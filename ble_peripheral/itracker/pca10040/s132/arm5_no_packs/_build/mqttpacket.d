@@ -1,0 +1,11 @@
+.\_build\mqttpacket.o: ..\..\..\..\..\Source\src\MQTT\MQTTPacket.c
+.\_build\mqttpacket.o: ..\..\..\..\..\Source\inc\mqtt\StackTrace.h
+.\_build\mqttpacket.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stdio.h
+.\_build\mqttpacket.o: ..\..\..\..\..\Source\inc\mqtt\MQTTPacket.h
+.\_build\mqttpacket.o: ..\..\..\..\..\Source\inc\mqtt\MQTTConnect.h
+.\_build\mqttpacket.o: ..\..\..\..\..\Source\inc\mqtt\MQTTPublish.h
+.\_build\mqttpacket.o: ..\..\..\..\..\Source\inc\mqtt\MQTTSubscribe.h
+.\_build\mqttpacket.o: ..\..\..\..\..\Source\inc\mqtt\MQTTUnsubscribe.h
+.\_build\mqttpacket.o: ..\..\..\..\..\Source\inc\mqtt\MQTTFormat.h
+.\_build\mqttpacket.o: ..\..\..\..\..\Source\inc\mqtt\MQTTPacket.h
+.\_build\mqttpacket.o: F:\software\keil\ARM\ARMCC\Bin\..\include\string.h
