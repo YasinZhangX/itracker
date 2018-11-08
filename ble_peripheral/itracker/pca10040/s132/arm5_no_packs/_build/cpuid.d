@@ -1,6 +1,6 @@
 .\_build\cpuid.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\cpuid.c
 .\_build\cpuid.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\cpuid.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\cpuid.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\cpuid.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\cpuid.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\cpuid.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

@@ -1,6 +1,6 @@
 .\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\signature.c
 .\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\signature.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\signature.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\signature.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\signature.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -43,3 +43,4 @@
 .\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\hash.h
 .\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\md5.h
 .\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha.h
+.\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha256.h

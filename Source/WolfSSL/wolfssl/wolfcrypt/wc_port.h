@@ -199,6 +199,7 @@
     #define wolfSSL_CryptHwMutexUnLock()    (void)0 /* Success */
 #endif /* WOLFSSL_CRYPT_HW_MUTEX */
 
+
 /* Mutex functions */
 WOLFSSL_API int wc_InitMutex(wolfSSL_Mutex*);
 WOLFSSL_API wolfSSL_Mutex* wc_InitAndAllocMutex(void);

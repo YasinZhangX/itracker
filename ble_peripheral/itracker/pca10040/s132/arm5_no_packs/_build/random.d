@@ -1,6 +1,6 @@
 .\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\random.c
 .\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\random.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\random.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\random.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\random.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -40,7 +40,7 @@
 .\_build\random.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\random.h
 .\_build\random.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
-.\_build\random.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
+.\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha256.h
 .\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\cpuid.h
 .\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
 .\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/misc.c

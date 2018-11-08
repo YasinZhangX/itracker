@@ -34,8 +34,3 @@
 .\_build\nrf_crypto_hash.o: ..\..\..\..\..\..\components\libraries\crypto\backend\oberon\oberon_backend_hash.h
 .\_build\nrf_crypto_hash.o: ..\..\..\..\..\..\components\libraries\crypto\backend\cc310_bl\cc310_bl_backend_hash.h
 .\_build\nrf_crypto_hash.o: ..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw\nrf_sw_backend_hash.h
-.\_build\nrf_crypto_hash.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
-.\_build\nrf_crypto_hash.o: ..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_mem.h
-.\_build\nrf_crypto_hash.o: ..\..\..\..\..\..\components\libraries\util\sdk_alloca.h
-.\_build\nrf_crypto_hash.o: F:\software\keil\ARM\ARMCC\Bin\..\include\alloca.h
-.\_build\nrf_crypto_hash.o: ..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_shared.h

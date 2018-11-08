@@ -1,6 +1,6 @@
 .\_build\ed25519.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\ed25519.c
 .\_build\ed25519.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\ed25519.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\ed25519.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\ed25519.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\ed25519.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\ed25519.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

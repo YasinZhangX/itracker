@@ -1,6 +1,6 @@
 .\_build\ecc.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\ecc.c
 .\_build\ecc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\ecc.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\ecc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\ecc.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\ecc.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\ecc.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -45,7 +45,6 @@
 .\_build\ecc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\tfm.h
 .\_build\ecc.o: F:\software\keil\ARM\ARMCC\Bin\..\include\limits.h
 .\_build\ecc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\random.h
-.\_build\ecc.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
+.\_build\ecc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha256.h
 .\_build\ecc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
 .\_build\ecc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
-.\_build\ecc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha.h

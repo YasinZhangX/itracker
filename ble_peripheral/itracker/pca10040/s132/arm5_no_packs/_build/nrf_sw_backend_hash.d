@@ -25,13 +25,3 @@
 .\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\util\sdk_macros.h
 .\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\util\nrf_assert.h
 .\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\crypto\backend\nrf_sw\nrf_sw_backend_hash.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_error.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_types.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\crypto\nrf_crypto_hash_shared.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\experimental_log\nrf_log.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\experimental_section_vars\nrf_section.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\strerror\nrf_strerror.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\experimental_log\src\nrf_log_internal.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\experimental_log\nrf_log_instance.h
-.\_build\nrf_sw_backend_hash.o: ..\..\..\..\..\..\components\libraries\experimental_log\nrf_log_types.h

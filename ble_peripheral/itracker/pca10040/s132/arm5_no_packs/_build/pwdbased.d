@@ -1,6 +1,6 @@
 .\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\pwdbased.c
 .\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\pwdbased.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\pwdbased.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\pwdbased.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\pwdbased.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -43,3 +43,4 @@
 .\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\hmac.h
 .\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\hash.h
 .\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\md5.h
+.\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha.h

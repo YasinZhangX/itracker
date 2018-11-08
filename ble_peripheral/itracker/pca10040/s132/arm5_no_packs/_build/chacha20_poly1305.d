@@ -1,6 +1,6 @@
 .\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\chacha20_poly1305.c
 .\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\chacha20_poly1305.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\chacha20_poly1305.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

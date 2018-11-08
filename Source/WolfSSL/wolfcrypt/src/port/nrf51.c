@@ -38,7 +38,7 @@
 #include "nrf_ecb.h"
 
 #ifdef SOFTDEVICE_PRESENT
-    #include "softdevice_handler.h"
+    #include "ser_softdevice_handler.h"
     #include "nrf_soc.h"
 #endif /* SOFTDEVICE_PRESENT */
 

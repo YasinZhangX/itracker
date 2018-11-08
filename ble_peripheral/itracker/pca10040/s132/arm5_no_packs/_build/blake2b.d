@@ -1,6 +1,6 @@
 .\_build\blake2b.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\blake2b.c
 .\_build\blake2b.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\blake2b.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\blake2b.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\blake2b.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\blake2b.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\blake2b.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

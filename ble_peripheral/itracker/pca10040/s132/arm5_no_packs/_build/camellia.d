@@ -1,6 +1,6 @@
 .\_build\camellia.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\camellia.c
 .\_build\camellia.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\camellia.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\camellia.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\camellia.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\camellia.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\camellia.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

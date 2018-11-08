@@ -1,6 +1,6 @@
 .\_build\misc.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\misc.c
 .\_build\misc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\misc.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\misc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\misc.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\misc.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\misc.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

@@ -1,6 +1,6 @@
 .\_build\cmac.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\cmac.c
 .\_build\cmac.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\cmac.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\cmac.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\cmac.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\cmac.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\cmac.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

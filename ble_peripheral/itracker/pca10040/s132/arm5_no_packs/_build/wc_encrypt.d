@@ -1,6 +1,6 @@
 .\_build\wc_encrypt.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\wc_encrypt.c
 .\_build\wc_encrypt.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\wc_encrypt.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\wc_encrypt.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\wc_encrypt.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\wc_encrypt.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\wc_encrypt.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

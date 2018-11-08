@@ -1,6 +1,6 @@
 .\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\md5.c
 .\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\md5.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\md5.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\md5.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\md5.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -42,3 +42,5 @@
 .\_build\md5.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
 .\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
 .\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/misc.c
+.\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\misc.h

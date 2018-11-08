@@ -1,6 +1,6 @@
 .\_build\sp_x86_64.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\sp_x86_64.c
 .\_build\sp_x86_64.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\sp_x86_64.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\sp_x86_64.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\sp_x86_64.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\sp_x86_64.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\sp_x86_64.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

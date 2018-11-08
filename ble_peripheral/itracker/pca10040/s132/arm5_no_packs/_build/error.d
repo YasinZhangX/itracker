@@ -1,6 +1,6 @@
 .\_build\error.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\error.c
 .\_build\error.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\error.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\error.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\error.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\error.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\error.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

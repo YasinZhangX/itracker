@@ -1,6 +1,6 @@
 .\_build\wc_port.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\wc_port.c
 .\_build\wc_port.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\wc_port.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\wc_port.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\wc_port.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\wc_port.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\wc_port.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

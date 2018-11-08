@@ -1,6 +1,6 @@
 .\_build\cryptodev.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\cryptodev.c
 .\_build\cryptodev.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\cryptodev.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\cryptodev.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\cryptodev.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\cryptodev.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\cryptodev.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

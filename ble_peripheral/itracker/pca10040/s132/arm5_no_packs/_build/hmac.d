@@ -1,6 +1,6 @@
 .\_build\hmac.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\hmac.c
 .\_build\hmac.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\hmac.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\hmac.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\hmac.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\hmac.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\hmac.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -44,3 +44,4 @@
 .\_build\hmac.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\hash.h
 .\_build\hmac.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\md5.h
 .\_build\hmac.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha.h
+.\_build\hmac.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha256.h

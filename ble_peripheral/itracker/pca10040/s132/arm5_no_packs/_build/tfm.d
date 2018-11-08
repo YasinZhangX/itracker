@@ -1,6 +1,6 @@
 .\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\tfm.c
 .\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\tfm.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\tfm.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\tfm.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\tfm.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -42,12 +42,4 @@
 .\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\misc.h
 .\_build\tfm.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
 .\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\random.h
-.\_build\tfm.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
-.\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\tfm.h
-.\_build\tfm.o: F:\software\keil\ARM\ARMCC\Bin\..\include\limits.h
-.\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
-.\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
-.\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/asm.c
-.\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/fp_sqr_comba_8.i
-.\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/fp_mul_comba_8.i
-.\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
+.\_build\tfm.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha256.h

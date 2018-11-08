@@ -1,6 +1,6 @@
 .\_build\hc128.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\hc128.c
 .\_build\hc128.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\hc128.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\hc128.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\hc128.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\hc128.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\hc128.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

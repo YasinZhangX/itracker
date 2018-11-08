@@ -1,6 +1,6 @@
 .\_build\internal.o: ..\..\..\..\..\Source\WolfSSL\src\internal.c
 .\_build\internal.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\internal.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\internal.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\internal.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\internal.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\internal.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -41,6 +41,6 @@
 .\_build\internal.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\internal.h
 .\_build\internal.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
 .\_build\internal.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\ssl.h
-.\_build\internal.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\version.h
+.\_build\internal.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\version.h
 .\_build\internal.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
 .\_build\internal.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\asn_public.h

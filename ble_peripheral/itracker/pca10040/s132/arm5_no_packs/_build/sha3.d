@@ -1,6 +1,6 @@
 .\_build\sha3.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\sha3.c
 .\_build\sha3.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\sha3.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\sha3.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\sha3.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\sha3.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\sha3.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

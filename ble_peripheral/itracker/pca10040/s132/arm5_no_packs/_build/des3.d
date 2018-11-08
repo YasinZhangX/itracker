@@ -1,6 +1,6 @@
 .\_build\des3.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\des3.c
 .\_build\des3.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\des3.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\des3.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\des3.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\des3.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\des3.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

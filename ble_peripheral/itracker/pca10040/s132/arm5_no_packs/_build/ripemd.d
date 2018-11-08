@@ -1,6 +1,6 @@
 .\_build\ripemd.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\ripemd.c
 .\_build\ripemd.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\ripemd.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\ripemd.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\ripemd.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\ripemd.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\ripemd.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

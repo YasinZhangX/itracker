@@ -31,6 +31,8 @@
 *.bak
 
 # ignore project compile files
+ble_peripheral\itracker\pca10040\s132\arm5_no_packs\_build\
+*.o
 *.org
 *.crf
 *.pbi

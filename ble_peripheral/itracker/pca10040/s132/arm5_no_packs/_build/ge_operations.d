@@ -1,6 +1,6 @@
 .\_build\ge_operations.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\ge_operations.c
 .\_build\ge_operations.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\ge_operations.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\ge_operations.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\ge_operations.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\ge_operations.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\ge_operations.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

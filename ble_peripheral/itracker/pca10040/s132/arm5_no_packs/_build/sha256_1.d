@@ -1,6 +1,6 @@
 .\_build\sha256_1.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\sha256.c
 .\_build\sha256_1.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\sha256_1.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\sha256_1.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\sha256_1.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\sha256_1.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\sha256_1.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -38,9 +38,9 @@
 .\_build\sha256_1.o: ..\..\..\..\..\..\external\freertos\portable\CMSIS\nrf52\portmacro_cmsis.h
 .\_build\sha256_1.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\sha256_1.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
-.\_build\sha256_1.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
-.\_build\sha256_1.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\sha256_1.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha256.h
 .\_build\sha256_1.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\sha256_1.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
 .\_build\sha256_1.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\cpuid.h
 .\_build\sha256_1.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
 .\_build\sha256_1.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/misc.c

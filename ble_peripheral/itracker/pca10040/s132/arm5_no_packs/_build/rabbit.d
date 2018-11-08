@@ -1,6 +1,6 @@
 .\_build\rabbit.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\rabbit.c
 .\_build\rabbit.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\rabbit.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\rabbit.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\rabbit.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\rabbit.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\rabbit.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

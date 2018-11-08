@@ -1,6 +1,6 @@
 .\_build\tls13.o: ..\..\..\..\..\Source\WolfSSL\src\tls13.c
 .\_build\tls13.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\tls13.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\tls13.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\tls13.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\tls13.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\tls13.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

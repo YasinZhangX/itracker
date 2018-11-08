@@ -1,6 +1,6 @@
 .\_build\nrf51.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\port\nrf51.c
 .\_build\nrf51.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\nrf51.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\nrf51.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\nrf51.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\nrf51.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\nrf51.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

@@ -1,6 +1,6 @@
 .\_build\chacha.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\chacha.c
 .\_build\chacha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\chacha.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\chacha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\chacha.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\chacha.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\chacha.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

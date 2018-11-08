@@ -1,6 +1,6 @@
 .\_build\sha.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\sha.c
 .\_build\sha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\sha.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\sha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\sha.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\sha.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\sha.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -42,3 +42,5 @@
 .\_build\sha.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
 .\_build\sha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
 .\_build\sha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\sha.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/misc.c
+.\_build\sha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\misc.h

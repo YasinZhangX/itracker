@@ -1,6 +1,6 @@
 .\_build\wolfevent.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\wolfevent.c
 .\_build\wolfevent.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\wolfevent.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\wolfevent.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\wolfevent.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\wolfevent.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\wolfevent.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

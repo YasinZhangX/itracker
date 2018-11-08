@@ -1,6 +1,6 @@
 .\_build\fe_low_mem.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\fe_low_mem.c
 .\_build\fe_low_mem.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\fe_low_mem.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\fe_low_mem.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\fe_low_mem.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\fe_low_mem.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\fe_low_mem.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

@@ -1,6 +1,6 @@
 .\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\sha512.c
 .\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\sha512.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\sha512.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\sha512.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\sha512.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -40,3 +40,8 @@
 .\_build\sha512.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha512.h
 .\_build\sha512.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\cpuid.h
+.\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/misc.c
+.\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\misc.h

@@ -1,6 +1,6 @@
 .\_build\sniffer.o: ..\..\..\..\..\Source\WolfSSL\src\sniffer.c
 .\_build\sniffer.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\sniffer.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\sniffer.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\sniffer.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\sniffer.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\sniffer.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

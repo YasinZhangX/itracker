@@ -1,6 +1,6 @@
 .\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\pkcs12.c
 .\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\pkcs12.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\pkcs12.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\pkcs12.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -44,7 +44,6 @@
 .\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\tfm.h
 .\_build\pkcs12.o: F:\software\keil\ARM\ARMCC\Bin\..\include\limits.h
 .\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\random.h
-.\_build\pkcs12.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
+.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha256.h
 .\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
 .\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
-.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha.h

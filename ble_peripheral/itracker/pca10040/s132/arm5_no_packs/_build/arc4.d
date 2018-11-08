@@ -1,6 +1,6 @@
 .\_build\arc4.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\arc4.c
 .\_build\arc4.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\arc4.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\arc4.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\arc4.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\arc4.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\arc4.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

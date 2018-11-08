@@ -584,7 +584,7 @@
 	#endif
 	};
 
-
+	
 	WOLFSSL_API word32 CheckRunTimeSettings(void);
 
 	/* If user uses RSA, DH, DSA, or ECC math lib directly then fast math and long

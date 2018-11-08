@@ -1,6 +1,6 @@
 .\_build\ocsp.o: ..\..\..\..\..\Source\WolfSSL\src\ocsp.c
 .\_build\ocsp.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\ocsp.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\ocsp.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\ocsp.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\ocsp.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\ocsp.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h

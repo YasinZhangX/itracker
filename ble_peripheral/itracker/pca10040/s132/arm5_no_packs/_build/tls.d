@@ -1,6 +1,6 @@
 .\_build\tls.o: ..\..\..\..\..\Source\WolfSSL\src\tls.c
 .\_build\tls.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\settings.h
-.\_build\tls.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\visibility.h
+.\_build\tls.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\visibility.h
 .\_build\tls.o: ..\..\..\..\..\Source\inc\wolfMQTT\user_settings.h
 .\_build\tls.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
 .\_build\tls.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stddef.h
@@ -39,7 +39,7 @@
 .\_build\tls.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\tls.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\tls.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\ssl.h
-.\_build\tls.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\version.h
+.\_build\tls.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\version.h
 .\_build\tls.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
 .\_build\tls.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
 .\_build\tls.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\asn_public.h
