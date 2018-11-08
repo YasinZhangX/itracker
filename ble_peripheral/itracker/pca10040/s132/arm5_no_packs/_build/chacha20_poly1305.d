@@ -39,3 +39,8 @@
 .\_build\chacha20_poly1305.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\chacha20_poly1305.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\chacha20_poly1305.h
+.\_build\chacha20_poly1305.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\chacha.h
+.\_build\chacha20_poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\poly1305.h

@@ -40,3 +40,6 @@
 .\_build\wc_port.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\wc_port.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
 .\_build\wc_port.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\wc_port.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\wc_port.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wc_port.h
+.\_build\wc_port.o: ..\..\..\..\..\..\components\libraries\ecc\ecc.h

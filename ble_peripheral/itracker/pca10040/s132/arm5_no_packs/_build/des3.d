@@ -39,3 +39,5 @@
 .\_build\des3.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\des3.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\des3.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\des3.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\des3.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h

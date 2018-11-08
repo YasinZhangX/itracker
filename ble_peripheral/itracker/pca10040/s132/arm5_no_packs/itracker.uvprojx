@@ -3410,11 +3410,6 @@
           <GroupName>wolfMQTT</GroupName>
           <Files>
             <File>
-              <FileName>mqtt_client.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\WolfMQTT\src\mqtt_client.c</FilePath>
-            </File>
-            <File>
               <FileName>mqtt_packet.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\WolfMQTT\src\mqtt_packet.c</FilePath>
@@ -3449,6 +3444,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\WolfMQTT\MqttFreeRTOSTcp.c</FilePath>
             </File>
+            <File>
+              <FileName>mqtt_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\WolfMQTT\src\mqtt_client.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3463,11 +3463,6 @@
               <FileName>crl.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\WolfSSL\src\crl.c</FilePath>
-            </File>
-            <File>
-              <FileName>internal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\WolfSSL\src\internal.c</FilePath>
             </File>
             <File>
               <FileName>keys.c</FileName>
@@ -3833,6 +3828,11 @@
               <FileName>nrf51.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\port\nrf51.c</FilePath>
+            </File>
+            <File>
+              <FileName>internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\WolfSSL\src\internal.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7179,11 +7179,6 @@
           <GroupName>wolfMQTT</GroupName>
           <Files>
             <File>
-              <FileName>mqtt_client.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\WolfMQTT\src\mqtt_client.c</FilePath>
-            </File>
-            <File>
               <FileName>mqtt_packet.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\WolfMQTT\src\mqtt_packet.c</FilePath>
@@ -7218,6 +7213,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\WolfMQTT\MqttFreeRTOSTcp.c</FilePath>
             </File>
+            <File>
+              <FileName>mqtt_client.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\WolfMQTT\src\mqtt_client.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7232,11 +7232,6 @@
               <FileName>crl.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\WolfSSL\src\crl.c</FilePath>
-            </File>
-            <File>
-              <FileName>internal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\WolfSSL\src\internal.c</FilePath>
             </File>
             <File>
               <FileName>keys.c</FileName>
@@ -7602,6 +7597,11 @@
               <FileName>nrf51.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\port\nrf51.c</FilePath>
+            </File>
+            <File>
+              <FileName>internal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\WolfSSL\src\internal.c</FilePath>
             </File>
           </Files>
         </Group>

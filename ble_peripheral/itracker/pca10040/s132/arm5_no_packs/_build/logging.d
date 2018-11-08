@@ -39,3 +39,5 @@
 .\_build\logging.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\logging.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\logging.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\logging.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\logging.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h

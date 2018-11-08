@@ -39,3 +39,4 @@
 .\_build\misc.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\misc.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\misc.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\misc.h
+.\_build\misc.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h

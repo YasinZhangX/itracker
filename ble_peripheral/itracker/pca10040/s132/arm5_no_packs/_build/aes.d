@@ -39,3 +39,5 @@
 .\_build\aes.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\aes.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\aes.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\aes.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\aes.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\aes.h

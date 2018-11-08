@@ -39,3 +39,4 @@
 .\_build\error.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\error.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\error.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\error.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h

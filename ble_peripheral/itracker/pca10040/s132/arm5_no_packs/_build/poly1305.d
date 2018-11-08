@@ -39,3 +39,9 @@
 .\_build\poly1305.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\poly1305.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\poly1305.h
+.\_build\poly1305.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\cpuid.h
+.\_build\poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/misc.c
+.\_build\poly1305.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\misc.h

@@ -39,3 +39,9 @@
 .\_build\random.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\random.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\random.h
+.\_build\random.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\random.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
+.\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\cpuid.h
+.\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/misc.c
+.\_build\random.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\misc.h

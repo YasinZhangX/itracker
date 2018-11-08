@@ -30,6 +30,7 @@
 #ifndef WOLFSSL_LOGGING_H
 #define WOLFSSL_LOGGING_H
 
+#include "settings.h"
 #include <types.h>
 
 #ifdef __cplusplus

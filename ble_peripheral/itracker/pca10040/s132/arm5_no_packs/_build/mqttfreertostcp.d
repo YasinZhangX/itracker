@@ -39,3 +39,14 @@
 .\_build\mqttfreertostcp.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\mqttfreertostcp.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\mqttfreertostcp.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\mqtt_client.h
+.\_build\mqttfreertostcp.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\options.h
+.\_build\mqttfreertostcp.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\mqtt_types.h
+.\_build\mqttfreertostcp.o: F:\software\keil\ARM\ARMCC\Bin\..\include\string.h
+.\_build\mqttfreertostcp.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stdlib.h
+.\_build\mqttfreertostcp.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\mqtt_packet.h
+.\_build\mqttfreertostcp.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\mqtt_socket.h
+.\_build\mqttfreertostcp.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\ssl.h
+.\_build\mqttfreertostcp.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\version.h
+.\_build\mqttfreertostcp.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\mqttfreertostcp.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\mqttfreertostcp.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\asn_public.h

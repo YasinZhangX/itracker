@@ -39,3 +39,6 @@
 .\_build\md5.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\md5.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\md5.h
+.\_build\md5.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\md5.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h

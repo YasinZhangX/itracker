@@ -624,7 +624,7 @@
 
 #elif defined(WOLFSSL_NRF51_AES)
     /* Use built-in AES hardware - AES 128 ECB Encrypt Only */
-    #include "wolfssl/wolfcrypt/port/nrf51.h"
+    #include "port/nrf51.h"
 
     static int wc_AesEncrypt(Aes* aes, const byte* inBlock, byte* outBlock)
     {

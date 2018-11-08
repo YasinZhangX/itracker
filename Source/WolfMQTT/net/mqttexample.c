@@ -25,8 +25,8 @@
 #endif
 
 #include "mqtt_client.h"
-#include "examples/mqttexample.h"
-#include "examples/mqttnet.h"
+#include "mqttexample.h"
+#include "mqttnet.h"
 
 
 /* locals */

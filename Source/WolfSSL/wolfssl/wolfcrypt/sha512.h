@@ -92,7 +92,7 @@ enum {
 
 
 #ifdef WOLFSSL_IMX6_CAAM
-    #include "wolfssl/wolfcrypt/port/caam/wolfcaam_sha.h"
+    #include "port/caam/wolfcaam_sha.h"
 #else
 /* wc_Sha512 digest */
 typedef struct wc_Sha512 {

@@ -39,3 +39,14 @@
 .\_build\rsa.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\rsa.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\rsa.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\rsa.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\rsa.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\rsa.h
+.\_build\rsa.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\integer.h
+.\_build\rsa.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\tfm.h
+.\_build\rsa.o: F:\software\keil\ARM\ARMCC\Bin\..\include\limits.h
+.\_build\rsa.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\random.h
+.\_build\rsa.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
+.\_build\rsa.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
+.\_build\rsa.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
+.\_build\rsa.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\hash.h
+.\_build\rsa.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\md5.h

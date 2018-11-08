@@ -102,9 +102,9 @@ enum {
 
 
 #ifdef WOLFSSL_TI_HASH
-    #include "wolfssl/wolfcrypt/port/ti/ti-hash.h"
+    #include "port/ti/ti-hash.h"
 #elif defined(WOLFSSL_IMX6_CAAM)
-    #include "wolfssl/wolfcrypt/port/caam/wolfcaam_sha.h"
+    #include "port/caam/wolfcaam_sha.h"
 #else
 /* wc_Sha256 digest */
 typedef struct wc_Sha256 {

@@ -39,3 +39,4 @@
 .\_build\cpuid.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\cpuid.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\cpuid.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\cpuid.h
+.\_build\cpuid.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h

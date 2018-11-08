@@ -39,3 +39,8 @@
 .\_build\ssl.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\ssl.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\ssl.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\internal.h
+.\_build\ssl.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\ssl.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\ssl.h
+.\_build\ssl.o: ..\..\..\..\..\Source\WolfMQTT\wolfmqtt\version.h
+.\_build\ssl.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\ssl.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\asn_public.h

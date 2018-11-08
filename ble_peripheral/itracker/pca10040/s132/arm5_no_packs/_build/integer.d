@@ -40,3 +40,4 @@
 .\_build\integer.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\integer.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/misc.c
 .\_build\integer.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\misc.h
+.\_build\integer.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h

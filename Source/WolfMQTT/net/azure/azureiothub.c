@@ -62,8 +62,8 @@
 #include <hmac.h>
 
 #include "azureiothub.h"
-#include "examples/mqttexample.h"
-#include "examples/mqttnet.h"
+#include "mqttexample.h"
+#include "mqttnet.h"
 
 /* Locals */
 static int mStopRead = 0;

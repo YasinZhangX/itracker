@@ -13201,7 +13201,7 @@ int wolfSSL_EVP_MD_type(const WOLFSSL_EVP_MD *md)
     }
 
 #define WOLFSSL_EVP_INCLUDED
-#include "wolfcrypt/src/evp.c"
+#include "src/evp.c"
 
 
     /* store for external read of iv, WOLFSSL_SUCCESS on success */

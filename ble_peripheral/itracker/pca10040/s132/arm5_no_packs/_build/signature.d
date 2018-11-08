@@ -39,3 +39,7 @@
 .\_build\signature.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\signature.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\signature.h
+.\_build\signature.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\hash.h
+.\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\md5.h
+.\_build\signature.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha.h

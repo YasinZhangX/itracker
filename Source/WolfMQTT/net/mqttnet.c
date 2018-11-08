@@ -46,6 +46,23 @@
     #include "FreeRTOS.h"
     #include "task.h"
     #include "semphr.h"
+		
+		/* For this limited implementation, only two members are required in the
+		Berkeley style sockaddr structure. */
+		struct freertos_sockaddr
+		{
+			/* _HT_ On 32- and 64-bit architectures, the addition of the two uint8_t
+			fields doesn't make the structure bigger, due to alignment.
+			The fields are inserted as a preparation for IPv6. */
+
+			/* sin_len and sin_family not used in the IPv4-only release. */
+			uint8_t sin_len;		/* length of this structure. */
+			uint8_t sin_family;		/* FREERTOS_AF_INET. */
+			uint16_t sin_port;
+			uint32_t sin_addr;
+		};
+		
+		#define SOCK_ADDR_IN                 struct freertos_sockaddr
 
 /* Windows */
 #elif defined(USE_WINDOWS_API)
@@ -141,7 +158,7 @@
 
 
 /* Include the example code */
-#include "examples/mqttexample.h"
+#include "mqttexample.h"
 
 /* Local context for Net callbacks */
 typedef enum {
@@ -329,7 +346,7 @@ static int NetDisconnect(void *context)
     return 0;
 }
 
-#else
+#elif defined(USE_WINDOWS_API)
 
 #ifndef WOLFMQTT_NO_TIMEOUT
 static void setup_timeout(struct timeval* tv, int timeout_ms)
@@ -682,8 +699,30 @@ static int NetDisconnect(void *context)
     }
     return 0;
 }
-
 #endif
+
+
+static int NetConnect(void *context, const char* host, word16 port,
+    int timeout_ms)
+{
+	return 0;
+}
+
+static int NetRead(void *context, byte* buf, int buf_len, int timeout_ms)
+{
+	return 0;
+}
+
+static int NetWrite(void *context, const byte* buf, int buf_len, int timeout_ms)
+{
+	return 0;
+}
+
+static int NetDisconnect(void *context)
+{
+	return 0;
+}
+
 
 
 /* Public Functions */

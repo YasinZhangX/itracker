@@ -1,8 +1,8 @@
 /* Wolf Includes */
-#include "wolfssl/wolfcrypt/settings.h"
+#include "settings.h"
 #include "mqtt_client.h"
-#include "examples/mqttnet.h" /* example FreeRTOS TCP network callbacks */
-#include "wolfssl/ssl.h"
+#include "mqttnet.h" /* example FreeRTOS TCP network callbacks */
+#include "ssl.h"
 
 /* Standard includes. */
 #include <stdio.h>

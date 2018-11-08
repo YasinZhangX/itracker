@@ -39,3 +39,4 @@
 .\_build\sha512.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\sha512.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\sha512.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha512.h
+.\_build\sha512.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h

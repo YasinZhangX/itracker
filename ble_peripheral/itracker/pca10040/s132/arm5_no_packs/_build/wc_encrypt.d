@@ -39,3 +39,4 @@
 .\_build\wc_encrypt.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\wc_encrypt.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\wc_encrypt.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\aes.h
+.\_build\wc_encrypt.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h

@@ -25,13 +25,13 @@
 #endif
 
 #include "mqtt_client.h"
-#include "examples/mqttnet.h"
+#include "mqttnet.h"
 
 
 /* TODO: Add includes for UART HW */
 
 /* Include the example code */
-#include "examples/mqttexample.h"
+#include "mqttexample.h"
 
 
 /* this code is a template for using UART for communication */

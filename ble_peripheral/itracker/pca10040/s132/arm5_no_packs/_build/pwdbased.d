@@ -39,3 +39,7 @@
 .\_build\pwdbased.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\pwdbased.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\pwdbased.h
+.\_build\pwdbased.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\hmac.h
+.\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\hash.h
+.\_build\pwdbased.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\md5.h

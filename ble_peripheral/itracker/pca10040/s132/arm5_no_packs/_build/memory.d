@@ -40,3 +40,6 @@
 .\_build\memory.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\memory.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\memory.h
 .\_build\memory.o: F:\software\keil\ARM\ARMCC\Bin\..\include\stdlib.h
+.\_build\memory.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\memory.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\memory.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h

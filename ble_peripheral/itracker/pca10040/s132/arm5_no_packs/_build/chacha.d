@@ -39,3 +39,9 @@
 .\_build\chacha.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\chacha.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\chacha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\chacha.h
+.\_build\chacha.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\chacha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\error-crypt.h
+.\_build\chacha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\logging.h
+.\_build\chacha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\cpuid.h
+.\_build\chacha.o: ..\..\..\..\..\Source\WolfSSL\wolfcrypt\src/misc.c
+.\_build\chacha.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\misc.h

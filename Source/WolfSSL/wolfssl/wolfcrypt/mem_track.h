@@ -60,7 +60,7 @@
 
 #if defined(USE_WOLFSSL_MEMORY) && !defined(WOLFSSL_STATIC_MEMORY)
 
-    #include "wolfssl/wolfcrypt/logging.h"
+    #include "logging.h"
 
     typedef struct memoryStats {
         size_t totalAllocs;     /* number of allocations */

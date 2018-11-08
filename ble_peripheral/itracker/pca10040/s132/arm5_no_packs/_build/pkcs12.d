@@ -39,3 +39,12 @@
 .\_build\pkcs12.o: ..\..\..\..\..\..\components\libraries\util\app_util.h
 .\_build\pkcs12.o: ..\..\..\..\..\..\external\freertos\source\include\mpu_wrappers.h
 .\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\asn.h
+.\_build\pkcs12.o: ..\..\..\..\..\..\itracker\Source\lib\micro-ecc\types.h
+.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\integer.h
+.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\tfm.h
+.\_build\pkcs12.o: F:\software\keil\ARM\ARMCC\Bin\..\include\limits.h
+.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\random.h
+.\_build\pkcs12.o: ..\..\..\..\..\..\components\libraries\sha256\sha256.h
+.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
+.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\wolfmath.h
+.\_build\pkcs12.o: ..\..\..\..\..\Source\WolfSSL\wolfssl\wolfcrypt\sha.h
