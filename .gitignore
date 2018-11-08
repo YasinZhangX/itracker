@@ -1,0 +1,54 @@
+# don't ignore source project files
+!.gitignore
+!*.c
+!*.C
+!*.cpp
+!*.CPP
+!*.h
+!*.H
+!*.ewp
+!*.ewd
+!*.eww
+!*.txt
+!*.s51
+!*.cfg
+!*.hex
+!*.bin
+!*.lib
+
+
+# ignore document files
+/Document
+*.pdf
+*.PDF
+
+# ignore compressed files
+*.rar
+*.zip
+*.7z
+
+# ignore bak files
+*.bak
+
+# ignore project compile files
+*.org
+*.crf
+*.pbi
+*.dll
+*.r51
+*.chm
+*.ico
+*.dat
+*.zjs
+*.xml
+cscope.files
+cscope.out
+tags
+*.swp
+*.wsdt
+*.dep
+*.pbd
+*.tmp
+*.TMP
+*.map
+*.d51
