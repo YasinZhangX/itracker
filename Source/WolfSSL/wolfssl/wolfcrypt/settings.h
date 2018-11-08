@@ -21,7 +21,7 @@
 
 
 /* Place OS specific preprocessor flags, defines, includes here, will be
-   included into every file because types.h includes it */
+   included into every file because wolftypes.h includes it */
 
 
 #ifndef WOLF_CRYPT_SETTINGS_H
@@ -200,7 +200,7 @@
 
 #ifdef HAVE_NETX
     #ifdef NEED_THREADX_TYPES
-        #include <types.h>
+        #include <wolftypes.h>
     #endif
     #include <nx_api.h>
 #endif
@@ -679,7 +679,7 @@ extern void uITRON4_free(void *p) ;
     #define NO_RABBIT
     #ifndef NO_FILESYSTEM
         #define LSR_FS
-        #include "inc/hw_types.h"
+        #include "inc/hw_wolftypes.h"
         #include "fs.h"
     #endif
     #define WOLFSSL_LWIP

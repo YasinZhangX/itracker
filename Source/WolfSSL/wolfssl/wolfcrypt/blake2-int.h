@@ -37,7 +37,7 @@
 #ifndef WOLFCRYPT_BLAKE2_INT_H
 #define WOLFCRYPT_BLAKE2_INT_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 
 #if defined(_MSC_VER)

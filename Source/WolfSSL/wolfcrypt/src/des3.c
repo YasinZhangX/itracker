@@ -440,7 +440,7 @@
 
 #elif defined(HAVE_COLDFIRE_SEC)
 
-    #include <ctaocrypt/types.h>
+    #include <ctaocrypt/wolftypes.h>
 
     #include "sec.h"
     #include "mcf5475_sec.h"

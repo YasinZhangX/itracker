@@ -107,7 +107,7 @@ ECC Curve Sizes:
 #include <asn.h>
 #include <error-crypt.h>
 #include <logging.h>
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef WOLFSSL_HAVE_SP_ECC
 #include <sp.h>

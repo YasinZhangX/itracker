@@ -625,7 +625,7 @@ static int SwapLists(WOLFSSL_CRL* crl)
 
 #if (defined(__MACH__) || defined(__FreeBSD__))
 
-#include <sys/types.h>
+#include <sys/wolftypes.h>
 #include <sys/event.h>
 #include <sys/time.h>
 #include <fcntl.h>
@@ -764,7 +764,7 @@ static void* DoMonitor(void* arg)
 
 #elif defined(__linux__)
 
-#include <sys/types.h>
+#include <sys/wolftypes.h>
 #include <sys/inotify.h>
 #include <sys/eventfd.h>
 #include <unistd.h>

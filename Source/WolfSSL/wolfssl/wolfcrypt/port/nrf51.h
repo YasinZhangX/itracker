@@ -27,7 +27,7 @@
 extern "C" {
 #endif
 
-#include <types.h>
+#include <wolftypes.h>
 
 /* Public Functions */
 int nrf51_random_generate(byte* output, word32 sz);

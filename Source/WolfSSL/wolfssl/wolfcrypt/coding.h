@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_CODING_H
 #define WOLF_CRYPT_CODING_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef __cplusplus
     extern "C" {

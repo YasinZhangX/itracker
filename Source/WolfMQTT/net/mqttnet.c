@@ -46,7 +46,7 @@
     #include "FreeRTOS.h"
     #include "task.h"
     #include "semphr.h"
-		
+
 		/* For this limited implementation, only two members are required in the
 		Berkeley style sockaddr structure. */
 		struct freertos_sockaddr
@@ -61,7 +61,7 @@
 			uint16_t sin_port;
 			uint32_t sin_addr;
 		};
-		
+
 		#define SOCK_ADDR_IN                 struct freertos_sockaddr
 
 /* Windows */

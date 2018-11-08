@@ -23,7 +23,7 @@
 #ifndef WOLF_CRYPT_SP_H
 #define WOLF_CRYPT_SP_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #if defined(WOLFSSL_HAVE_SP_RSA) || defined(WOLFSSL_HAVE_SP_DH) || \
                                     defined(WOLFSSL_HAVE_SP_ECC)

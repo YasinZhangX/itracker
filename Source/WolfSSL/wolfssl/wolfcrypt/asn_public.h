@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_ASN_PUBLIC_H
 #define WOLF_CRYPT_ASN_PUBLIC_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef __cplusplus
     extern "C" {

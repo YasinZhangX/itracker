@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_RSA_H
 #define WOLF_CRYPT_RSA_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifndef NO_RSA
 

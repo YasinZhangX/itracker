@@ -39,7 +39,7 @@
 #ifndef WOLF_CRYPT_TFM_H
 #define WOLF_CRYPT_TFM_H
 
-#include <types.h>
+#include <wolftypes.h>
 #ifndef CHAR_BIT
     #include <limits.h>
 #endif

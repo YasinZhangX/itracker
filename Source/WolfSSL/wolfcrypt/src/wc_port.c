@@ -25,7 +25,7 @@
 #endif
 
 #include <settings.h>
-#include <types.h>
+#include <wolftypes.h>
 #include <error-crypt.h>
 #include <logging.h>
 #include <wc_port.h>

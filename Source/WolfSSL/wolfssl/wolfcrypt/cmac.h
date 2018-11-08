@@ -23,7 +23,7 @@
 #ifndef WOLF_CRYPT_CMAC_H
 #define WOLF_CRYPT_CMAC_H
 
-#include <types.h>
+#include <wolftypes.h>
 #include <aes.h>
 
 #if !defined(NO_AES) && defined(WOLFSSL_CMAC)

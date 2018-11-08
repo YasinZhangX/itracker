@@ -871,7 +871,7 @@ void* wolfSSL_Realloc(void *ptr, size_t size, void* heap, int type)
 
 /* Example for user io pool, shared build may need definitions in lib proper */
 
-#include <types.h>
+#include <wolftypes.h>
 #include <stdlib.h>
 
 #ifndef HAVE_THREAD_LS

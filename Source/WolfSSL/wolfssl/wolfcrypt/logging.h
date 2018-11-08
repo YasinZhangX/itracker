@@ -31,7 +31,7 @@
 #define WOLFSSL_LOGGING_H
 
 #include "settings.h"
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef __cplusplus
     extern "C" {

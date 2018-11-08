@@ -24,7 +24,7 @@
 #ifndef WOLF_CRYPT_FIPS_TEST_H
 #define WOLF_CRYPT_FIPS_TEST_H
 
-#include <cyassl/ctaocrypt/types.h>
+#include <cyassl/ctaocrypt/wolftypes.h>
 
 
 #ifdef __cplusplus

@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_ARC4_H
 #define WOLF_CRYPT_ARC4_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef __cplusplus
     extern "C" {

@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_CURVE25519_H
 #define WOLF_CRYPT_CURVE25519_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef HAVE_CURVE25519
 

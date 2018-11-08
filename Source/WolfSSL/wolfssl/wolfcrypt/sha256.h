@@ -29,7 +29,7 @@
 #ifndef WOLF_CRYPT_SHA256_H
 #define WOLF_CRYPT_SHA256_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifndef NO_SHA256
 

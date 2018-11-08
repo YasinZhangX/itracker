@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_SIGNATURE_H
 #define WOLF_CRYPT_SIGNATURE_H
 
-#include <types.h>
+#include <wolftypes.h>
 #include <hash.h>
 #include <random.h>
 

@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_HC128_H
 #define WOLF_CRYPT_HC128_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifndef NO_HC128
 

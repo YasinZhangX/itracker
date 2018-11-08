@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <ctype.h>
-#include <types.h>
+#include <wolftypes.h>
 #include <error-crypt.h>
 #include <random.h>
 #include <mem_track.h>
@@ -68,7 +68,7 @@
 #elif defined(WOLFSSL_TIRTOS)
     #include <string.h>
     #include <netdb.h>
-    #include <sys/types.h>
+    #include <sys/wolftypes.h>
     #include <arpa/inet.h>
     #include <sys/socket.h>
     #include <ti/sysbios/knl/Task.h>
@@ -86,7 +86,7 @@
     #include <arpa/inet.h>
     #include <string.h>
     #include <selectLib.h>
-    #include <sys/types.h>
+    #include <sys/wolftypes.h>
     #include <netinet/in.h>
     #include <fcntl.h>
     #include <sys/time.h>
@@ -95,7 +95,7 @@
     #define SOCKET_T int
 #else
     #include <string.h>
-    #include <sys/types.h>
+    #include <sys/wolftypes.h>
 #ifndef WOLFSSL_LEANPSK
     #include <unistd.h>
     #include <netdb.h>

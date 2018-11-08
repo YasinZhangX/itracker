@@ -1,4 +1,4 @@
-/* types.h
+/* wolftypes.h
  *
  * Copyright (C) 2006-2017 wolfSSL Inc.
  *
@@ -20,7 +20,7 @@
  */
 
 /*!
-    \file wolfssl/wolfcrypt/types.h
+    \file wolfssl/wolfcrypt/wolftypes.h
 */
 
 #ifndef WOLF_CRYPT_TYPES_H
@@ -584,7 +584,7 @@
 	#endif
 	};
 
-	
+
 	WOLFSSL_API word32 CheckRunTimeSettings(void);
 
 	/* If user uses RSA, DH, DSA, or ECC math lib directly then fast math and long

@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_RIPEMD_H
 #define WOLF_CRYPT_RIPEMD_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef WOLFSSL_RIPEMD
 

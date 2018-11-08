@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_SHA_H
 #define WOLF_CRYPT_SHA_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifndef NO_SHA
 

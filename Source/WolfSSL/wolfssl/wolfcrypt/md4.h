@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_MD4_H
 #define WOLF_CRYPT_MD4_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifndef NO_MD4
 

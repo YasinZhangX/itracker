@@ -38,7 +38,7 @@
     #endif
 	#include <settings.h>
     #include <ssl.h>
-    #include <types.h>
+    #include <wolftypes.h>
 
     #ifndef WOLF_TLS_DHKEY_BITS_MIN /* allow define to be overridden */
         #ifdef WOLFSSL_MAX_STRENGTH

@@ -31,7 +31,7 @@
     #include <stdint.h>
 #endif
 
-#include <types.h>
+#include <wolftypes.h>
 
 #if defined(USE_INTEL_SPEEDUP) && !defined(NO_CURVED25519_X64)
     #define CURVED25519_X64

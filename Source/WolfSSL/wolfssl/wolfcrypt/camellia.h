@@ -54,7 +54,7 @@
 #ifndef WOLF_CRYPT_CAMELLIA_H
 #define WOLF_CRYPT_CAMELLIA_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef HAVE_CAMELLIA
 

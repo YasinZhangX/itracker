@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_COMPRESS_H
 #define WOLF_CRYPT_COMPRESS_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef HAVE_LIBZ
 

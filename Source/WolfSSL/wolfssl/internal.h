@@ -25,7 +25,7 @@
 #define WOLFSSL_INT_H
 
 
-#include <types.h>
+#include <wolftypes.h>
 #include <ssl.h>
 #ifdef HAVE_CRL
     #include <crl.h>

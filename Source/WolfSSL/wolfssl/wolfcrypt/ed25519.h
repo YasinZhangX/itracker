@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_ED25519_H
 #define WOLF_CRYPT_ED25519_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef HAVE_ED25519
 

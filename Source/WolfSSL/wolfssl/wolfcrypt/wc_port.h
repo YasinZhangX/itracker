@@ -60,7 +60,7 @@
 #elif defined(THREADX)
     #ifndef SINGLE_THREADED
         #ifdef NEED_THREADX_TYPES
-            #include <types.h>
+            #include <wolftypes.h>
         #endif
         #include <tx_api.h>
     #endif

@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_POLY1305_H
 #define WOLF_CRYPT_POLY1305_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef HAVE_POLY1305
 

@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_IDEA_H
 #define WOLF_CRYPT_IDEA_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef HAVE_IDEA
 

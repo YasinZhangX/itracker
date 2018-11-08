@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_ECC_H
 #define WOLF_CRYPT_ECC_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef HAVE_ECC
 

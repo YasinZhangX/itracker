@@ -25,7 +25,7 @@
 #define WOLF_CRYPT_MISC_H
 
 
-#include <types.h>
+#include <wolftypes.h>
 
 
 #ifdef __cplusplus

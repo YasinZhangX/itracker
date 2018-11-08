@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_CHACHA_H
 #define WOLF_CRYPT_CHACHA_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef HAVE_CHACHA
 

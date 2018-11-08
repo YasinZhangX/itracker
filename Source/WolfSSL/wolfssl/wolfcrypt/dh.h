@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_DH_H
 #define WOLF_CRYPT_DH_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifndef NO_DH
 

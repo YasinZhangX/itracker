@@ -23,7 +23,7 @@
 #ifndef WOLF_CRYPT_SHA3_H
 #define WOLF_CRYPT_SHA3_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef WOLFSSL_SHA3
 

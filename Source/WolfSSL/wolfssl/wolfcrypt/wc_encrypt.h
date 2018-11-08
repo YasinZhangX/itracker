@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_ENCRYPT_H
 #define WOLF_CRYPT_ENCRYPT_H
 
-#include <types.h>
+#include <wolftypes.h>
 #include <aes.h>
 #include <chacha.h>
 #include <des3.h>

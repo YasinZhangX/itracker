@@ -27,7 +27,7 @@
 #ifndef WOLF_CRYPT_AES_H
 #define WOLF_CRYPT_AES_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifndef NO_AES
 

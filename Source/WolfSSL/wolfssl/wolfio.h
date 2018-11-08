@@ -86,7 +86,7 @@
         #undef MIN
         #undef MAX
         #include <rt.h>
-        #include <sys/types.h>
+        #include <sys/wolftypes.h>
         #include <sys/socket.h>
         #include <netdb.h>
         #include <netinet/in.h>
@@ -96,7 +96,7 @@
         #undef SOCKADDR_IN
     #elif defined(WOLFSSL_PRCONNECT_PRO)
         #include <prconnect_pro/prconnect_pro.h>
-        #include <sys/types.h>
+        #include <sys/wolftypes.h>
         #include <errno.h>
         #include <unistd.h>
         #include <fcntl.h>
@@ -105,7 +105,7 @@
     #elif defined(WOLFSSL_SGX)
         #include <errno.h>
     #elif !defined(WOLFSSL_NO_SOCK)
-        #include <sys/types.h>
+        #include <sys/wolftypes.h>
         #include <errno.h>
         #ifndef EBSNET
             #include <unistd.h>

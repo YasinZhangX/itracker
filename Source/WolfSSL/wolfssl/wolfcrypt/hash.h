@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_HASH_H
 #define WOLF_CRYPT_HASH_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifndef NO_MD5
     #include <md5.h>

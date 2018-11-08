@@ -21,7 +21,7 @@
 #ifndef _WOLF_CRYPTO_DEV_H_
 #define _WOLF_CRYPTO_DEV_H_
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef __cplusplus
     extern "C" {

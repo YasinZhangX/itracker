@@ -26,7 +26,7 @@
 #ifndef WOLF_CRYPT_PKCS7_H
 #define WOLF_CRYPT_PKCS7_H
 
-#include <types.h>
+#include <wolftypes.h>
 
 #ifdef HAVE_PKCS7
 
