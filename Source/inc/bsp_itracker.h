@@ -229,6 +229,7 @@ static const char* clean_filename(const char* path)
 #endif
 
 #include "SEGGER_RTT.h"
+extern uint32_t get_stamp(void);
 #ifdef DEBUG
 #define DPRINTF(level, fmt, args...)\
 	if(LOG_LEVEL_CHECK(level)) {\

@@ -31,8 +31,11 @@
 *.bak
 
 # ignore project compile files
-ble_peripheral\itracker\pca10040\s132\arm5_no_packs\_build\
+/ble_peripheral/itracker/pca10040/s132/arm5_no_packs/_build/
 *.o
+*.d
+*.htm
+*.Hope
 *.org
 *.crf
 *.pbi

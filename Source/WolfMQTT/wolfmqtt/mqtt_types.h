@@ -43,7 +43,7 @@
     extern "C" {
 #endif
 
-#include "visibility.h"
+#include "mqtt_visibility.h"
 
 /* configuration for Harmony */
 #ifdef MICROCHIP_MPLAB_HARMONY

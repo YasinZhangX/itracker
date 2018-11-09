@@ -42,8 +42,6 @@
 #define WOLFSSL_BASE64_ENCODE
 
 /* enable TLS features */
-#define ENABLE_MQTT_TLS
-
 #define HAVE_TLS_EXTENSIONS
 #define HAVE_SUPPORTED_CURVES
 #define HAVE_ONE_TIME_AUTH
@@ -57,5 +55,6 @@
 #define NO_PSK
 #define NO_MD4
 #define NO_DES3
+#define NO_FILESYSTEM
 
 #endif /* _USER_SETTING_H_ */
