@@ -105,6 +105,8 @@
     extern "C" {
 #endif
 
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 #ifndef WOLFSSL_WOLFSSL_TYPE_DEFINED
 #define WOLFSSL_WOLFSSL_TYPE_DEFINED
 typedef struct WOLFSSL          WOLFSSL;

@@ -30,7 +30,7 @@
 
 #if !defined(NO_SHA256) && !defined(WOLFSSL_ARMASM)
 
-#include <sha256.h>
+#include <wolfsha256.h>
 #include <error-crypt.h>
 #include <cpuid.h>
 

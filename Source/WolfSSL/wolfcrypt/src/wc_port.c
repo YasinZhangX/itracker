@@ -30,7 +30,7 @@
 #include <logging.h>
 #include <wc_port.h>
 #ifdef HAVE_ECC
-    #include <ecc.h>
+    #include <wolfecc.h>
 #endif
 #ifdef WOLFSSL_ASYNC_CRYPT
     #include <async.h>

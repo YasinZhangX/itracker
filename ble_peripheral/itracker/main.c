@@ -89,6 +89,7 @@
 #include "bleMain.h"
 #include "sensorMain.h"
 #include "dfuTask.h"
+#include "MqttFreeRTOSTcp.h"
 
 #define DEAD_BEEF                       0xDEADBEEF                                  /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 extern char GSM_RSP[1600];
@@ -395,13 +396,7 @@ int main(void)
 		// dfu 
     dfu_settings_init();
 		nrf_crypto_init();
-		nrf_crypto_ecc_public_key_from_raw(&g_nrf_crypto_ecc_secp256r1_curve_info,&m_public_key,pk,sizeof(pk));
-	
-		// init gsm
-	  Gsm_Uart_Init();
-	  Gsm_Gpio_Init();
-	  Gsm_PowerUp();
-	  Gsm_Init();
+		nrf_crypto_ecc_public_key_from_raw(&g_nrf_crypto_ecc_secp256r1_curve_info, &m_public_key,pk, sizeof(pk));
 		
 		// sensors
 	  sensors_init();
@@ -410,9 +405,19 @@ int main(void)
 		timers_init();
 	  application_timers_start();
 		
+		// init gsm
+	  Gsm_Uart_Init();
+	  Gsm_Gpio_Init();
+	  Gsm_PowerUp();
+	  Gsm_Init();
+		
     // Create a FreeRTOS task for the BLE stack. The task will run advertising_start() before entering its loop.
     nrf_sdh_freertos_init(advertising_start, NULL);		
 		BaseType_t xReturned = xTaskCreate(dfu_task, "dfu", 512, NULL, 1, NULL);
+		
+		// mqtt
+		MQTT_init();
+		
 		
     // Start FreeRTOS scheduler.
     vTaskStartScheduler();

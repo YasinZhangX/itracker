@@ -1,4 +1,4 @@
-/* sha512.h
+/* wolfsha512.h
  *
  * Copyright (C) 2006-2017 wolfSSL Inc.
  *
@@ -20,7 +20,7 @@
  */
 
 /*!
-    \file wolfssl/wolfcrypt/sha512.h
+    \file wolfssl/wolfcrypt/wolfsha512.h
 */
 
 
@@ -50,7 +50,7 @@
     #if defined(WOLFSSL_SHA384)
         #define CYASSL_SHA384
     #endif
-    #include <cyassl/ctaocrypt/sha512.h>
+    #include <cyassl/ctaocrypt/wolfsha512.h>
 #endif
 
 #ifdef __cplusplus

@@ -1,4 +1,4 @@
-/* md5.h
+/* wolfmd5.h
  *
  * Copyright (C) 2006-2017 wolfSSL Inc.
  *
@@ -20,7 +20,7 @@
  */
 
 /*!
-    \file wolfssl/wolfcrypt/md5.h
+    \file wolfssl/wolfcrypt/wolfmd5.h
 */
 
 

@@ -25,6 +25,7 @@
 #endif
 
 #include <settings.h>
+#include "wolftypes.h"
 
 #ifdef WOLFSSL_NRF51
 
@@ -37,6 +38,10 @@
 #include "nrf_drv_clock.h"
 #include "nrf_ecb.h"
 
+#include "nrf_drv_rtc.h"
+
+#include "bsp_itracker.h"
+
 #ifdef SOFTDEVICE_PRESENT
     #include "ser_softdevice_handler.h"
     #include "nrf_soc.h"
@@ -46,7 +51,8 @@
 #ifndef NO_CRYPT_BENCHMARK
 static byte mRtcInitDone = 0;
 static int mRtcSec = 0;
-const nrf_drv_rtc_t rtc = NRF_DRV_RTC_INSTANCE(0); /**< Declaring an instance of nrf_drv_rtc for RTC0. */
+//const nrf_drv_rtc_t rtc = NRF_DRV_RTC_INSTANCE(0); /**< Declaring an instance of nrf_drv_rtc for RTC0. */
+extern const nrf_drv_rtc_t rtc;
 #endif /* !NO_CRYPT_BENCHMARK */
 
 /* AES */
@@ -74,7 +80,8 @@ int nrf51_random_generate(byte* output, word32 size)
     }
 
     while (remaining > 0) {
-        err_code = nrf_drv_rng_bytes_available(&available);
+        nrf_drv_rng_bytes_available(&available);
+			  err_code = NRF_SUCCESS;
         if (err_code == NRF_SUCCESS) {
             length = (remaining < available) ? remaining : available;
             if (length > 0) {
@@ -171,10 +178,10 @@ static void rtc_config(void)
     uint32_t err_code;
 
     // Start the internal LFCLK XTAL oscillator
-    err_code = nrf_drv_clock_init(NULL);
+    err_code = nrf_drv_clock_init();
     APP_ERROR_CHECK(err_code);
 
-    nrf_drv_clock_lfclk_request();
+    nrf_drv_clock_lfclk_request(NULL);
 
     // Initialize RTC instance
     err_code = nrf_drv_rtc_init(&rtc, NULL, rtc_handler);
@@ -184,7 +191,7 @@ static void rtc_config(void)
     nrf_drv_rtc_tick_enable(&rtc, false);
 
     // Set compare channel to trigger interrupt after 1 seconds
-    err_code = nrf_drv_rtc_cc_set(&rtc, 0, RTC0_CONFIG_FREQUENCY, true);
+    err_code = nrf_drv_rtc_cc_set(&rtc, 0, RTC_DEFAULT_CONFIG_FREQUENCY, true);
     APP_ERROR_CHECK(err_code);
 
     // Power on RTC instance

@@ -80,7 +80,7 @@
     #include <random.h>
     #include <des3.h>
     #include <md4.h>
-    #include <md5.h>
+    #include <wolfmd5.h>
     #include <arc4.h>
     #include <idea.h>
     #include <curve25519.h>
@@ -89,7 +89,7 @@
         #include <openssl/ocsp.h>
     #endif /* WITH_STUNNEL */
     #ifdef WOLFSSL_SHA512
-        #include <sha512.h>
+        #include <wolfsha512.h>
     #endif
     #if defined(WOLFCRYPT_HAVE_SRP) && !defined(NO_SHA256) \
         && !defined(WC_NO_RNG)
@@ -101,7 +101,6 @@
 #ifdef NO_ASN
     #include <dh.h>
 #endif
-
 
 #ifdef WOLFSSL_SESSION_EXPORT
 #ifdef WOLFSSL_DTLS

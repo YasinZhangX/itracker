@@ -34,6 +34,10 @@
 #include <random.h>
 #include <cpuid.h>
 
+#ifdef WOLFSSL_NRF51
+#include "nrf_drv_rtc.h"
+#endif
+
 
 #ifdef HAVE_FIPS
 int wc_GenerateSeed(OS_Seed* os, byte* seed, word32 sz)
@@ -87,7 +91,7 @@ int wc_RNG_GenerateByte(WC_RNG* rng, byte* b)
 #ifndef WC_NO_RNG /* if not FIPS and RNG is disabled then do not compile */
 
 #include <error-crypt.h>
-#include <sha256.h>
+#include <wolfsha256.h>
 
 #ifdef NO_INLINE
     #include <misc.h>
@@ -1561,7 +1565,8 @@ int wc_GenerateSeed(OS_Seed* os, byte* output, word32 sz)
         }
 
         while (remaining > 0) {
-            err_code = nrf_drv_rng_bytes_available(&available);
+            nrf_drv_rng_bytes_available(&available);
+						err_code = NRF_SUCCESS;
             if (err_code == NRF_SUCCESS) {
                 length = (remaining < available) ? remaining : available;
                 if (length > 0) {

@@ -34,7 +34,7 @@
 
 #else
 
-#include <md5.h>
+#include <wolfmd5.h>
 #include <error-crypt.h>
 #include <logging.h>
 

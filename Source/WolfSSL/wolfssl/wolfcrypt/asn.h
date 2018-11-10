@@ -53,9 +53,9 @@
     #include <sha.h>
 #endif
 #ifndef NO_MD5
-    #include <md5.h>
+    #include <wolfmd5.h>
 #endif
-#include <sha256.h>
+#include <wolfsha256.h>
 #include <asn_public.h>   /* public interface */
 
 

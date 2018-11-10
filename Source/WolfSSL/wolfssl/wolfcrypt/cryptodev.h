@@ -33,7 +33,7 @@
     #include <rsa.h>
 #endif
 #ifdef HAVE_ECC
-    #include <ecc.h>
+    #include <wolfecc.h>
 #endif
 
 /* Crypto Information Structure for callbacks */

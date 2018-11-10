@@ -34,7 +34,7 @@
 #include <fe_operations.h>
 #include <ge_operations.h>
 #include <random.h>
-#include <sha512.h>
+#include <wolfsha512.h>
 
 #ifdef WOLFSSL_ASYNC_CRYPT
     #include <async.h>

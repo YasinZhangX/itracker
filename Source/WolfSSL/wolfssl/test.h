@@ -26,7 +26,7 @@
         #include <rsa.h>
     #endif
     #ifdef HAVE_ECC
-        #include <ecc.h>
+        #include <wolfecc.h>
     #endif /* HAVE_ECC */
     #ifndef NO_DH
         #include <dh.h>

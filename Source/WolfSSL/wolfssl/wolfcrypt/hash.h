@@ -29,16 +29,16 @@
 #include <wolftypes.h>
 
 #ifndef NO_MD5
-    #include <md5.h>
+    #include <wolfmd5.h>
 #endif
 #ifndef NO_SHA
     #include <sha.h>
 #endif
 #if defined(WOLFSSL_SHA224) || !defined(NO_SHA256)
-    #include <sha256.h>
+    #include <wolfsha256.h>
 #endif
 #if defined(WOLFSSL_SHA384) || defined(WOLFSSL_SHA512)
-    #include <sha512.h>
+    #include <wolfsha512.h>
 #endif
 #ifdef HAVE_BLAKE2
     #include <blake2.h>
@@ -137,7 +137,7 @@ WOLFSSL_API int wc_HashFinal(wc_HashAlg* hash, enum wc_HashType type,
 
 
 #ifndef NO_MD5
-#include <md5.h>
+#include <wolfmd5.h>
 WOLFSSL_API int wc_Md5Hash(const byte* data, word32 len, byte* hash);
 #endif
 
@@ -147,7 +147,7 @@ WOLFSSL_API int wc_ShaHash(const byte*, word32, byte*);
 #endif
 
 #ifndef NO_SHA256
-#include <sha256.h>
+#include <wolfsha256.h>
 WOLFSSL_API int wc_Sha256Hash(const byte*, word32, byte*);
 
     #if defined(WOLFSSL_SHA224)
@@ -156,7 +156,7 @@ WOLFSSL_API int wc_Sha256Hash(const byte*, word32, byte*);
 #endif
 
 #ifdef WOLFSSL_SHA512
-#include <sha512.h>
+#include <wolfsha512.h>
 WOLFSSL_API int wc_Sha512Hash(const byte*, word32, byte*);
 
     #if defined(WOLFSSL_SHA384)

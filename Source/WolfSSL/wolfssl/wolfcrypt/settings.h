@@ -170,6 +170,8 @@
     #include "user_settings.h"
 #endif
 
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 
 /* make sure old RNG name is used with CTaoCrypt FIPS */
 #ifdef HAVE_FIPS

@@ -1,4 +1,4 @@
-/* ecc.h
+/* wolfecc.h
  *
  * Copyright (C) 2006-2017 wolfSSL Inc.
  *
@@ -20,7 +20,7 @@
  */
 
 /*!
-    \file wolfssl/wolfcrypt/ecc.h
+    \file wolfssl/wolfcrypt/wolfecc.h
 */
 
 

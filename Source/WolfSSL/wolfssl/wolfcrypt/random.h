@@ -95,7 +95,7 @@
     #ifdef NO_SHA256
         #error "Hash DRBG requires SHA-256."
     #endif /* NO_SHA256 */
-    #include <sha256.h>
+    #include <wolfsha256.h>
 #elif defined(HAVE_WNR)
      /* allow whitewood as direct RNG source using wc_GenerateSeed directly */
 #else

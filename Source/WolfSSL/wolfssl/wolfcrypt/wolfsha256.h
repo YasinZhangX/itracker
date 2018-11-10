@@ -1,4 +1,4 @@
-/* sha256.h
+/* wolfsha256.h
  *
  * Copyright (C) 2006-2017 wolfSSL Inc.
  *
@@ -20,7 +20,7 @@
  */
 
 /*!
-    \file wolfssl/wolfcrypt/sha256.h
+    \file wolfssl/wolfcrypt/wolfsha256.h
 */
 
 
@@ -49,7 +49,7 @@
     #endif
 
     /* for fips @wc_fips */
-    #include <cyassl/ctaocrypt/sha256.h>
+    #include <cyassl/ctaocrypt/wolfsha256.h>
 #endif
 
 #ifdef FREESCALE_LTC_SHA

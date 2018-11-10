@@ -48,7 +48,7 @@
     #include <pkcs12.h>
 #endif
 #ifndef NO_MD5
-    #include <md5.h>
+    #include <wolfmd5.h>
 #endif
 #ifndef NO_SHA
     #include <sha.h>
@@ -70,7 +70,7 @@
     #include <arc4.h>
 #endif
 #ifdef HAVE_ECC
-    #include <ecc.h>
+    #include <wolfecc.h>
 #endif
 #ifdef HAVE_ED25519
     #include <ed25519.h>
@@ -79,16 +79,16 @@
     #include <curve25519.h>
 #endif
 #ifndef NO_SHA256
-    #include <sha256.h>
+    #include <wolfsha256.h>
 #endif
 #ifdef HAVE_OCSP
     #include <ocsp.h>
 #endif
 #ifdef WOLFSSL_SHA512
-    #include <sha512.h>
+    #include <wolfsha512.h>
 #endif
 #ifdef HAVE_AESGCM
-    #include <sha512.h>
+    #include <wolfsha512.h>
 #endif
 #ifdef WOLFSSL_RIPEMD
     #include <ripemd.h>
@@ -100,7 +100,7 @@
     #include <rsa.h>
 #endif
 #ifdef HAVE_ECC
-    #include <ecc.h>
+    #include <wolfecc.h>
 #endif
 #ifndef NO_DH
     #include <dh.h>

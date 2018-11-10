@@ -33,7 +33,7 @@
 #include <integer.h>
 #include <sp_int.h>
 
-#include <ecc.h>
+#include <wolfecc.h>
 
 #if defined(_MSC_VER)
     #define SP_NOINLINE __declspec(noinline)

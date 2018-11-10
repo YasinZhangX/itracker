@@ -103,7 +103,7 @@ ECC Curve Sizes:
 	#endif
 #endif
 
-#include <ecc.h>
+#include <wolfecc.h>
 #include <asn.h>
 #include <error-crypt.h>
 #include <logging.h>
@@ -2561,7 +2561,7 @@ int wc_ecc_get_curve_id(int curve_idx)
 
 /* Returns the curve size that corresponds to a given ecc_curve_id identifier
  *
- * id      curve id, from ecc_curve_id enum in ecc.h
+ * id      curve id, from ecc_curve_id enum in wolfecc.h
  * return  curve size, from ecc_sets[] on success, negative on error
  */
 int wc_ecc_get_curve_size_from_id(int curve_id)

@@ -27,7 +27,7 @@
 #include <settings.h>
 
 #ifdef WOLFSSL_SHA512
-#include <sha512.h>
+#include <wolfsha512.h>
 #include <error-crypt.h>
 #include <cpuid.h>
 

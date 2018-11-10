@@ -3,6 +3,7 @@
 #include "mqtt_client.h"
 #include "mqttnet.h" /* example FreeRTOS TCP network callbacks */
 #include "ssl.h"
+#include "cert.h"
 
 /* Standard includes. */
 #include <stdio.h>
@@ -18,6 +19,8 @@
 #include "FreeRTOS_DNS.h"
 #include "FreeRTOS_Sockets.h"
 #endif
+
+#include "MqttFreeRTOSTcp.h"
 
 
 /* Configuration */
@@ -134,6 +137,7 @@ static int mqtt_tls_cb(MqttClient* client)
          *                              clientCertFile, WOLFSSL_FILETYPE_PEM);*/
 
     #else
+				long caCertBufLen = XSTRLEN((const char *)caCertBuf);
         /* Load CA certificate buffer */
         rc = wolfSSL_CTX_load_verify_buffer(client->tls.ctx, caCertBuf,
                                           caCertBufLen, WOLFSSL_FILETYPE_PEM);
@@ -180,7 +184,7 @@ int mqtt_tls_cb(MqttClient* client)
 #endif /* ENABLE_MQTT_TLS */
 
 
-void* vSecureMQTTClientTask( void *pvParameters )
+void vSecureMQTTClientTask( void *pvParameters )
 {
     int rc;
     int state = -1;
@@ -190,7 +194,7 @@ void* vSecureMQTTClientTask( void *pvParameters )
     MqttPublish publish;
     char PubMsg[16];
 
-	(void)pvParameters;
+	  (void)pvParameters;
 
     PRINTF("Starting MQTT");
 
@@ -201,7 +205,7 @@ void* vSecureMQTTClientTask( void *pvParameters )
         PRINTF("MQTT Net Init: %s (%d)",
             MqttClient_ReturnCodeToString(rc), rc);
         if (rc != MQTT_CODE_SUCCESS) {
-			break;
+					goto exit;
         }
 
         rc = MqttClient_Init(&gMQTTC, &gMQTTN,
@@ -211,8 +215,9 @@ void* vSecureMQTTClientTask( void *pvParameters )
                 DEFAULT_CMD_TIMEOUT_MS);
         PRINTF("MQTT Init: %s (%d)",
             MqttClient_ReturnCodeToString(rc), rc);
-		if (rc != MQTT_CODE_SUCCESS)
-			break;
+				if (rc != MQTT_CODE_SUCCESS) {
+					goto exit;
+				}
 
         state = 0;
 
@@ -331,8 +336,26 @@ void* vSecureMQTTClientTask( void *pvParameters )
             MqttClient_ReturnCodeToString(rc), rc);
 
         cntr += 100000;
+exit:
         vTaskDelay(5000);
     } /* for loop */
+}
 
-    return (void*)rc;
+#define MQTT_TASK_STACK_SIZE 1024
+
+void MQTT_init(void)
+{
+	static BaseType_t xTasksAlreadyCreated = pdFALSE;
+	/* Create the tasks that use the IP stack if they have not already been
+		created. */
+		if( xTasksAlreadyCreated == pdFALSE )
+		{
+			/* Create the TCP server task.  This will itself create the client task
+			once it has completed the wolfSSL initialisation. */
+			xTaskCreate( vSecureMQTTClientTask, "MQTTClient",
+				MQTT_TASK_STACK_SIZE, NULL,
+				tskIDLE_PRIORITY+1, NULL );
+
+			xTasksAlreadyCreated = pdTRUE;
+		}
 }

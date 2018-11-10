@@ -82,15 +82,15 @@ ASN Options:
 #endif
 
 #if defined(WOLFSSL_SHA512) || defined(WOLFSSL_SHA384)
-    #include <sha512.h>
+    #include <wolfsha512.h>
 #endif
 
 #ifndef NO_SHA256
-    #include <sha256.h>
+    #include <wolfsha256.h>
 #endif
 
 #ifdef HAVE_ECC
-    #include <ecc.h>
+    #include <wolfecc.h>
 #endif
 
 #ifdef HAVE_ED25519

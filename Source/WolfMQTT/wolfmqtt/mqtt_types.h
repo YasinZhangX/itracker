@@ -44,6 +44,7 @@
 #endif
 
 #include "mqtt_visibility.h"
+#include "bsp_itracker.h"
 
 /* configuration for Harmony */
 #ifdef MICROCHIP_MPLAB_HARMONY
@@ -183,7 +184,7 @@ enum MqttPacketResponseCodes {
         #define LINE_END    "\n"
     #endif
     #ifndef PRINTF
-        #define PRINTF(_f_, ...)  printf( (_f_ LINE_END), ##__VA_ARGS__)
+        #define PRINTF(_f_, ...)  DPRINTF(LOG_INFO, (_f_ LINE_END), ##__VA_ARGS__)
     #endif
 
     #ifndef WOLFMQTT_NO_STDIO

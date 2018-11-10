@@ -32,7 +32,7 @@
 #include <asn.h>
 #endif
 #ifdef HAVE_ECC
-#include <ecc.h>
+#include <wolfecc.h>
 #endif
 #ifndef NO_RSA
 #include <rsa.h>
