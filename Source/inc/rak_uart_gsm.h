@@ -20,8 +20,8 @@
 
 #define  GSM_AUTO_CMD_NUM                     (10)
 
-#define  GSM_TCP_STR        									"\"TCP\""
-#define  GSM_UDP_STR        									"\"UDP\""
+#define  GSM_TCP_STR        									"TCP"
+#define  GSM_UDP_STR        									"UDP"
 #define  GSM_TCP_TYPE        									(0)
 #define  GSM_UDP_TYPE        									(1)
 
@@ -89,6 +89,8 @@
 
 #define TRANSFE_EVENT_POSTDATA  (0x01)
 
+#define SOCKET_DEFAULT_LOCAL_PORT  		0
+
 typedef enum G_TYPE
 {
   GSM_TYPE_CHAR,
@@ -119,7 +121,8 @@ int Gsm_SetSdEchoCmd(void);
 int Gsm_GetRssiCmd(void);
 
 // socket
-int Gsm_OpenSocketCmd(uint8_t SocketType,char *ip,uint16_t DestPort);
+int Gsm_OpenSocketCmd(uint8_t contextID, uint8_t connectID, uint8_t ServiceType, 
+							const char *host, uint16_t DestPort, uint16_t localPort, uint8_t accessMode);
 int Gsm_CloseSocketCmd(void);
 
 // DNS

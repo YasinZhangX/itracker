@@ -29,6 +29,8 @@
 #include "mqttexample.h"
 #include "settings.h"
 
+#include "rak_uart_gsm.h"
+
 /* FreeRTOS TCP */
 #ifdef FREERTOS_TCP
     #include "FreeRTOS.h"
@@ -49,20 +51,14 @@
 
 		/* For this limited implementation, only two members are required in the
 		Berkeley style sockaddr structure. */
-		struct freertos_sockaddr
+		struct sockaddr
 		{
-			/* _HT_ On 32- and 64-bit architectures, the addition of the two uint8_t
-			fields doesn't make the structure bigger, due to alignment.
-			The fields are inserted as a preparation for IPv6. */
-
-			/* sin_len and sin_family not used in the IPv4-only release. */
-			uint8_t sin_len;		/* length of this structure. */
-			uint8_t sin_family;		/* FREERTOS_AF_INET. */
-			uint16_t sin_port;
-			uint32_t sin_addr;
+			const char* hostname;
+			uint16_t remote_port;
+			uint16_t local_port;
 		};
 
-		#define SOCK_ADDR_IN                 struct freertos_sockaddr
+		#define SOCK_ADDR_IN                 struct sockaddr
 
 /* Windows */
 #elif defined(USE_WINDOWS_API)
@@ -156,7 +152,8 @@
     #define SOCK_ADDRINFO   struct addrinfo
 #endif
 
-#define DEFAULT_MQTT_SOCKET 1
+#define DEFAULT_MQTT_SOCKET 			1
+#define DEFAULT_MQTT_CONNECTID 		1
 
 
 /* Include the example code */
@@ -713,19 +710,19 @@ static int NetConnect(void *context, const char* host, word16 port,
 
     switch (sock->stat) {
     case SOCK_BEGIN:
-        hostIp = FreeRTOS_gethostbyname_a(host, NULL, 0, 0);
-        if (hostIp == 0)
-            break;
 
-        sock->addr.sin_family = FREERTOS_AF_INET;
-        sock->addr.sin_port = FreeRTOS_htons(port);
-        sock->addr.sin_addr = hostIp;
+				sock->addr.hostname = host;
+        sock->addr.remote_port = port;
+				sock->addr.local_port = SOCKET_DEFAULT_LOCAL_PORT;     // default local_port is 0
+        
 
         /* Create socket */
         sock->fd = DEFAULT_MQTT_SOCKET;
 
-        if (sock->fd == FREERTOS_INVALID_SOCKET)
-            break;
+        if (sock->fd == 0) {
+						DPRINTF(LOG_ERROR, "sock->fd invalid.\r\n");
+						break;
+				}
 
         (void)timeout_ms;
 
@@ -734,8 +731,8 @@ static int NetConnect(void *context, const char* host, word16 port,
         FALL_THROUGH;
     case SOCK_CONN:
         /* Start connect */
-        rc = FreeRTOS_connect(sock->fd, (SOCK_ADDR_IN*)&sock->addr,
-                              sizeof(sock->addr));
+        //rc = FreeRTOS_connect(sock->fd, (SOCK_ADDR_IN*)&sock->addr,
+        //                      sizeof(sock->addr));
         break;
     }
 

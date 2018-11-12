@@ -105,7 +105,7 @@ TimerHandle_t m_demo_timer;
 GSM_RECIEVE_TYPE g_type = GSM_TYPE_CHAR;
 
 /*----------------------------iTracker application-------------------------------*/
-#define GSM_TEST
+#define GSM_ENABLED
 uint8_t gsm_started = 0;
 
 /****************************************************
@@ -249,7 +249,7 @@ static void sleep_mode_enter(void)
 
 /*************************** GSM ********************************/
 
-#ifdef GSM_TEST
+#ifdef GSM_ENABLED
 
 #define  DEST_DOMAIN              "track.vizisens.com"
 #define  DEST_PORT                3003//(80)  //
@@ -293,77 +293,6 @@ int Gsm_Init()
 		Gsm_nb_iot_config();
 
 	return 0;
-}
-
-
-				
-int Gsm_HttpPost(uint8_t* data, uint16_t len)
-{ 
-    int        ret = -1;
-    uint16_t   httpLen = 0;
-    uint8_t*   http_buf = NULL; 
-
-    ret = Gsm_OpenSocketCmd(GSM_TCP_TYPE, DEST_DOMAIN, DEST_PORT);
-    if(ret != 0)
-    {
-			  Gsm_CloseSocketCmd(); 
-        return -1; 
-    }
-    
-    http_buf = malloc(256);
-    if(http_buf == NULL)
-    {
-       DPRINTF(LOG_INFO, "\r\n-----http_buf malloc 256 fail!!!-----\r\n");
-       return -1;
-    }
-    
-    httpLen =sprintf((char *)http_buf,
-                     "POST /%s HTTP/1.1\r\n"
-                     "Host: %s\r\n"
-                     "Content-Length: %d\r\n"
-                     "Content-Type: application/json\r\n\r\n",
-                     DEST_URL, DEST_DOMAIN, len);
-    
-    
-    ret =Gsm_SendDataCmd((char *)http_buf,httpLen); 
-    DPRINTF(LOG_DEBUG, "%s", http_buf);
-    ret =Gsm_SendDataCmd((char *)data,len); 
-    DPRINTF(LOG_DEBUG, "%s", data);
-    if (ret < 0) {
-      DPRINTF(LOG_ERROR, "Gsm_HttpPost send fail...\r\n");
-      free(http_buf);
-      Gsm_CloseSocketCmd();
-      return ret;   
-    }
-    
-    free(http_buf);
-    return ret;
-}
-
-
-int Gsm_HttpRsp(void)
-{
-    uint16_t   read_len; 
-    char*      http_RecvBuf =NULL;
-    int        ret = -1;
-        
-    http_RecvBuf = malloc(1024);
-    if(http_RecvBuf == NULL)
-    {
-       DPRINTF(LOG_INFO, "\r\n-----http_RecvBuf malloc 1024 fail!!!-----\r\n");
-       return -1;
-    }
-     
-		read_len = Gsm_RecvData(http_RecvBuf, 5000);//5 s 
-		//DPRINTF(LOG_DEBUG, "%s", http_RecvBuf);
-		if(read_len > 0) 
-		{
-				DPRINTF(LOG_DEBUG, "Gsm_HttpRsp response len=%d\r\n", read_len);
-		}
-    free(http_RecvBuf);
-    Gsm_CloseSocketCmd(); 
-	
-    return ret;
 }
 #endif
 

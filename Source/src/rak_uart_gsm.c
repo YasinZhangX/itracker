@@ -504,7 +504,7 @@ void Gsm_nb_iot_config(void)
 #if 1
     Gsm_print("AT+COPS=?");
     memset(GSM_RSP,0,GSM_GENER_CMD_LEN);
-    retavl=Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40,true);
+    retavl=Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40, true);
 		delay_ms(1000);
 		
     Gsm_print("AT+COPS=1,0,\"CHINA MOBILE\",0");
@@ -514,32 +514,32 @@ void Gsm_nb_iot_config(void)
 		
     Gsm_print("AT+QNWINFO");
     memset(GSM_RSP,0,GSM_GENER_CMD_LEN);
-    retavl=Gsm_WaitRspOK((char *)GSM_RSP,GSM_GENER_CMD_TIMEOUT*4,true);
+    retavl=Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*4, true);
     delay_ms(1000);
 		
 		Gsm_print("AT+QICSGP=1,1,\"CMCC\","","",1");
     memset(GSM_RSP,0,GSM_GENER_CMD_LEN);
-    retavl=Gsm_WaitRspOK((char *)GSM_RSP,GSM_GENER_CMD_TIMEOUT*40,true);
+    retavl=Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40, true);
 		delay_ms(1000);
 		
 		Gsm_print("AT+QIACT=1");
     memset(GSM_RSP,0,GSM_GENER_CMD_LEN);
-    retavl=Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40,true);
+    retavl=Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40, true);
 		delay_ms(1000);
 		
 		Gsm_print("AT+QIACT?");
     memset(GSM_RSP,0,GSM_GENER_CMD_LEN);
-    retavl=Gsm_WaitRspOK((char *)GSM_RSP,GSM_GENER_CMD_TIMEOUT*40,true);
+    retavl=Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40, true);
 		delay_ms(1000);
 		
     Gsm_print("AT+QIOPEN=1,1,\"TCP LISTENER\",\"127.0.0.1\",0,2020,0");
     memset(GSM_RSP,0,GSM_GENER_CMD_LEN);
-    retavl=Gsm_WaitRspOK((char *)GSM_RSP,GSM_GENER_CMD_TIMEOUT * 40,true);
+    retavl=Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40, true);
     delay_ms(1000);
 		
     Gsm_print("AT+QISTATE");
     memset(GSM_RSP,0,GSM_GENER_CMD_LEN);
-    retavl=Gsm_WaitRspOK((char *)GSM_RSP,GSM_GENER_CMD_TIMEOUT * 40,true);
+    retavl=Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40, true);
 		DPRINTF(LOG_DEBUG,"AT+QISTATE GSM_RSP = %s\r\n",GSM_RSP);
 		delay_ms(1000);
 #endif
@@ -841,7 +841,7 @@ int Gsm_CheckNetworkCmd(void)
         //DPRINTF(LOG_INFO, "%s", cmd);
 				GSM_UART_TxBuf((uint8_t *)cmd,cmd_len);
         memset(cmd,0,GSM_GENER_CMD_LEN);
-        retavl=Gsm_WaitRspOK(cmd,GSM_GENER_CMD_TIMEOUT,true);
+        retavl=Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT, true);
         
         if(retavl>=0)
         {
@@ -1094,31 +1094,41 @@ int Gsm_WaitRspTcpConnt(char *rsp_value,uint16_t timeout_ms)
 }
 
 
-//Open socket 
-int Gsm_OpenSocketCmd(uint8_t SocketType,char *ip,uint16_t DestPort)
+
+// Get socket state
+int Gsm_GetSocketStateCmd(void) {
+		int retavl = -1;
+		Gsm_print("AT+QISTATE");
+    memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+    retavl = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40, true);
+		DPRINTF(LOG_INFO,"AT+QISTATE GSM_RSP = %s\r\n",GSM_RSP);
+}
+
+// Open socket 
+int Gsm_OpenSocketCmd(uint8_t contextID, uint8_t connectID, uint8_t ServiceType, 
+											const char *host, uint16_t DestPort, uint16_t localPort, uint8_t accessMode)
 {
-    int retavl=-1;
-    //
+    int retavl = -1;
     char *cmd;
+		int retry_count;
       
-    cmd=(char *)malloc(GSM_GENER_CMD_LEN);
-    if(cmd)
+    cmd = (char *)malloc(GSM_GENER_CMD_LEN);
+    if ( cmd )
     {
         uint8_t cmd_len;
-        memset(cmd,0,GSM_GENER_CMD_LEN);
-        cmd_len=sprintf(cmd,"%s%s,\"%s\",\"%d\"\r\n",GSM_OPENSOCKET_CMD_STR,
-                        (SocketType==GSM_TCP_TYPE)?GSM_TCP_STR:GSM_UDP_STR,
-                         ip,DestPort);
-        GSM_UART_TxBuf((uint8_t *)cmd,cmd_len);
-        
-        memset(cmd,0,GSM_GENER_CMD_LEN);
-        retavl=Gsm_WaitRspOK(NULL,GSM_GENER_CMD_TIMEOUT,true);       
-       
-        if(retavl>=0)
-        {   
-            //recv rsp msg...
-            retavl=Gsm_WaitRspTcpConnt(NULL,GSM_OPENSOCKET_CMD_TIMEOUT);           
-        }
+        memset(cmd, 0, GSM_GENER_CMD_LEN);
+        cmd_len = sprintf(cmd,"%s%d,%d,\"%s\",\"%s\",%d,%d,%d\r\n",GSM_OPENSOCKET_CMD_STR, contextID, connectID,
+                         (ServiceType == GSM_TCP_TYPE) ? GSM_TCP_STR : GSM_UDP_STR,
+                         host, DestPort, localPort, accessMode);
+ 		
+				retry_count = 3;
+				do
+				{
+					retry_count--;
+					GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+					memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+					retavl = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT*40, true);
+				} while (retry_count && retavl);
         
         free(cmd);
     }
