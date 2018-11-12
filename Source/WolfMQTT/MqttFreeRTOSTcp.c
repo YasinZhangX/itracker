@@ -346,7 +346,7 @@ exit:
 void MQTT_init(void)
 {
 	static BaseType_t xTasksAlreadyCreated = pdFALSE;
-	/* Create the tasks that use the IP stack if they have not already been
+		/* Create the tasks that use the IP stack if they have not already been
 		created. */
 		if( xTasksAlreadyCreated == pdFALSE )
 		{

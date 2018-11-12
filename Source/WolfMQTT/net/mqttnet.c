@@ -156,6 +156,8 @@
     #define SOCK_ADDRINFO   struct addrinfo
 #endif
 
+#define DEFAULT_MQTT_SOCKET 1
+
 
 /* Include the example code */
 #include "mqttexample.h"
@@ -705,7 +707,39 @@ static int NetDisconnect(void *context)
 static int NetConnect(void *context, const char* host, word16 port,
     int timeout_ms)
 {
-	return 0;
+	SocketContext *sock = (SocketContext*)context;
+    uint32_t hostIp = 0;
+    int rc = -1;
+
+    switch (sock->stat) {
+    case SOCK_BEGIN:
+        hostIp = FreeRTOS_gethostbyname_a(host, NULL, 0, 0);
+        if (hostIp == 0)
+            break;
+
+        sock->addr.sin_family = FREERTOS_AF_INET;
+        sock->addr.sin_port = FreeRTOS_htons(port);
+        sock->addr.sin_addr = hostIp;
+
+        /* Create socket */
+        sock->fd = DEFAULT_MQTT_SOCKET;
+
+        if (sock->fd == FREERTOS_INVALID_SOCKET)
+            break;
+
+        (void)timeout_ms;
+
+        sock->stat = SOCK_CONN;
+
+        FALL_THROUGH;
+    case SOCK_CONN:
+        /* Start connect */
+        rc = FreeRTOS_connect(sock->fd, (SOCK_ADDR_IN*)&sock->addr,
+                              sizeof(sock->addr));
+        break;
+    }
+
+    return rc;
 }
 
 static int NetRead(void *context, byte* buf, int buf_len, int timeout_ms)

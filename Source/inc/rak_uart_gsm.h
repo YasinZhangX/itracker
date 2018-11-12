@@ -54,11 +54,10 @@
 //#if defined (M35)
 #define  GSM_CHECKNETWORK_CMD_STR       "AT+CREG?"
 //#elif defined (BC95)
-//#define  GSM_CHECKNETWORK_CMD_STR       "AT+CEREG?"
+//#define  GSM_CHECKNETWORK_CMD_STR     "AT+CEREG?"
 //#endif
 #define  GSM_CHECKGPRS_CMD_STR          "AT+CGATT?"
 #define  GSM_SETCONTEXT_CMD_STR         "AT+QIFGCNT=0"
-#define  GSM_SETDNSMODE_CMD_STR         "AT+QIDNSIP=1"
 #define  GSM_SETSENDECHO_CMD_STR        "AT+QISDE=0"
 #define  GSM_ATS_ENABLE_CMD_STR         "ATS0=1"
 
@@ -68,12 +67,14 @@
 #define  GSM_SENDDATA_CMD_STR           "AT+QISEND="
 #define  GSM_CLOSESOCKET_CMD_STR        "AT+QICLOSE"
 
-#define  GSM_DNS_GETIP_CMD_STR         "AT+QIDNSGIP="
-#define  GSM_HTTP_SETURL_CMD_STR         "AT+QHTTPURL="
-#define  GSM_HTTP_GET_CMD_STR         "AT+QHTTPGET="
-#define  GSM_HTTP_READ_CMD_STR         "AT+QHTTPREAD="
-#define  GSM_HTTP_POST_CMD_STR         "AT+QHTTPPOST="
-#define  GSM_HTTP_DL_CMD_STR         "AT+QHTTPDL="
+#define  GSM_QUERY_DNSSERVER_CMD_STR    "AT+QIDNSCFG="
+#define  GSM_DNS_GETIP_CMD_STR          "AT+QIDNSGIP="
+
+#define  GSM_HTTP_SETURL_CMD_STR        "AT+QHTTPURL="
+#define  GSM_HTTP_GET_CMD_STR         	"AT+QHTTPGET="
+#define  GSM_HTTP_READ_CMD_STR         	"AT+QHTTPREAD="
+#define  GSM_HTTP_POST_CMD_STR         	"AT+QHTTPPOST="
+#define  GSM_HTTP_DL_CMD_STR         		"AT+QHTTPDL="
 
 #if defined (BC95)
 #define  GSM_CHECKNBAND_CMD_STR           "AT+NBAND?"
@@ -106,24 +107,41 @@ void Gsm_CheckAutoBaud(void);
 int Gsm_AutoBaud(void);
 int Gsm_FixBaudCmd(int baud);
 int Gsm_SetEchoCmd(int flag);
+
 int Gsm_CheckSimCmd(void);
 int Gsm_CheckNetworkCmd(void);
 int Gsm_CheckGPRSCmd(void);
+
 int Gsm_SetContextCmd(void);
-int Gsm_SetDnsModeCmd(void);
 int Gsm_SetAtsEnCmd(void);
 int Gsm_SetSdEchoCmd(void);
-int Gsm_OpenSocketCmd(uint8_t SocketType,char *ip,uint16_t DestPort);
-int Gsm_SendDataCmd(char *data,uint16_t len);
-int Gsm_CloseSocketCmd(void);
-void Gsm_RecvData_test(char *recv_buf,uint16_t timeout);
-uint16_t Gsm_RecvData(char *recv_buf,uint16_t timeout);
-void SetGsmEvent(uint32_t event);
+
 int Gsm_GetRssiCmd(void);
-void Gsm_nb_iot_config(void);
+
+// socket
+int Gsm_OpenSocketCmd(uint8_t SocketType,char *ip,uint16_t DestPort);
+int Gsm_CloseSocketCmd(void);
+
+// DNS
+int Gsm_SetDnsModeCmd(uint8_t contextID);
+
+// Tx
+int Gsm_SendDataCmd(char *data,uint16_t len);
+// Rx
+uint16_t Gsm_RecvData(char *recv_buf,uint16_t timeout);
+
+// gsm test
 void gsm_send_test(void);
-void gps_data_get();
+void Gsm_RecvData_test(char *recv_buf,uint16_t timeout);
+
+// nbiot config
+void Gsm_nb_iot_config(void);
+
+// gps
 void gps_config();
+void gps_data_get();
+
+
 #if defined (BC95)
 int Gsm_CheckNbandCmd(int *band);
 int Gsm_CheckConStatusCmd(void);
