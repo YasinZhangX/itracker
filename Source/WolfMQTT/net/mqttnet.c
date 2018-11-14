@@ -121,26 +121,23 @@
 #endif
 
 /* Setup defaults */
-#ifndef SOCKET_T
-    #define SOCKET_T        int
+#ifndef CONTEXT_T
+    #define CONTEXT_T        int
 #endif
-#ifndef SOERROR_T
-    #define SOERROR_T       int
+#ifndef CONNECT_T
+    #define CONNECT_T       int
 #endif
-#ifndef SELECT_FD
-    #define SELECT_FD(fd)   ((fd) + 1)
-#endif
-#ifndef SOCKET_INVALID
-    #define SOCKET_INVALID  ((SOCKET_T)0)
+#ifndef CONTEXT_INVALID
+    #define CONTEXT_INVALID  ((CONTEXT_T)0)
 #endif
 #ifndef SOCK_CONNECT
-    #define SOCK_CONNECT    connect
+    #define SOCK_CONNECT    Gsm_OpenSocketCmd
 #endif
 #ifndef SOCK_SEND
-    #define SOCK_SEND(s,b,l,f) send((s), (b), (size_t)(l), (f))
+    #define SOCK_SEND(s,b,l,t) Gsm_SendDataCmd((s), (b), (uint16_t)(l), (uint32_t)t)
 #endif
 #ifndef SOCK_RECV
-    #define SOCK_RECV(s,b,l,f) recv((s), (b), (size_t)(l), (f))
+    #define SOCK_RECV(s,b,l,t) Gsm_RecvData((s), (b), (uint16_t)(l), (uint32_t)(t))
 #endif
 #ifndef SOCK_CLOSE
     #define SOCK_CLOSE      close
@@ -152,8 +149,8 @@
     #define SOCK_ADDRINFO   struct addrinfo
 #endif
 
-#define DEFAULT_MQTT_SOCKET 			1
-#define DEFAULT_MQTT_CONNECTID 		1
+#define DEFAULT_MQTT_CONTEXT 			1
+#define DEFAULT_MQTT_CONNECTID 		0
 
 
 /* Include the example code */
@@ -166,7 +163,8 @@ typedef enum {
 } NB_Stat;
 
 typedef struct _SocketContext {
-    SOCKET_T fd;
+    CONTEXT_T contextID;
+	  CONNECT_T connectID;
     NB_Stat stat;
     int bytes;
     SOCK_ADDR_IN addr;
@@ -733,6 +731,8 @@ static int NetConnect(void *context, const char* host, word16 port,
         /* Start connect */
         //rc = FreeRTOS_connect(sock->fd, (SOCK_ADDR_IN*)&sock->addr,
         //                      sizeof(sock->addr));
+		    rc = Gsm_OpenSocketCmd(DEFAULT_MQTT_CONTEXTID, uint8_t connectID, uint8_t ServiceType, 
+							const char *host, uint16_t DestPort, uint16_t localPort, uint8_t accessMode);
         break;
     }
 

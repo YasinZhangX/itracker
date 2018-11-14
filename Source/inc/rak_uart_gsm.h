@@ -129,9 +129,9 @@ int Gsm_CloseSocketCmd(void);
 int Gsm_SetDnsModeCmd(uint8_t contextID);
 
 // Tx
-int Gsm_SendDataCmd(char *data,uint16_t len);
+int Gsm_SendDataCmd(uint8_t connectID, char *data, uint16_t len, uint32_t timeout);
 // Rx
-uint16_t Gsm_RecvData(char *recv_buf,uint16_t timeout);
+uint16_t Gsm_RecvData(uint8_t connectID, char *recv_buf, uint16_t len, uint32_t timeout);
 
 // gsm test
 void gsm_send_test(void);

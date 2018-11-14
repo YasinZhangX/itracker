@@ -1159,7 +1159,7 @@ int Gsm_CloseSocketCmd(void)
 
 
 // send data 
-int Gsm_SendDataCmd(char *data, uint16_t len)
+int Gsm_SendDataCmd(uint8_t connectID, char *data, uint16_t len, uint32_t timeout)
 {
     int retavl = -1;
     //
@@ -1169,9 +1169,9 @@ int Gsm_SendDataCmd(char *data, uint16_t len)
     if ( cmd )
     {
         uint8_t cmd_len;
-        memset(cmd,0,GSM_GENER_CMD_LEN);
-        cmd_len=sprintf(cmd,"%s0,%d\r\n",GSM_SENDDATA_CMD_STR,len);
-        GSM_UART_TxBuf((uint8_t *)cmd,cmd_len);
+        memset(cmd, 0, GSM_GENER_CMD_LEN);
+        cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_SENDDATA_CMD_STR, connectID, len);
+        GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 		    DPRINTF(LOG_INFO, "cmd=%s\ncmd_len=%d", cmd, cmd_len);
 				DPRINTF(LOG_INFO, "data=%s\n", data);
         
@@ -1179,9 +1179,9 @@ int Gsm_SendDataCmd(char *data, uint16_t len)
         if(retavl == 0)
         {
 						DPRINTF(LOG_INFO, "GSM_SEND_DATA\n");
-            GSM_UART_TxBuf((uint8_t *)data,len);
-						memset(cmd,0,GSM_GENER_CMD_LEN);
-            retavl = Gsm_WaitRspOK(cmd,GSM_GENER_CMD_TIMEOUT,true); 
+            GSM_UART_TxBuf((uint8_t *)data, len);
+						memset(cmd, 0, GSM_GENER_CMD_LEN);
+            retavl = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT, true); 
             if(retavl == 0)
             {
                 retavl = len;
@@ -1204,14 +1204,15 @@ int Gsm_SendDataCmd(char *data, uint16_t len)
 }
 
 // Receive Data
-uint16_t Gsm_RecvData(char *recv_buf,uint16_t block_ms)
+uint16_t Gsm_RecvData(uint8_t connectID, char *recv_buf, uint16_t len, uint32_t timeout)
 {
       int         c=0, i=0;      
       //OS_ERR      os_err; 
       //uint32_t    LocalTime=0, StartTime=0;
             
-      int time_left = block_ms;
+      uint32_t time_left = timeout;
       
+			DPRINTF(LOG_INFO, "Rx:");
       do
       {
           c= Gsm_RxByte();
@@ -1226,6 +1227,7 @@ uint16_t Gsm_RecvData(char *recv_buf,uint16_t block_ms)
           recv_buf[i++] =(char)c;
           
       } while (time_left > 0);
+			DPRINTF(LOG_INFO, "\r\n");
       
       return i;
 }
