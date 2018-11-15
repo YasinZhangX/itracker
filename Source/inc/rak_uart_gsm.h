@@ -31,6 +31,7 @@
 
 #define  GSM_SOCKET_CONNECT_ERR        				(-2)
 
+#define  GSM_RECVDATA_RSP_STR           "+QIRD:"
 #define  GSM_OPENSOCKET_OK_STR          "CONNECT OK\r\n"
 #define  GSM_OPENSOCKET_FAIL_STR        "CONNECT FAIL\r\n"
 #define  FIX_BAUD_URC            				"RDY\r\n"
@@ -70,6 +71,7 @@
 #define  GSM_RSSI_CMD_STR        				"AT+CSQ"
 #define  GSM_SENDDATA_CMD_STR           "AT+QISEND="
 #define  GSM_CLOSESOCKET_CMD_STR        "AT+QICLOSE"
+#define  GSM_READDATA_CMD_STR           "AT+QIRD="
 
 #define  GSM_QUERY_DNSSERVER_CMD_STR    "AT+QIDNSCFG="
 #define  GSM_DNS_GETIP_CMD_STR          "AT+QIDNSGIP="
@@ -156,4 +158,3 @@ int Gsm_CheckConStatusCmd(void);
 void ToPostTransfeData(char *buf,int len);
 
 #endif
-

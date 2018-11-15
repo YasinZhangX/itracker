@@ -193,10 +193,10 @@ int Gsm_WaitRspOK(char *rsp_value, uint32_t timeout_ms, uint8_t is_rf)
 	return retavl;
 }
 
-int Gsm_WaitSendAck(uint16_t timeout_ms)
+int Gsm_WaitSendAck(uint32_t timeout_ms)
 {
 	int retavl = -1;
-	uint16_t time_count = timeout_ms;
+	uint32_t time_count = timeout_ms;
 
 	do {
 		int c;
@@ -217,11 +217,11 @@ int Gsm_WaitSendAck(uint16_t timeout_ms)
 	return retavl;
 }
 
-int Gsm_WaitNewLine(char *rsp_value, uint16_t timeout_ms)
+int Gsm_WaitNewLine(char *rsp_value, uint32_t timeout_ms)
 {
 	int retavl = -1;
 	int i = 0;
-	uint16_t time_count = timeout_ms;
+	uint32_t time_count = timeout_ms;
 	char new_line[3] = { 0 };
 	char str_tmp[GSM_GENER_CMD_LEN];
 	char *cmp_p = NULL;
@@ -415,12 +415,13 @@ int Gsm_CloseSocketCmd(void)
 
 
 // send data
-int Gsm_SendDataCmd(void* context, char *data, uint16_t len, uint32_t timeout)
+int Gsm_SendDataCmd(void *context, char *data, uint16_t len, uint32_t timeout)
 {
 	int retavl = -1;
 	char *cmd;
 
 	SocketContext *sock = (SocketContext *)context;
+
 	connectID = sock->connectID;
 
 	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
@@ -451,26 +452,90 @@ int Gsm_SendDataCmd(void* context, char *data, uint16_t len, uint32_t timeout)
 	return retavl;
 }
 
-// Receive Data
-uint16_t Gsm_RecvData(uint8_t connectID, char *recv_buf, uint16_t len, uint32_t timeout)
+int Gsm_WaitRecvPrompt(uint32_t timeout)
 {
-	int c = 0, i = 0;
+	int retavl = -1;
+	uint8_t wait_len;
+	uint32_t time_count = timeout_ms;
 
-	uint32_t time_left = timeout;
+	memset(resp, 0, 1600);
+	wait_len = strlen(GSM_RECVDATA_RSP_STR);
 
-	DPRINTF(LOG_INFO, "Rx:");
 	do {
+		int c;
 		c = Gsm_RxByte();
 		if (c < 0) {
-			time_left--;
+			time_count--;
 			delay_ms(1);
 			continue;
 		}
 		//R485_UART_TxBuf((uint8_t *)&c,1);
 		SEGGER_RTT_printf(0, "%c", c);
-		recv_buf[i++] = (char)c;
-	} while (time_left > 0);
-	DPRINTF(LOG_INFO, "\r\n");
+		resp[i++] = (char)c;
+
+		if (i >= wait_len) {
+			cmp_p = strstr(resp, GSM_RECVDATA_RSP_STR);
+			if (cmp_p) {
+				retavl = 0;
+				break;
+			}
+		}
+	} while (time_count > 0);
+
+	return retavl;
+}
+
+// Read Recv Data
+int Gsm_ReadRecvBufferCmd(uint8_t connectID, uint16_t len, uint32_t timeout)
+{
+	int retavl = -1;
+	char *cmd;
+
+	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
+	if (cmd) {
+		uint8_t cmd_len;
+		memset(cmd, 0, GSM_GENER_CMD_LEN);
+		cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_READDATA_CMD_STR, connectID, len);
+		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+
+		retavl = Gsm_WaitRecvPrompt(timeout);
+
+		if (retavl == 0) {
+			memset(resp, 0, 1600);
+			retavl = Gsm_WaitNewLine(resp, timeout);
+		}
+
+		free(cmd);
+	}
+	return retavl;
+}
+
+// Receive Data
+uint16_t Gsm_RecvData(uint8_t connectID, char *recv_buf, uint16_t len, uint32_t timeout)
+{
+	int c = 0, i = 0;
+	uint8_t retavl = -1;
+	uint32_t time_left = timeout;
+
+	retavl = Gsm_ReadRecvBufferCmd(connectID, len, timeout);
+
+	if (retavl == 0) {
+		DPRINTF(LOG_INFO, "Rx:");
+		do {
+			c = Gsm_RxByte();
+			if (c < 0) {
+				time_left--;
+				delay_ms(1);
+				continue;
+			}
+			//R485_UART_TxBuf((uint8_t *)&c,1);
+			SEGGER_RTT_printf(0, "%c", c);
+			recv_buf[i++] = (char)c;
+			if (i > len)
+				DPRINTF(LOG_INFO, "\r\nRx Too Many data\r\n");
+		} while (time_left > 0);
+		SEGGER_RTT_printf(0, "\r\n");
+	}
 
 	return i;
 }
