@@ -26,9 +26,67 @@
     extern "C" {
 #endif
 
+#include "settings.h"
+#include "mqtt_socket.h"
+
+/* For this limited implementation, only two members are required in the
+ * Berkeley style sockaddr structure. */
+struct sockaddr {
+	const char *	hostname;
+	uint16_t	remote_port;
+	uint16_t	local_port;
+};
+
+#define SOCK_ADDR_IN    struct sockaddr
+	
+/* Setup defaults */
+#ifndef CONTEXT_T
+#define CONTEXT_T       uint8_t
+#endif
+#ifndef CONNECT_T
+#define CONNECT_T       uint8_t
+#endif
+#ifndef CONTEXT_INVALID
+#define CONTEXT_INVALID  ((CONTEXT_T)0)
+#endif
+#ifndef SOCK_CONNECT
+#define SOCK_CONNECT    Gsm_OpenSocketCmd
+#endif
+#ifndef SOCK_SEND
+#define SOCK_SEND(s, b, l, t) Gsm_SendDataCmd((s), (b), (uint16_t)(l), (uint32_t)t)
+#endif
+#ifndef SOCK_RECV
+#define SOCK_RECV(s, b, l, t) Gsm_RecvData((s), (b), (uint16_t)(l), (uint32_t)(t))
+#endif
+#ifndef SOCK_CLOSE
+#define SOCK_CLOSE      close
+#endif
+#ifndef SOCK_ADDR_IN
+#define SOCK_ADDR_IN    struct sockaddr_in
+#endif
+#ifdef SOCK_ADDRINFO
+#define SOCK_ADDRINFO   struct addrinfo
+#endif
+
+#define DEFAULT_MQTT_CONTEXTID          1
+#define DEFAULT_MQTT_CONNECTID          0
 
 /* Default MQTT host broker to use, when none is specified in the examples */
 #define DEFAULT_MQTT_HOST       "iot.eclipse.org" /* broker.hivemq.com */
+
+/* Local context for Net callbacks */
+typedef enum {
+	SOCK_BEGIN = 0,
+	SOCK_CONN,
+} NB_Stat;
+
+typedef struct _SocketContext {
+	CONTEXT_T	contextID;
+	CONNECT_T	connectID;
+	NB_Stat		stat;
+	int		bytes;
+	SOCK_ADDR_IN	addr;
+} SocketContext;
 
 /* Functions used to handle the MqttNet structure creation / destruction */
 int MqttClientNet_Init(MqttNet* net);

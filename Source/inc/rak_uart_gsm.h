@@ -25,6 +25,10 @@
 #define  GSM_TCP_TYPE        									(0)
 #define  GSM_UDP_TYPE        									(1)
 
+#define  GSM_BUFFER_ACCESS_MODE								(0)
+#define  GSM_DIRECT_PUSH_MODE									(1)
+#define  GSM_TRANSPARENT_ACCESS_MODE					(2)
+
 #define  GSM_SOCKET_CONNECT_ERR        				(-2)
 
 #define  GSM_OPENSOCKET_OK_STR          "CONNECT OK\r\n"
@@ -121,8 +125,7 @@ int Gsm_SetSdEchoCmd(void);
 int Gsm_GetRssiCmd(void);
 
 // socket
-int Gsm_OpenSocketCmd(uint8_t contextID, uint8_t connectID, uint8_t ServiceType, 
-							const char *host, uint16_t DestPort, uint16_t localPort, uint8_t accessMode);
+int Gsm_OpenSocketCmd(void *context, uint8_t ServiceType, uint8_t accessMode);
 int Gsm_CloseSocketCmd(void);
 
 // DNS
