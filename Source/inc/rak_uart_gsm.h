@@ -8,6 +8,7 @@
 #include "nrf_error.h"
 #include "app_error.h"
 #include "bsp_itracker.h"
+#include "mqttnet.h"
 
 #define  GSM_GENER_CMD_LEN                    (128)
 #define  GSM_GENER_CMD_TIMEOUT                (500)  //ms
@@ -95,8 +96,6 @@
 
 #define TRANSFE_EVENT_POSTDATA  (0x01)
 
-#define SOCKET_DEFAULT_LOCAL_PORT  		0
-
 typedef enum G_TYPE
 {
   GSM_TYPE_CHAR,
@@ -134,9 +133,10 @@ int Gsm_CloseSocketCmd(void);
 int Gsm_SetDnsModeCmd(uint8_t contextID);
 
 // Tx
-int Gsm_SendDataCmd(uint8_t connectID, char *data, uint16_t len, uint32_t timeout);
+int Gsm_SendDataCmd(void *context, char *data, uint16_t len, uint32_t timeout);
 // Rx
-uint16_t Gsm_RecvData(uint8_t connectID, char *recv_buf, uint16_t len, uint32_t timeout);
+int Gsm_ReadRecvBufferCmd(void *context, uint16_t len, uint32_t timeout);
+uint16_t Gsm_RecvRawData(byte *recv_buf, uint16_t len, uint32_t timeout);
 
 // gsm test
 void gsm_send_test(void);

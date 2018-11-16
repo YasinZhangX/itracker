@@ -284,12 +284,10 @@ static int NetConnect(void *context, const char *host, word16 port,
 		      int timeout_ms)
 {
 	SocketContext *sock = (SocketContext *)context;
-	uint32_t hostIp = 0;
 	int rc = -1;
 
 	switch (sock->stat) {
 	case SOCK_BEGIN:
-
 		sock->addr.hostname = host;
 		sock->addr.remote_port = port;
 		sock->addr.local_port = SOCKET_DEFAULT_LOCAL_PORT;  // default local_port is 0

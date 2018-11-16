@@ -56,10 +56,10 @@ struct sockaddr {
 #define SOCK_SEND(s, b, l, t) Gsm_SendDataCmd((s), (b), (uint16_t)(l), (uint32_t)t)
 #endif
 #ifndef SOCK_RECV
-#define SOCK_RECV(s, b, l, t) Gsm_RecvData((s), (b), (uint16_t)(l), (uint32_t)(t))
+#define SOCK_RECV(b, l, t) Gsm_RecvRawData((b), (uint16_t)(l), (uint32_t)(t))
 #endif
 #ifndef SOCK_CLOSE
-#define SOCK_CLOSE      close
+#define SOCK_CLOSE      Gsm_CloseSocketCmd
 #endif
 #ifndef SOCK_ADDR_IN
 #define SOCK_ADDR_IN    struct sockaddr_in
@@ -67,9 +67,15 @@ struct sockaddr {
 #ifdef SOCK_ADDRINFO
 #define SOCK_ADDRINFO   struct addrinfo
 #endif
-
+#ifndef DEFAULT_MQTT_CONTEXTID
 #define DEFAULT_MQTT_CONTEXTID          1
+#endif
+#ifndef DEFAULT_MQTT_CONNECTID
 #define DEFAULT_MQTT_CONNECTID          0
+#endif
+#ifndef SOCKET_DEFAULT_LOCAL_PORT
+#define SOCKET_DEFAULT_LOCAL_PORT       0
+#endif
 
 /* Default MQTT host broker to use, when none is specified in the examples */
 #define DEFAULT_MQTT_HOST       "iot.eclipse.org" /* broker.hivemq.com */
