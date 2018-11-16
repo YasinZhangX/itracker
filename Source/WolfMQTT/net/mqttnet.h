@@ -23,7 +23,7 @@
 #define WOLFMQTT_NET_H
 
 #ifdef __cplusplus
-    extern "C" {
+extern "C" {
 #endif
 
 #include "settings.h"
@@ -38,10 +38,10 @@ struct sockaddr {
 };
 
 #define SOCK_ADDR_IN    struct sockaddr
-	
+
 /* Setup defaults */
 #ifndef CONTEXT_T
-#define CONTEXT_T       uint8_t
+#define CONTEXT_T uint8_t
 #endif
 #ifndef CONNECT_T
 #define CONNECT_T       uint8_t
@@ -56,7 +56,7 @@ struct sockaddr {
 #define SOCK_SEND(s, b, l, t) Gsm_SendDataCmd((s), (b), (uint16_t)(l), (uint32_t)t)
 #endif
 #ifndef SOCK_RECV
-#define SOCK_RECV(b, l, t) Gsm_RecvRawData((b), (uint16_t)(l), (uint32_t)(t))
+#define SOCK_RECV(b, l, t)    Gsm_RecvRawData((b), (uint16_t)(l), (uint32_t)(t))
 #endif
 #ifndef SOCK_CLOSE
 #define SOCK_CLOSE      Gsm_CloseSocketCmd
@@ -95,12 +95,12 @@ typedef struct _SocketContext {
 } SocketContext;
 
 /* Functions used to handle the MqttNet structure creation / destruction */
-int MqttClientNet_Init(MqttNet* net);
-int MqttClientNet_DeInit(MqttNet* net);
+int MqttClientNet_Init(MqttNet *net);
+int MqttClientNet_DeInit(MqttNet *net);
 
 
 #ifdef __cplusplus
-    } /* extern "C" */
+}     /* extern "C" */
 #endif
 
 #endif /* WOLFMQTT_NET_H */

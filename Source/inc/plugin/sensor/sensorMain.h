@@ -19,9 +19,9 @@ extern tracker_data_t tracker_data;
 /**
  *  Public Functions
  */
-void sensors_init();
-void start_collect_data();
-void sensor_collect_timer_handle();
+void sensors_init(void);
+void start_collect_data(void);
+void sensor_collect_timer_handle(void);
 
 #ifdef __cplusplus
 }

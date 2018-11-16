@@ -76,7 +76,7 @@ void gap_params_init(void);
 void gatt_init(void);
 void conn_params_init(void);
 void peer_manager_init(void);
-void advertising_start();
+void advertising_start(void);
 
 static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context);
 static void gatt_evt_handler(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_t const * p_evt);
@@ -495,7 +495,7 @@ static void pm_evt_handler(pm_evt_t const * p_evt)
         case PM_EVT_PEERS_DELETE_SUCCEEDED:
         {
             bool delete_bonds = false;
-            advertising_start(&delete_bonds);
+            advertising_start();
         } break;
 
         case PM_EVT_PEER_DATA_UPDATE_FAILED:
