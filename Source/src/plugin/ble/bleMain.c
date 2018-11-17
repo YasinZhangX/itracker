@@ -76,7 +76,7 @@ void gap_params_init(void);
 void gatt_init(void);
 void conn_params_init(void);
 void peer_manager_init(void);
-void advertising_start(void);
+void advertising_start();
 
 static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context);
 static void gatt_evt_handler(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_t const * p_evt);
