@@ -32,6 +32,22 @@
 #endif
 
 #include "mqtt_types.h"
+/* Allow custom override of data types */
+#if !defined(WOLFMQTT_CUSTOM_TYPES) && !defined(WOLF_CRYPT_TYPES_H)
+    /* Basic Types */
+    #ifndef byte
+        typedef unsigned char  byte;
+    #endif
+    #ifndef word16
+        typedef unsigned short word16;
+    #endif
+    #ifndef word32
+        typedef unsigned int   word32;
+    #endif
+		#ifndef WOLLFSSL_TYPES
+			#define WOLFSSL_TYPES /* make sure wolfSSL knows we defined these types */
+		#endif
+#endif
 #ifdef ENABLE_MQTT_TLS
     #if !defined(WOLFSSL_USER_SETTINGS) && !defined(USE_WINDOWS_API)
         #include <options.h>

@@ -85,6 +85,67 @@ void Gsm_RingBuf(uint8_t in_data)
 	}
 }
 
+/*************************** GSM ********************************/
+
+int Gsm_Init()
+{
+	int  retval;
+	int time_count;
+	static int flag1 = 0;
+	static int flag2 = 0;
+	static int flag3 = 0;
+	static int flag4 = 0;
+
+	if (flag1 == 0) {
+		DPRINTF(LOG_INFO, "check auto baud\r\n");
+		/*module init ,check is auto baud,if auto,config to 115200 baud.*/
+		Gsm_CheckAutoBaud();
+		flag1 = 1;
+	}
+
+	if (flag2 == 0) {
+		DPRINTF(LOG_INFO, "set echo\r\n");
+		/*isable cmd echo*/
+		retval = Gsm_SetEchoCmd(0);
+		if (retval == -1) {
+			DPRINTF(LOG_WARN, "set echo fail\r\n");
+			return -1;
+		}
+		flag2 = 1;
+	}
+
+	if (flag3 == 0) {
+		DPRINTF(LOG_INFO, "gps config\r\n");
+		retval = 0;//= gps_config();
+		if (retval == -1) {
+			DPRINTF(LOG_WARN, "gps config fail\r\n");
+			return -1;
+		}
+		flag3 = 1;
+	}
+
+	if (flag4 == 0) {
+		DPRINTF(LOG_INFO, "check sim card\r\n");
+		/*check SIM Card status,if not ready,retry 60s,return*/
+		time_count = 0;
+		while ((Gsm_CheckSimCmd() < 0)) {
+			delay_ms(GSM_CHECKSIM_RETRY_TIME);
+
+			if (++time_count > GSM_CHECKSIM_RETRY_NUM) {
+				DPRINTF(LOG_WARN, "check sim card timeout\r\n");
+				return -1;
+			}
+		}
+		flag4 = 1;
+	}
+
+	DPRINTF(LOG_INFO, "Test with Hologram on China Telecom\r\n");
+	/*config NB-IOT param, this test is based China Telecom, if not success, contact your operator.
+	 * The detail of command can refer to  Quectel document https://www.quectel.com/support/ */
+	retval = Gsm_nb_iot_config();
+
+	return retval;
+}
 
 void Gsm_PowerUp(void)
 {
@@ -208,6 +269,7 @@ int Gsm_WaitSendAck(uint32_t timeout_ms)
 			continue;
 		}
 		//R485_UART_TxBuf((uint8_t *)&c,1);
+		DPRINTF(LOG_DEBUG, "Rx:%c ", (uint8_t *)&c);
 		if ((char)c == '>') {
 			retval = 0;
 			break;
@@ -287,6 +349,7 @@ int Gsm_WaitRecvPrompt(uint32_t timeout_ms)
 	return retval;
 }
 
+
 void Gsm_print(char *at_cmd)
 {
 	uint8_t cmd_len;
@@ -294,55 +357,78 @@ void Gsm_print(char *at_cmd)
 	memset(GSM_CMD, 0, GSM_GENER_CMD_LEN);
 	cmd_len = sprintf(GSM_CMD, "%s\r\n", at_cmd);
 	GSM_UART_TxBuf((uint8_t *)GSM_CMD, cmd_len);
+	DPRINTF(LOG_DEBUG, "send: %s\r\n", at_cmd);
 }
 
-void Gsm_nb_iot_config(void)
+int Gsm_nb_iot_config(void)
 {
 	int retval = -1;
 
-	Gsm_print("AT+COPS=?");
-	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
-	delay_ms(1000);
+//	Gsm_print("AT+COPS=?");
+//	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+//	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 100, true);
+//	if (retval == -1)
+//		goto exit;
+//	delay_ms(1000);
 
-	Gsm_print("AT+COPS=1,0,\"CHINA MOBILE\",0");
+	Gsm_print("AT+COPS=1,0,\"CHN-UNICOM\",0");
+	// Gsm_print("AT+COPS=1,0,\"CHINA MOBILE\",0");
 	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
+	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 100, true);
+	if (retval == -1)
+		goto exit;
 	delay_ms(1000);
 
 	Gsm_print("AT+QNWINFO");
 	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 4, true);
+	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 1, true);
+	if (retval == -1)
+		goto exit;
 	delay_ms(1000);
 
-	Gsm_print("AT+QICSGP=1,1,\"CMCC\"," "," ",1");
+	Gsm_print("AT+QICSGP=1,1,\"hologram\",\"\",\"\",1");
 	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
 	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
-	delay_ms(1000);
-
-	Gsm_print("AT+QIACT=1");
-	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
+	if (retval == -1)
+		goto exit;
 	delay_ms(1000);
 
 	Gsm_print("AT+QIACT?");
 	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
 	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
+	if (retval == -1)
+		goto exit;
 	delay_ms(1000);
 
-	Gsm_print("AT+QIOPEN=1,1,\"TCP LISTENER\",\"127.0.0.1\",0,2020,0");
+	Gsm_print("AT+QIACT=1");
 	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
+	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 50, true);
+	if (retval == -1)
+		goto exit;
 	delay_ms(1000);
 
-	Gsm_print("AT+QISTATE");
+	Gsm_print("AT+QIACT?");
 	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
 	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
-	DPRINTF(LOG_DEBUG, "AT+QISTATE GSM_RSP = %s\r\n", GSM_RSP);
+	if (retval == -1)
+		goto exit;
 	delay_ms(1000);
+
+//	Gsm_print("AT+QIOPEN=1,1,\"TCP LISTENER\",\"127.0.0.1\",0,2020,0");
+//	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+//	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
+//	delay_ms(1000);
+
+//	Gsm_print("AT+QISTATE");
+//	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+//	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
+//	DPRINTF(LOG_DEBUG, "AT+QISTATE GSM_RSP = %s\r\n", GSM_RSP);
+//	delay_ms(1000);
+	exit:
+	return retval;
 }
 
-void gps_config()
+int gps_config()
 {
 	int retval = -1;
 	uint8_t cmd_len;
@@ -361,6 +447,8 @@ void gps_config()
 	retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT * 4, true);
 	DPRINTF(LOG_DEBUG, "AT+QGPS retval= %d\r\n", retval);
 	delay_ms(1000);
+
+	return retval;
 }
 
 void gps_data_get()
@@ -371,7 +459,7 @@ void gps_data_get()
 	memset(RSP, 0, GSM_GENER_CMD_LEN);
 	Gsm_print("AT+QGPSGNMEA=\"GGA\"");
 	retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT, true);
-	GpsParseGpsData_2(RSP);
+	GpsParseGpsData_2((int8_t*)RSP);
 	memset(gps_data, 0, 512);
 	sprintf(gps_data, GPS_FORMAT, NmeaGpsData.NmeaDataType,
 		NmeaGpsData.NmeaUtcTime,
@@ -411,10 +499,11 @@ int Gsm_OpenSocketCmd(void *context, uint8_t ServiceType, uint8_t accessMode)
 	if (cmd) {
 		uint8_t cmd_len;
 		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s%d,%d,\"%s\",\"%s\",%d,%d,%d\r\n", GSM_OPENSOCKET_CMD_STR, sock->contextID, sock->connectID,
-				  (ServiceType == GSM_TCP_TYPE) ? GSM_TCP_STR : GSM_UDP_STR,
-				  sock->addr.hostname, sock->addr.remote_port, sock->addr.local_port, accessMode);
-
+		 cmd_len = sprintf(cmd, "%s%d,%d,\"%s\",\"%s\",%d,%d,%d\r\n", GSM_OPENSOCKET_CMD_STR, sock->contextID, sock->connectID,
+		 		  (ServiceType == GSM_TCP_TYPE) ? GSM_TCP_STR : GSM_UDP_STR,
+		 		  sock->addr.hostname, sock->addr.remote_port, sock->addr.local_port, accessMode);
+		DPRINTF(LOG_DEBUG, "socket cmd=%s cmdlen=%d", cmd, cmd_len);
+		
 		retry_count = 3;
 		do {
 			retry_count--;
@@ -475,12 +564,12 @@ int Gsm_SendDataCmd(void *context, const void *data, uint16_t len, uint32_t time
 		DPRINTF(LOG_INFO, "cmd=%s\ncmd_len=%d", cmd, cmd_len);
 		DPRINTF(LOG_INFO, "data=%s\n", (char *)data);
 
-		retval = Gsm_WaitSendAck(GSM_GENER_CMD_TIMEOUT * 4);  //500*4=2000ms
+		retval = Gsm_WaitSendAck(GSM_GENER_CMD_TIMEOUT * 10);  //500*4=2000ms
 		if (retval == 0) {
 			DPRINTF(LOG_INFO, "GSM_SEND_DATA\n");
 			GSM_UART_TxBuf((uint8_t *)data, len);
 			memset(cmd, 0, GSM_GENER_CMD_LEN);
-			retval = Gsm_WaitRspOK(cmd, timeout_ms, true);
+			retval = Gsm_WaitSendAck(GSM_GENER_CMD_TIMEOUT * 4);  //500*4=2000ms
 			if (retval == 0)
 				retval = len;
 			else if (retval > 0)
@@ -634,7 +723,7 @@ int Gsm_CheckSimCmd(void)
 		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
 		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT, true);
+		retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT*5, true);
 		DPRINTF(LOG_DEBUG, "Gsm_CheckSimCmd cmd= %s\r\n", cmd);
 		if (retval >= 0) {
 			if (NULL != strstr(cmd, GSM_CHECKSIM_RSP_OK))

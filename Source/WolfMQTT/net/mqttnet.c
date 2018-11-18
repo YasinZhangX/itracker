@@ -140,7 +140,7 @@ static int NetConnect(void *context, const char *host, word16 port, int timeout_
 		FALL_THROUGH;
 	case SOCK_CONN:
 		/* Start connect */
-		rc = SOCK_CONNECT(context, GSM_TCP_TYPE, GSM_BUFFER_ACCESS_MODE);
+		rc = Gsm_OpenSocketCmd(sock, GSM_TCP_TYPE, GSM_BUFFER_ACCESS_MODE);
 		break;
 	}
 

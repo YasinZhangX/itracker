@@ -41,7 +41,7 @@ struct sockaddr {
 
 /* Setup defaults */
 #ifndef CONTEXT_T
-#define CONTEXT_T uint8_t
+#define CONTEXT_T       uint8_t
 #endif
 #ifndef CONNECT_T
 #define CONNECT_T       uint8_t
@@ -76,9 +76,6 @@ struct sockaddr {
 #ifndef SOCKET_DEFAULT_LOCAL_PORT
 #define SOCKET_DEFAULT_LOCAL_PORT       0
 #endif
-
-/* Default MQTT host broker to use, when none is specified in the examples */
-#define DEFAULT_MQTT_HOST       "iot.eclipse.org" /* broker.hivemq.com */
 
 /* Local context for Net callbacks */
 typedef enum {

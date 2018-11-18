@@ -1,30 +1,30 @@
 /**
  * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
- * 
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice, this
  *    list of conditions and the following disclaimer.
- * 
+ *
  * 2. Redistributions in binary form, except as embedded into a Nordic
  *    Semiconductor ASA integrated circuit in a product or a software update for
  *    such product, must reproduce the above copyright notice, this list of
  *    conditions and the following disclaimer in the documentation and/or other
  *    materials provided with the distribution.
- * 
+ *
  * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
  *    contributors may be used to endorse or promote products derived from this
  *    software without specific prior written permission.
- * 
+ *
  * 4. This software, with or without modification, must only be used with a
  *    Nordic Semiconductor ASA integrated circuit.
- * 
+ *
  * 5. Any software provided in binary form under this license must not be reverse
  *    engineered, decompiled, modified and/or disassembled.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
  * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -35,7 +35,7 @@
  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
+ *
  */
 /** @file
  *
@@ -100,12 +100,11 @@ extern nrf_crypto_ecc_public_key_t              m_public_key;
 /*considering the limination of ram and power,num of tasks should as little as possible */
 
 #define DEMO_INTERVAL        15000
-TimerHandle_t m_demo_timer;   
+TimerHandle_t m_demo_timer;
 
 GSM_RECIEVE_TYPE g_type = GSM_TYPE_CHAR;
 
 /*----------------------------iTracker application-------------------------------*/
-#define GSM_ENABLED
 uint8_t gsm_started = 0;
 
 /****************************************************
@@ -135,7 +134,7 @@ static void log_init(void)
 
 static void demo_timeout_handler(TimerHandle_t xTimer)
 {
-    
+
     DPRINTF(LOG_INFO, "demo_timeout_handler\r\n");
     UNUSED_PARAMETER(xTimer);
     DPRINTF(LOG_INFO, "++++++++++++gps data++++++++++++\r\n");
@@ -172,7 +171,7 @@ static void timers_init(void)
 /**@brief   Function for starting application timers.
  * @details Timers are run after the scheduler has started.
  */
-static void application_timers_start(void)
+void application_timers_start(void)
 {
     // Start application timers, non-block
     if (pdPASS != xTimerStart(m_demo_timer, 0))
@@ -233,7 +232,7 @@ static void conn_params_error_handler(uint32_t nrf_error)
  *
  * @note This function will not return.
  */
-static void sleep_mode_enter(void)
+void sleep_mode_enter(void)
 {
     uint32_t err_code = bsp_indication_set(BSP_INDICATE_IDLE);
     APP_ERROR_CHECK(err_code);
@@ -247,55 +246,6 @@ static void sleep_mode_enter(void)
     APP_ERROR_CHECK(err_code);
 }
 
-/*************************** GSM ********************************/
-
-#ifdef GSM_ENABLED
-
-#define  DEST_DOMAIN              "track.vizisens.com"
-#define  DEST_PORT                3003//(80)  //
-#define  DEST_URL									"itrack\0"
-
-	
-int Gsm_Init()
-{
-    //int  retavl;
-    int time_count;
-		
-    DPRINTF(LOG_INFO,"check auto baud\r\n");
-    /*module init ,check is auto baud,if auto,config to 115200 baud.*/ 
-    Gsm_CheckAutoBaud();
-    
-    DPRINTF(LOG_INFO,"set echo\r\n");
-    /*isable cmd echo*/
-    Gsm_SetEchoCmd(0);
-    
-    DPRINTF(LOG_INFO,"check sim card\r\n");
-    /*check SIM Card status,if not ready,retry 60s,return*/
-    time_count=0;
-	  gps_config();
-    while((Gsm_CheckSimCmd()<0))
-    {
-        delay_ms(GSM_CHECKSIM_RETRY_TIME);
-               
-        if(++time_count>GSM_CHECKSIM_RETRY_NUM)
-        {
-            DPRINTF(LOG_WARN,"check sim card timeout\r\n");
-            return -1;
-        }
-    }
-
-		DPRINTF(LOG_INFO,"Test with Hologram on China Telecom\r\n");
-		
-		time_count=0;
-		//Gsm_test_hologram();
-		/*config NB-IOT param, this test is based China Telecom, if not success, contact your operator.
-		  The detail of command can refer to  Quectel document https://www.quectel.com/support/ */
-		Gsm_nb_iot_config();
-
-	return 0;
-}
-#endif
-
 /**@brief Application main function.
  */
 
@@ -304,90 +254,91 @@ int main(void)
     uint32_t err_code;
     bool erase_bonds;
 	  int ret;
-	  
-	  // log  
+
+	  // log
     log_init();
-	
+
 	  //clock init
 	  nrf_drv_clock_init();
 
 	  // Activate deep sleep mode.
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-	  
+
+		// timer init
+	  timers_init();
+
 		// ble
     ble_stack_init();
     gap_params_init();
     gatt_init();
     services_init();
+		advertising_init();
     conn_params_init();
 	  peer_manager_init();
-	  
-		// dfu 
+
+		// dfu
     dfu_settings_init();
 		nrf_crypto_init();
 		nrf_crypto_ecc_public_key_from_raw(&g_nrf_crypto_ecc_secp256r1_curve_info, &m_public_key,pk, sizeof(pk));
-		
+
 		// sensors
 	  sensors_init();
-		
-		// timer
-		timers_init();
-	  application_timers_start();
-		
+
 		// init gsm
 	  Gsm_Uart_Init();
 	  Gsm_Gpio_Init();
 	  Gsm_PowerUp();
-	  Gsm_Init();
-		
+
     // Create a FreeRTOS task for the BLE stack. The task will run advertising_start() before entering its loop.
-    nrf_sdh_freertos_init(advertising_start, NULL);		
-		BaseType_t xReturned = xTaskCreate(dfu_task, "dfu", 512, NULL, 1, NULL);
+    nrf_sdh_freertos_init(advertising_start, NULL);
 		
-		// mqtt
+		// dfu task init
+		//BaseType_t xReturned = xTaskCreate(dfu_task, "dfu", 512, NULL, 1, NULL);
+
+		// mqtt task init
 		MQTT_init();
-		
-		
+
+
     // Start FreeRTOS scheduler.
     vTaskStartScheduler();
 
     for (;;)
     {
         APP_ERROR_HANDLER(NRF_ERROR_FORBIDDEN);
-    }	 
+    }
 }
 
 char * float2str(float val, int precision, char *buf)
 {
     char *cur, *end;
-    
+
     sprintf(buf, "%.6f", val);
     if (precision < 6) {
         cur = buf + strlen(buf) - 1;
-        end = cur - 6 + precision; 
+        end = cur - 6 + precision;
         while ((cur > end) && (*cur == '0')) {
             *cur = '\0';
             cur--;
         }
     }
-    
+
     return buf;
 }
 
 char * double2str(double val, int precision, char *buf)
 {
     char *cur, *end;
-    
+
     sprintf(buf, "%.6f", val);
     if (precision < 6) {
         cur = buf + strlen(buf) - 1;
-        end = cur - 6 + precision; 
+        end = cur - 6 + precision;
         while ((cur > end) && (*cur == '0')) {
             *cur = '\0';
             cur--;
         }
     }
-    
+
     return buf;
 }
 

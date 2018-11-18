@@ -99,7 +99,7 @@ typedef enum G_TYPE {
  *                                         EXTERN FUNCTION
  *********************************************************************************************************
  */
-
+int  Gsm_Init(void);
 void GMS_PowerUp(void);
 void GMS_PowerDown(void);
 void Gsm_CheckAutoBaud(void);
@@ -136,10 +136,10 @@ void gsm_send_test(void);
 void Gsm_RecvData_test(char *recv_buf, uint16_t timeout);
 
 // nbiot config
-void Gsm_nb_iot_config(void);
+int  Gsm_nb_iot_config(void);
 
 // gps
-void gps_config(void);
+int  gps_config(void);
 void gps_data_get(void);
 
 

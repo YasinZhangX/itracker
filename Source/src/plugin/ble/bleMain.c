@@ -71,13 +71,17 @@ extern char GSM_RSP[1600];
 #define SEC_PARAM_MIN_KEY_SIZE              7                                       /**< Minimum encryption key size. */
 #define SEC_PARAM_MAX_KEY_SIZE              16                                      /**< Maximum encryption key size. */
 
+extern void sleep_mode_enter(void);
+
 void ble_stack_init(void);
 void gap_params_init(void);
 void gatt_init(void);
+void advertising_init(void);
 void conn_params_init(void);
 void peer_manager_init(void);
 void advertising_start();
 
+static void on_adv_evt(ble_adv_evt_t ble_adv_evt);
 static void ble_evt_handler(ble_evt_t const * p_ble_evt, void * p_context);
 static void gatt_evt_handler(nrf_ble_gatt_t * p_gatt, nrf_ble_gatt_evt_t const * p_evt);
 static void nus_data_handler(ble_nus_evt_t * p_evt);
@@ -177,6 +181,34 @@ void services_init(void)
     APP_ERROR_CHECK(err_code);
 }
 
+/**@brief Function for initializing the Advertising functionality.
+ */
+void advertising_init(void)
+{
+    uint32_t               err_code;
+    ble_advertising_init_t init;
+
+    memset(&init, 0, sizeof(init));
+
+    init.advdata.name_type          = BLE_ADVDATA_FULL_NAME;
+    init.advdata.include_appearance = false;
+    init.advdata.flags              = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
+
+    init.srdata.uuids_complete.uuid_cnt = sizeof(m_adv_uuids) / sizeof(m_adv_uuids[0]);
+    init.srdata.uuids_complete.p_uuids  = m_adv_uuids;
+
+    init.config.ble_adv_fast_enabled  = true;
+    init.config.ble_adv_fast_interval = APP_ADV_INTERVAL;
+    init.config.ble_adv_fast_timeout  = 0;
+
+    init.evt_handler = on_adv_evt;
+
+    err_code = ble_advertising_init(&m_advertising, &init);
+    APP_ERROR_CHECK(err_code);
+
+    ble_advertising_conn_cfg_tag_set(&m_advertising, APP_BLE_CONN_CFG_TAG);
+}
+
 /**@brief Function for initializing the Connection Parameters module.
  */
 void conn_params_init(void)
@@ -236,6 +268,30 @@ void advertising_start()
 {
     ret_code_t err_code = ble_advertising_start(&m_advertising, BLE_ADV_MODE_FAST);
     APP_ERROR_CHECK(err_code);
+}
+
+/**@brief Function for handling advertising events.
+ *
+ * @details This function will be called for advertising events which are passed to the application.
+ *
+ * @param[in] ble_adv_evt  Advertising event.
+ */
+static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
+{
+    uint32_t err_code;
+
+    switch (ble_adv_evt)
+    {
+        case BLE_ADV_EVT_FAST:
+            err_code = bsp_indication_set(BSP_INDICATE_ADVERTISING);
+            APP_ERROR_CHECK(err_code);
+            break;
+        case BLE_ADV_EVT_IDLE:
+            //sleep_mode_enter();
+            break;
+        default:
+            break;
+    }
 }
 
 /**@brief Function for handling BLE events.

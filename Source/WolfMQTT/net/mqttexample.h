@@ -55,10 +55,15 @@
     #endif
 #endif /* !WOLFMQTT_NO_STDIO */
 
+#include "settings.h"
+#include "mqtt_socket.h"
+#include "mqtt_packet.h"
+#include "mqtt_client.h"
+
 
 /* Default Configurations */
 #define DEFAULT_CMD_TIMEOUT_MS  30000
-#define DEFAULT_CON_TIMEOUT_MS  5000
+#define DEFAULT_CON_TIMEOUT_MS  50000
 #define DEFAULT_MQTT_QOS        MQTT_QOS_0
 #define DEFAULT_KEEP_ALIVE_SEC  60
 #define DEFAULT_CLIENT_ID       "WolfMQTTClient"
