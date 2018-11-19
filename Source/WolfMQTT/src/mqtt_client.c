@@ -413,7 +413,6 @@ int MqttClient_Connect(MqttClient *client, MqttConnect *connect)
     /* Wait for connect ack packet */
     rc = MqttClient_WaitType(client, &client->msg, client->cmd_timeout_ms,
         MQTT_PACKET_TYPE_CONNECT_ACK, 0, &connect->ack);
-
     return rc;
 }
 

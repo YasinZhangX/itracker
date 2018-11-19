@@ -27,22 +27,22 @@
 #define MQTT_BUF_SIZE   1024
 #define DEFAULT_MQTT_HOST       "mqtt-dev-esp8266-v1.baiyatech.com" /* mqtt broker server */
 #define DEFAULT_CMD_TIMEOUT_MS  30000
-#define DEFAULT_CON_TIMEOUT_MS  50000
+#define DEFAULT_CON_TIMEOUT_MS  30000
 #define DEFAULT_MQTT_QOS        MQTT_QOS_0
 #define DEFAULT_KEEP_ALIVE_SEC  60
 #define DEFAULT_CLIENT_ID       "WolfMQTTClient"
 #define DEFAULT_USERNAME        "baiya"
 #define DEFAULT_USERPW					"baiyatech"
-#define WOLFMQTT_TOPIC_NAME     "example/"
-#define DEFAULT_TOPIC_NAME      WOLFMQTT_TOPIC_NAME "testTopic"
+#define WOLFMQTT_TOPIC_NAME     "BY2/"
+#define DEFAULT_TOPIC_NAME      WOLFMQTT_TOPIC_NAME "U"
 #define TLS_CA_CERT             "DSTRootCAX3.pem"
 
 
 
 static MqttClient gMQTTC;
 static MqttNet gMQTTN;
-static byte gMqttTxBuf[MQTT_BUF_SIZE];
-static byte gMqttRxBuf[MQTT_BUF_SIZE];
+static byte gMqttTxBuf[MQTT_BUF_SIZE] = {0};
+static byte gMqttRxBuf[MQTT_BUF_SIZE] = {0};
 static int mPacketIdLast;
 static const char *mTlsCaFile = TLS_CA_CERT;
 
@@ -300,7 +300,7 @@ void vSecureMQTTClientTask(void *pvParameters)
 			}
 			case 3:
 			{
-				rc = MqttClient_WaitMessage(&gMQTTC, 1000);
+				rc = MqttClient_WaitMessage(&gMQTTC, 2000);
 				if (rc == MQTT_CODE_ERROR_TIMEOUT)
 					/* A timeout is not an error, it just means there is no data */
 					rc = MQTT_CODE_SUCCESS;

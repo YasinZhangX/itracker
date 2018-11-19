@@ -299,7 +299,7 @@ int Gsm_WaitNewLine(char *rsp_value, uint32_t timeout_ms)
 			continue;
 		}
 		//R485_UART_TxBuf((uint8_t *)&c,1);
-		SEGGER_RTT_printf(0, "%c", c);
+		//SEGGER_RTT_printf(0, "%c", c);
 		str_tmp[i++] = c;
 		if (i > strlen("\r\n")) {
 			if ((cmp_p = strstr(str_tmp, "\r\n")) != NULL) {
@@ -334,9 +334,8 @@ int Gsm_WaitRecvPrompt(uint32_t timeout_ms)
 			continue;
 		}
 		//R485_UART_TxBuf((uint8_t *)&c,1);
-		SEGGER_RTT_printf(0, "%c", c);
+		//SEGGER_RTT_printf(0, "%c", c);
 		resp[i++] = (char)c;
-
 		if (i >= wait_len) {
 			cmp_p = strstr(resp, GSM_RECVDATA_RSP_STR);
 			if (cmp_p) {
@@ -358,6 +357,30 @@ void Gsm_print(char *at_cmd)
 	cmd_len = sprintf(GSM_CMD, "%s\r\n", at_cmd);
 	GSM_UART_TxBuf((uint8_t *)GSM_CMD, cmd_len);
 	DPRINTF(LOG_DEBUG, "send: %s\r\n", at_cmd);
+}
+
+void gsm_send_test(void)
+{
+	int retval = -1;
+	int retry_count = 2;
+	do {
+		retry_count--;
+		Gsm_print("AT+QISEND=0,48");
+		retval = Gsm_WaitSendAck(GSM_GENER_CMD_TIMEOUT);
+	} while (retry_count && retval);
+
+	if (retval == 0) {
+		DPRINTF(LOG_INFO, "------GSM_SEND_DATA\n");
+		Gsm_print("{\"k\":\"+C7pOb8=\",\"d\":\"Hello,World!\",\"t\":\"TOPIC1\"}");
+	}
+	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT, true);
+	if (retval >= 0) {
+		if (NULL != strstr((char *)GSM_RSP, "SEND OK"))
+			retval = 0;
+		else
+			retval = -1;
+	}
 }
 
 int Gsm_nb_iot_config(void)
@@ -513,6 +536,22 @@ int Gsm_OpenSocketCmd(void *context, uint8_t ServiceType, uint8_t accessMode)
 		} while (retry_count && retval);
 
 		free(cmd);
+		
+		if (retval == 0) {
+			memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+			retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 300);
+			retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40);
+			DPRINTF(LOG_DEBUG, "open socket rsp=%s\r\n", GSM_RSP);
+			if (retval == 0) {
+				if (strstr((char *)GSM_RSP, "QIOPEN: 0,0")) {
+					retval = 0;
+				} else {
+					retval = -1;
+				}
+			}
+		}
+		
+		Gsm_GetSocketStateCmd();
 	}
 	return retval;
 }
@@ -536,7 +575,7 @@ int Gsm_CloseSocketCmd(void *context)
 		cmd_len = sprintf(cmd, "%s=%d\r\n", GSM_CLOSESOCKET_CMD_STR, connectID);
 		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
+		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT * 20, true);
 
 		free(cmd);
 	}
@@ -561,25 +600,24 @@ int Gsm_SendDataCmd(void *context, const void *data, uint16_t len, uint32_t time
 		memset(cmd, 0, GSM_GENER_CMD_LEN);
 		cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_SENDDATA_CMD_STR, connectID, len);
 		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
-		DPRINTF(LOG_INFO, "cmd=%s\ncmd_len=%d", cmd, cmd_len);
-		DPRINTF(LOG_INFO, "data=%s\n", (char *)data);
-
-		retval = Gsm_WaitSendAck(GSM_GENER_CMD_TIMEOUT * 10);  //500*4=2000ms
-		if (retval == 0) {
-			DPRINTF(LOG_INFO, "GSM_SEND_DATA\n");
-			GSM_UART_TxBuf((uint8_t *)data, len);
-			memset(cmd, 0, GSM_GENER_CMD_LEN);
-			retval = Gsm_WaitSendAck(GSM_GENER_CMD_TIMEOUT * 4);  //500*4=2000ms
-			if (retval == 0)
-				retval = len;
-			else if (retval > 0)
-				if (strstr(cmd, "SEND OK"))
-					retval = 0;
-		} else {
-			//DPRINTF(LOG_INFO, "ret1=%d", retval);
-		}
-		free(cmd);
+		//DPRINTF(LOG_DEBUG, "cmd=%scmd_len=%d\r\n", cmd, cmd_len);
+		//DPRINTF(LOG_DEBUG, "data=%s\n", (char *)data);
+		delay_ms(10);
+		
+		//DPRINTF(LOG_DEBUG, "GSM_SEND_DATA\n");
+		GSM_UART_TxBuf((uint8_t *)data, len);
+		memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+		retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 10, true);  //500*4=2000ms
+		if (retval == 0)
+			retval = len;
+		else if (retval > 0)
+			if (strstr(cmd, "SEND OK"))
+				retval = 0;
+	} else {
+		//DPRINTF(LOG_DEBUG, "ret1=%d", retval);
 	}
+	free(cmd);
+
 	return retval;
 }
 
@@ -599,15 +637,16 @@ int Gsm_ReadRecvBufferCmd(void *context, uint16_t len, uint32_t timeout)
 		uint8_t cmd_len;
 		memset(cmd, 0, GSM_GENER_CMD_LEN);
 		cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_READDATA_CMD_STR, connectID, len);
+		//DPRINTF(LOG_DEBUG, "recvSendCmd: %s\r\n", cmd);
 		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
 		retval = Gsm_WaitRecvPrompt(timeout);
-
+			
 		if (retval == 0) {
 			memset(resp, 0, 1600);
 			retval = Gsm_WaitNewLine(resp, timeout);
 			if (retval == 0) {
-				DPRINTF(LOG_INFO, "%s", resp);
+				//DPRINTF(LOG_DEBUG, "recvlen:%s\r\n", resp);
 				sscanf(resp, " %d", &retval);
 			}
 		}
@@ -625,7 +664,7 @@ uint16_t Gsm_RecvRawData(byte *recv_buf, uint16_t len, uint32_t timeout)
 	uint16_t i = 0;
 	uint32_t time_left = timeout;
 
-	DPRINTF(LOG_INFO, "Rx:");
+	//DPRINTF(LOG_INFO, "Rx:");
 	do {
 		c = Gsm_RxByte();
 		if (c < 0) {
@@ -634,7 +673,7 @@ uint16_t Gsm_RecvRawData(byte *recv_buf, uint16_t len, uint32_t timeout)
 			continue;
 		}
 		//R485_UART_TxBuf((uint8_t *)&c,1);
-		SEGGER_RTT_printf(0, "%c", c);
+		//SEGGER_RTT_printf(0, "%c", c);
 		recv_buf[i++] = (byte)c;
 	} while (time_left > 0 && i < len);
 

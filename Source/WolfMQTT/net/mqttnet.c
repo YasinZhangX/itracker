@@ -152,21 +152,20 @@ static int NetRead(void *context, byte *buf, int buf_len, int timeout_ms)
 	SocketContext *sock = (SocketContext *)context;
 	int rc = -1, timeout = 0;
 	int lenToBeRead = 0;
-	int retry_count = 4;
+	int timeleft = timeout_ms;
 
 	if (context == NULL || buf == NULL || buf_len <= 0)
 		return MQTT_CODE_ERROR_BAD_ARG;
 
 	sock->bytes = 0;
-
 	/* Loop until buf_len has been read, error or timeout */
-	while ((sock->bytes < buf_len) && (timeout == 0) && (retry_count-- > 0)) {
+	while ((sock->bytes < buf_len) && (timeout == 0)) {
 		/* Wait for any event within the socket set. */
-		lenToBeRead = Gsm_ReadRecvBufferCmd(context, buf_len - sock->bytes, timeout_ms);
-		if (lenToBeRead != -1) {
+		lenToBeRead = Gsm_ReadRecvBufferCmd(context, buf_len - sock->bytes, timeleft);
+		if (lenToBeRead > 0) {
 			/* Try and read number of lenToBeRead provided,
 			 *  minus what's already been read */
-			rc = (int)SOCK_RECV(&buf[sock->bytes], lenToBeRead, timeout_ms);
+			rc = (int)SOCK_RECV(&buf[sock->bytes], lenToBeRead, timeleft);
 
 			if (rc <= 0) {
 				timeout = 1;    /* timeout */
@@ -175,7 +174,10 @@ static int NetRead(void *context, byte *buf, int buf_len, int timeout_ms)
 				sock->bytes += rc;      /* Data */
 			}
 		} else {
-			timeout = 1;
+			delay_ms(1);
+			timeleft--;
+			if	(timeleft <= 0)
+				timeout = 1;
 		}
 	}
 
