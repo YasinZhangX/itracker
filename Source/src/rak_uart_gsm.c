@@ -24,7 +24,7 @@ uint8_t GSM_RSP[1600] = { 0 };
 char resp[1500] = { 0 };
 extern char CMD[128];
 extern char RSP[128];
-char gps_data[512] = { 0 };
+extern char gps_data[512];
 extern tNmeaGpsData NmeaGpsData;
 extern char post_data[1024];
 #define  GPS_FORMAT                             \
@@ -116,7 +116,7 @@ int Gsm_Init()
 
 	if (flag3 == 0) {
 		DPRINTF(LOG_INFO, "gps config\r\n");
-		retval = 0;//= gps_config();
+		retval = gps_config();
 		if (retval == -1) {
 			DPRINTF(LOG_WARN, "gps config fail\r\n");
 			return -1;
@@ -481,21 +481,26 @@ void gps_data_get()
 
 	memset(RSP, 0, GSM_GENER_CMD_LEN);
 	Gsm_print("AT+QGPSGNMEA=\"GGA\"");
-	retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT, true);
-	GpsParseGpsData_2((int8_t*)RSP);
-	memset(gps_data, 0, 512);
-	sprintf(gps_data, GPS_FORMAT, NmeaGpsData.NmeaDataType,
-		NmeaGpsData.NmeaUtcTime,
-		NmeaGpsData.NmeaLatitude,
-		NmeaGpsData.NmeaLatitudePole,
-		NmeaGpsData.NmeaLongitude,
-		NmeaGpsData.NmeaLongitudePole,
-		NmeaGpsData.NmeaAltitude,
-		NmeaGpsData.NmeaAltitudeUnit,
-		NmeaGpsData.NmeaHeightGeoid,
-		NmeaGpsData.NmeaHeightGeoidUnit
-		);
-	DPRINTF(LOG_INFO, "%s", gps_data);
+	retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT*10, true);
+	retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT*10, true);
+	if (retval == 0) {
+		GpsParseGpsData_2((int8_t*)RSP);
+		memset(gps_data, 0, 512);
+		sprintf(gps_data, GPS_FORMAT, NmeaGpsData.NmeaDataType,
+			NmeaGpsData.NmeaUtcTime,
+			NmeaGpsData.NmeaLatitude,
+			NmeaGpsData.NmeaLatitudePole,
+			NmeaGpsData.NmeaLongitude,
+			NmeaGpsData.NmeaLongitudePole,
+			NmeaGpsData.NmeaAltitude,
+			NmeaGpsData.NmeaAltitudeUnit,
+			NmeaGpsData.NmeaHeightGeoid,
+			NmeaGpsData.NmeaHeightGeoidUnit
+			);
+		DPRINTF(LOG_INFO, "%s", gps_data);
+	} else {
+		DPRINTF(LOG_WARN, "GPS data get timeout");
+	}
 }
 
 // Get socket state
@@ -525,7 +530,7 @@ int Gsm_OpenSocketCmd(void *context, uint8_t ServiceType, uint8_t accessMode)
 		 cmd_len = sprintf(cmd, "%s%d,%d,\"%s\",\"%s\",%d,%d,%d\r\n", GSM_OPENSOCKET_CMD_STR, sock->contextID, sock->connectID,
 		 		  (ServiceType == GSM_TCP_TYPE) ? GSM_TCP_STR : GSM_UDP_STR,
 		 		  sock->addr.hostname, sock->addr.remote_port, sock->addr.local_port, accessMode);
-		DPRINTF(LOG_DEBUG, "socket cmd=%s cmdlen=%d", cmd, cmd_len);
+		DPRINTF(LOG_DEBUG, "socket cmd=%s\r\n", cmd);
 		
 		retry_count = 3;
 		do {
@@ -537,16 +542,23 @@ int Gsm_OpenSocketCmd(void *context, uint8_t ServiceType, uint8_t accessMode)
 
 		free(cmd);
 		
+		if (strstr((char *)GSM_RSP, "QIURC")) {
+			retval = MQTT_CODE_ERROR_NETWORK;
+			return retval;
+		}
+		
 		if (retval == 0) {
 			memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-			retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 300);
-			retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40);
-			DPRINTF(LOG_DEBUG, "open socket rsp=%s\r\n", GSM_RSP);
+			retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 100);
 			if (retval == 0) {
-				if (strstr((char *)GSM_RSP, "QIOPEN: 0,0")) {
-					retval = 0;
-				} else {
-					retval = -1;
+				retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40);
+				DPRINTF(LOG_DEBUG, "open socket rsp=%s\r\n", GSM_RSP);
+				if (retval == 0) {
+					if (strstr((char *)GSM_RSP, "QIOPEN: 0,0")) {
+						retval = 0;
+					} else {
+						retval = MQTT_CODE_CONTINUE;
+					}
 				}
 			}
 		}
@@ -573,9 +585,10 @@ int Gsm_CloseSocketCmd(void *context)
 		uint8_t cmd_len;
 		memset(cmd, 0, GSM_GENER_CMD_LEN);
 		cmd_len = sprintf(cmd, "%s=%d\r\n", GSM_CLOSESOCKET_CMD_STR, connectID);
+		DPRINTF(LOG_DEBUG, "close socket cmd=%s", cmd);
 		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT * 20, true);
+		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT * 40, true);
 
 		free(cmd);
 	}

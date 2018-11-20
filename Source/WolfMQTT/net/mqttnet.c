@@ -174,8 +174,8 @@ static int NetRead(void *context, byte *buf, int buf_len, int timeout_ms)
 				sock->bytes += rc;      /* Data */
 			}
 		} else {
-			delay_ms(1);
-			timeleft--;
+			delay_ms(1000);
+			timeleft = timeleft - 1000;
 			if	(timeleft <= 0)
 				timeout = 1;
 		}

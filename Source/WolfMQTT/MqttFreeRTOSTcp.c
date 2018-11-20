@@ -37,7 +37,7 @@
 #define DEFAULT_TOPIC_NAME      WOLFMQTT_TOPIC_NAME "U"
 #define TLS_CA_CERT             "DSTRootCAX3.pem"
 
-
+char gps_data[512] = { 0 };
 
 static MqttClient gMQTTC;
 static MqttNet gMQTTN;
@@ -192,6 +192,7 @@ void vSecureMQTTClientTask(void *pvParameters)
 	MqttMessage lwt_msg;
 	MqttPublish publish;
 	char PubMsg[16];
+	char* msg = PubMsg;
 
 	(void)pvParameters;
 
@@ -300,6 +301,9 @@ void vSecureMQTTClientTask(void *pvParameters)
 			}
 			case 3:
 			{
+				if (cntr%3 == 0) {
+					gps_data_get();
+				}
 				rc = MqttClient_WaitMessage(&gMQTTC, 2000);
 				if (rc == MQTT_CODE_ERROR_TIMEOUT)
 					/* A timeout is not an error, it just means there is no data */
@@ -307,8 +311,14 @@ void vSecureMQTTClientTask(void *pvParameters)
 
 				if (rc == MQTT_CODE_SUCCESS) {
 					cntr++; /* increment counter */
-
+					
 					XSNPRINTF(PubMsg, sizeof(PubMsg), "Counter:%d", (int)cntr);
+					
+					if (cntr%3 == 0) {
+						msg = strcat(gps_data, PubMsg);
+					} else {
+						msg = PubMsg;
+					}
 
 					/* Publish Topic */
 					XMEMSET(&publish, 0, sizeof(publish));
@@ -317,8 +327,8 @@ void vSecureMQTTClientTask(void *pvParameters)
 					publish.duplicate = 0;
 					publish.topic_name = DEFAULT_TOPIC_NAME;
 					publish.packet_id = mqttclient_get_packetid();
-					publish.buffer = (byte *)PubMsg;
-					publish.total_len = (word16)XSTRLEN(PubMsg);
+					publish.buffer = (byte *)msg;
+					publish.total_len = (word16)XSTRLEN(msg);
 					rc = MqttClient_Publish(&gMQTTC, &publish);
 					PRINTF("MQTT Publish: Topic %s, %s (%d)",
 					       publish.topic_name,

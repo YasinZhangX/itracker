@@ -265,7 +265,7 @@ int main(void)
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
 
 		// timer init
-	  timers_init();
+	  //timers_init();
 
 		// ble
     ble_stack_init();
@@ -282,7 +282,7 @@ int main(void)
 		nrf_crypto_ecc_public_key_from_raw(&g_nrf_crypto_ecc_secp256r1_curve_info, &m_public_key,pk, sizeof(pk));
 
 		// sensors
-	  sensors_init();
+	  //sensors_init();
 
 		// init gsm
 	  Gsm_Uart_Init();

@@ -99,6 +99,7 @@ typedef enum G_TYPE {
  *                                         EXTERN FUNCTION
  *********************************************************************************************************
  */
+void delay_ms(uint32_t ms);
 int  Gsm_Init(void);
 void GMS_PowerUp(void);
 void GMS_PowerDown(void);
