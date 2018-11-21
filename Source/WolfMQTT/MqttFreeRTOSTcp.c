@@ -34,7 +34,7 @@
 #define DEFAULT_USERNAME        "baiya"
 #define DEFAULT_USERPW					"baiyatech"
 #define WOLFMQTT_TOPIC_NAME     "BY2/"
-#define DEFAULT_TOPIC_NAME      WOLFMQTT_TOPIC_NAME "U"
+#define DEFAULT_TOPIC_NAME      WOLFMQTT_TOPIC_NAME "U/wolfmqtt"
 #define TLS_CA_CERT             "DSTRootCAX3.pem"
 
 char gps_data[512] = { 0 };
@@ -49,7 +49,7 @@ static const char *mTlsCaFile = TLS_CA_CERT;
 extern void application_timers_start(void);
 
 
-#define PRINT_BUFFER_SIZE 80
+#define PRINT_BUFFER_SIZE 1024
 static int mqtt_message_cb(MqttClient *client, MqttMessage *msg,
 			   byte msg_new, byte msg_done)
 {
@@ -201,9 +201,8 @@ void vSecureMQTTClientTask(void *pvParameters)
   while (1) {
 		PRINTF("GSM Init");
     rc = Gsm_Init();
-		if (rc == 0) {
+		if (rc >= 0) {
 			PRINTF("GSM Init Success");
-			//application_timers_start();
 			break;
 		} else {
 			PRINTF("GSM Init fail. Retry");
@@ -302,7 +301,9 @@ void vSecureMQTTClientTask(void *pvParameters)
 			case 3:
 			{
 				if (cntr%3 == 0) {
+					DPRINTF(LOG_DEBUG, "1 GPS data geting\r\n");
 					gps_data_get();
+					DPRINTF(LOG_DEBUG, "2 GPS data get\r\n");
 				}
 				rc = MqttClient_WaitMessage(&gMQTTC, 2000);
 				if (rc == MQTT_CODE_ERROR_TIMEOUT)

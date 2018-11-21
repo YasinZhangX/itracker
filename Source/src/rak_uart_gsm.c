@@ -3,6 +3,10 @@
  *                                             INCLUDE FILES
  *********************************************************************************************************
  */
+/* FreeRTOS includes */
+#include "FreeRTOS.h"
+#include "task.h"
+
 #include "stdio.h"
 #include "rak_uart_gsm.h"
 #include "gps.h"
@@ -48,9 +52,14 @@ extern char post_data[1024];
 
 void  AppTaskGPRS(void const *argument);
 
-void delay_ms(uint32_t ms)
+void delay_ms_hard(uint32_t ms)
 {
 	nrf_delay_ms(ms);
+}
+
+void delay_ms(uint32_t ms)
+{
+	vTaskDelay(ms);
 }
 
 int GSM_UART_TxBuf(uint8_t *buffer, int nbytes)
@@ -152,18 +161,18 @@ void Gsm_PowerUp(void)
 	DPRINTF(LOG_DEBUG, "GMS_PowerUp\r\n");
 
 	GSM_PWR_OFF;
-	delay_ms(200);
+	delay_ms_hard(200);
 
 	/*Pwr stable wait at least 30ms before pulling down PWRKEY pin*/
 	GSM_PWR_ON;
 	GSM_RESET_HIGH;
-	delay_ms(60);           // >30ms
+	delay_ms_hard(60);           // >30ms
 
 	/*Pwr key keep to low at least 100ms*/
 	GSM_PWRKEY_LOW;
-	delay_ms(300); //300ms
+	delay_ms_hard(300); //300ms
 	GSM_PWRKEY_HIGH;
-	delay_ms(500);
+	delay_ms_hard(500);
 }
 
 void Gsm_PowerDown(void)
@@ -214,8 +223,8 @@ int Gsm_WaitRspOK(char *rsp_value, uint32_t timeout_ms, uint8_t is_rf)
 		do {
 			c = Gsm_RxByte();
 			if (c < 0) {
-				time_count--;
-				delay_ms(1);
+				time_count=time_count-5;
+				delay_ms(5);
 				continue;
 			}
 
@@ -228,8 +237,8 @@ int Gsm_WaitRspOK(char *rsp_value, uint32_t timeout_ms, uint8_t is_rf)
 			int c;
 			c = Gsm_RxByte();
 			if (c < 0) {
-				time_count--;
-				delay_ms(1);
+				time_count=time_count-5;
+				delay_ms(5);
 				continue;
 			}
 			//R485_UART_TxBuf((uint8_t *)&c,1);
@@ -242,10 +251,16 @@ int Gsm_WaitRspOK(char *rsp_value, uint32_t timeout_ms, uint8_t is_rf)
 				else
 					cmp_p = strstr(resp, GSM_CMD_RSP_OK);
 				if (cmp_p) {
-					if (i > wait_len && rsp_value != NULL)
-						//SEGGER_RTT_printf(0,"--%s  len=%d\r\n", resp, (cmp_p-resp));
-						memcpy(rsp_value, resp, (cmp_p - resp));
-					retval = 0;
+					if (i > wait_len) {
+						if (rsp_value != NULL) {
+							//SEGGER_RTT_printf(0,"--%s  len=%d\r\n", resp, (cmp_p-resp));
+							memcpy(rsp_value, resp, (cmp_p - resp));
+							retval = cmp_p - resp;
+						} else {
+							retval = 0;
+						}
+					}
+					
 					break;
 				}
 			}
@@ -386,6 +401,7 @@ void gsm_send_test(void)
 int Gsm_nb_iot_config(void)
 {
 	int retval = -1;
+	uint8_t doflag = 0;
 
 //	Gsm_print("AT+COPS=?");
 //	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
@@ -423,12 +439,15 @@ int Gsm_nb_iot_config(void)
 		goto exit;
 	delay_ms(1000);
 
-	Gsm_print("AT+QIACT=1");
-	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 50, true);
-	if (retval == -1)
-		goto exit;
-	delay_ms(1000);
+	if (doflag == 0) {
+		Gsm_print("AT+QIACT=1");
+		memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+		retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 50, true);
+		if (retval == -1)
+			goto exit;
+		delay_ms(1000);
+		doflag = 1;
+	}
 
 	Gsm_print("AT+QIACT?");
 	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
@@ -483,7 +502,7 @@ void gps_data_get()
 	Gsm_print("AT+QGPSGNMEA=\"GGA\"");
 	retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT*10, true);
 	retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT*10, true);
-	if (retval == 0) {
+	if (retval >= 0) {
 		GpsParseGpsData_2((int8_t*)RSP);
 		memset(gps_data, 0, 512);
 		sprintf(gps_data, GPS_FORMAT, NmeaGpsData.NmeaDataType,
@@ -538,7 +557,7 @@ int Gsm_OpenSocketCmd(void *context, uint8_t ServiceType, uint8_t accessMode)
 			GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 			memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
 			retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
-		} while (retry_count && retval);
+		} while (retry_count && retval < 0);
 
 		free(cmd);
 		
@@ -547,13 +566,13 @@ int Gsm_OpenSocketCmd(void *context, uint8_t ServiceType, uint8_t accessMode)
 			return retval;
 		}
 		
-		if (retval == 0) {
+		if (retval >= 0) {
 			memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
 			retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 100);
-			if (retval == 0) {
+			if (retval >= 0) {
 				retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40);
 				DPRINTF(LOG_DEBUG, "open socket rsp=%s\r\n", GSM_RSP);
-				if (retval == 0) {
+				if (retval >= 0) {
 					if (strstr((char *)GSM_RSP, "QIOPEN: 0,0")) {
 						retval = 0;
 					} else {
@@ -602,6 +621,8 @@ int Gsm_SendDataCmd(void *context, const void *data, uint16_t len, uint32_t time
 	int retval = -1;
 	char *cmd;
 	uint8_t connectID;
+	uint8_t retry_count = 3;
+	int pos = 0;
 
 	SocketContext *sock = (SocketContext *)context;
 
@@ -613,19 +634,28 @@ int Gsm_SendDataCmd(void *context, const void *data, uint16_t len, uint32_t time
 		memset(cmd, 0, GSM_GENER_CMD_LEN);
 		cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_SENDDATA_CMD_STR, connectID, len);
 		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
-		//DPRINTF(LOG_DEBUG, "cmd=%scmd_len=%d\r\n", cmd, cmd_len);
-		//DPRINTF(LOG_DEBUG, "data=%s\n", (char *)data);
+		DPRINTF(LOG_DEBUG, "cmd=%s\r\n", cmd);
+		DPRINTF(LOG_DEBUG, "data=%s\n", (char *)data);
 		delay_ms(10);
 		
-		//DPRINTF(LOG_DEBUG, "GSM_SEND_DATA\n");
+		DPRINTF(LOG_DEBUG, "GSM_SEND_DATA\n");
 		GSM_UART_TxBuf((uint8_t *)data, len);
 		memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 10, true);  //500*4=2000ms
-		if (retval == 0)
-			retval = len;
-		else if (retval > 0)
-			if (strstr(cmd, "SEND OK"))
+		do {
+			retry_count--;
+			retval = Gsm_WaitRspOK((char *)&GSM_RSP[pos], GSM_GENER_CMD_TIMEOUT * 30, true);  //500*10=5000ms
+			DPRINTF(LOG_DEBUG, "GSM_RSP=%s\r\n rsp_len=%d retval=%d\r\n", GSM_RSP, strlen((char*)GSM_RSP), retval);
+			if (retval >= 0) {
+				pos = pos + retval;
+			}
+			if (strstr((char *)GSM_RSP, "SEND")) {
+				retval = len;
+			}else if (strstr((char *)GSM_RSP, "+QIURC: \"recv\"")) {
 				retval = 0;
+			} else {
+			  retval = -1;
+			}
+		} while(retval < 0 && retry_count > 0);
 	} else {
 		//DPRINTF(LOG_DEBUG, "ret1=%d", retval);
 	}
@@ -655,10 +685,10 @@ int Gsm_ReadRecvBufferCmd(void *context, uint16_t len, uint32_t timeout)
 
 		retval = Gsm_WaitRecvPrompt(timeout);
 			
-		if (retval == 0) {
+		if (retval >= 0) {
 			memset(resp, 0, 1600);
 			retval = Gsm_WaitNewLine(resp, timeout);
-			if (retval == 0) {
+			if (retval >= 0) {
 				//DPRINTF(LOG_DEBUG, "recvlen:%s\r\n", resp);
 				sscanf(resp, " %d", &retval);
 			}
@@ -711,7 +741,7 @@ int Gsm_AutoBaud(void)
 			retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, NULL);
 			delay_ms(500);
 			rety_cunt--;
-		} while (retval != 0 && rety_cunt > 0);
+		} while (retval < 0 && rety_cunt > 0);
 
 		free(cmd);
 	}
