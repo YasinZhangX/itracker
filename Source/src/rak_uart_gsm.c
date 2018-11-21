@@ -401,7 +401,7 @@ void gsm_send_test(void)
 int Gsm_nb_iot_config(void)
 {
 	int retval = -1;
-	uint8_t doflag = 0;
+	static uint8_t doflag = 0;
 
 //	Gsm_print("AT+COPS=?");
 //	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
@@ -497,29 +497,33 @@ void gps_data_get()
 {
 	int retval = -1;
 	uint8_t cmd_len;
+	uint8_t retry_count = 3;
 
 	memset(RSP, 0, GSM_GENER_CMD_LEN);
 	Gsm_print("AT+QGPSGNMEA=\"GGA\"");
-	retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT*10, true);
-	retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT*10, true);
-	if (retval >= 0) {
-		GpsParseGpsData_2((int8_t*)RSP);
-		memset(gps_data, 0, 512);
-		sprintf(gps_data, GPS_FORMAT, NmeaGpsData.NmeaDataType,
-			NmeaGpsData.NmeaUtcTime,
-			NmeaGpsData.NmeaLatitude,
-			NmeaGpsData.NmeaLatitudePole,
-			NmeaGpsData.NmeaLongitude,
-			NmeaGpsData.NmeaLongitudePole,
-			NmeaGpsData.NmeaAltitude,
-			NmeaGpsData.NmeaAltitudeUnit,
-			NmeaGpsData.NmeaHeightGeoid,
-			NmeaGpsData.NmeaHeightGeoidUnit
-			);
-		DPRINTF(LOG_INFO, "%s", gps_data);
-	} else {
-		DPRINTF(LOG_WARN, "GPS data get timeout");
-	}
+	do {
+		retry_count--;
+		retval = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT*10, true);
+		if (retval >= 0 && strstr(RSP, "QGPSGNMEA")) {
+			GpsParseGpsData_2((int8_t*)RSP);
+			memset(gps_data, 0, 512);
+			sprintf(gps_data, GPS_FORMAT, NmeaGpsData.NmeaDataType,
+				NmeaGpsData.NmeaUtcTime,
+				NmeaGpsData.NmeaLatitude,
+				NmeaGpsData.NmeaLatitudePole,
+				NmeaGpsData.NmeaLongitude,
+				NmeaGpsData.NmeaLongitudePole,
+				NmeaGpsData.NmeaAltitude,
+				NmeaGpsData.NmeaAltitudeUnit,
+				NmeaGpsData.NmeaHeightGeoid,
+				NmeaGpsData.NmeaHeightGeoidUnit
+				);
+			//DPRINTF(LOG_INFO, "%s", gps_data);
+			break;
+		} else {
+			DPRINTF(LOG_WARN, "GPS data get timeout, Retry Left %d", retry_count);
+		}
+	} while (retry_count > 0);
 }
 
 // Get socket state
@@ -621,8 +625,9 @@ int Gsm_SendDataCmd(void *context, const void *data, uint16_t len, uint32_t time
 	int retval = -1;
 	char *cmd;
 	uint8_t connectID;
-	uint8_t retry_count = 3;
-	int pos = 0;
+	uint8_t send_retry = 2;
+	uint8_t retry_count;
+	int pos, times;
 
 	SocketContext *sock = (SocketContext *)context;
 
@@ -633,33 +638,42 @@ int Gsm_SendDataCmd(void *context, const void *data, uint16_t len, uint32_t time
 		uint8_t cmd_len;
 		memset(cmd, 0, GSM_GENER_CMD_LEN);
 		cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_SENDDATA_CMD_STR, connectID, len);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
-		DPRINTF(LOG_DEBUG, "cmd=%s\r\n", cmd);
-		DPRINTF(LOG_DEBUG, "data=%s\n", (char *)data);
-		delay_ms(10);
-		
-		DPRINTF(LOG_DEBUG, "GSM_SEND_DATA\n");
-		GSM_UART_TxBuf((uint8_t *)data, len);
-		memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
 		do {
-			retry_count--;
-			retval = Gsm_WaitRspOK((char *)&GSM_RSP[pos], GSM_GENER_CMD_TIMEOUT * 30, true);  //500*10=5000ms
-			DPRINTF(LOG_DEBUG, "GSM_RSP=%s\r\n rsp_len=%d retval=%d\r\n", GSM_RSP, strlen((char*)GSM_RSP), retval);
-			if (retval >= 0) {
-				pos = pos + retval;
+			send_retry--;
+			times = len/100+1; 
+			retry_count = 2*times;
+			pos = 0;
+			GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+			DPRINTF(LOG_DEBUG, "cmd=%s\r\n", cmd);
+			DPRINTF(LOG_DEBUG, "data=%s\n", (char *)data);
+			delay_ms(10);
+			
+			DPRINTF(LOG_DEBUG, "GSM_SEND_DATA\n");
+			GSM_UART_TxBuf((uint8_t *)data, len);
+			memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+			do {
+				retry_count--;
+				retval = Gsm_WaitRspOK((char *)&GSM_RSP[pos], GSM_GENER_CMD_TIMEOUT * 10, true);  //500*10=5000ms
+				DPRINTF(LOG_DEBUG, "GSM_RSP=%s\r\n pos=%d\r\n rsp_len=%d retval=%d\r\n", GSM_RSP, pos, strlen((char*)GSM_RSP), retval);
+				if (retval >= 0) {
+					pos = pos + retval;
+				}
+				if (strstr((char *)GSM_RSP, "SEND")) {
+					retval = len;
+				}else if (strstr((char *)GSM_RSP, "+QIURC: \"recv\"")) {
+					retval = 0;
+				} else {
+					retval = -1;
+				}
+			} while(retval < 0 && retry_count > 0);
+			if (retval >= 0 ) {
+				break;
 			}
-			if (strstr((char *)GSM_RSP, "SEND")) {
-				retval = len;
-			}else if (strstr((char *)GSM_RSP, "+QIURC: \"recv\"")) {
-				retval = 0;
-			} else {
-			  retval = -1;
-			}
-		} while(retval < 0 && retry_count > 0);
-	} else {
-		//DPRINTF(LOG_DEBUG, "ret1=%d", retval);
+		} while(send_retry > 0);
 	}
 	free(cmd);
+	if (retval < 0)
+		retval = 0;
 
 	return retval;
 }

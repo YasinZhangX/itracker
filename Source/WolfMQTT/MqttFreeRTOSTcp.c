@@ -305,7 +305,7 @@ void vSecureMQTTClientTask(void *pvParameters)
 					gps_data_get();
 					DPRINTF(LOG_DEBUG, "2 GPS data get\r\n");
 				}
-				rc = MqttClient_WaitMessage(&gMQTTC, 2000);
+				rc = MqttClient_WaitMessage(&gMQTTC, 1000);
 				if (rc == MQTT_CODE_ERROR_TIMEOUT)
 					/* A timeout is not an error, it just means there is no data */
 					rc = MQTT_CODE_SUCCESS;
@@ -320,6 +320,7 @@ void vSecureMQTTClientTask(void *pvParameters)
 					} else {
 						msg = PubMsg;
 					}
+					DPRINTF(LOG_DEBUG, "MSG: %s\r\n", gps_data);
 
 					/* Publish Topic */
 					XMEMSET(&publish, 0, sizeof(publish));
@@ -335,6 +336,7 @@ void vSecureMQTTClientTask(void *pvParameters)
 					       publish.topic_name,
 					       MqttClient_ReturnCodeToString(rc), rc);
 				}
+				vTaskDelay(5000);
 				break;
 			}
 			default:
