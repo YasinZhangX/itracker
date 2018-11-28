@@ -63,7 +63,7 @@
 #define configTICK_RATE_HZ                                                        (portTickType)1000
 #define configMAX_PRIORITIES                                                      ( 3 )
 #define configMINIMAL_STACK_SIZE                                                  ( 60 )
-#define configTOTAL_HEAP_SIZE                                                     ( 1024*25 )
+#define configTOTAL_HEAP_SIZE                                                     ( 1024*27 )
 #define configMAX_TASK_NAME_LEN                                                   ( 20 )
 #define configUSE_16_BIT_TICKS                                                    0
 #define configIDLE_SHOULD_YIELD                                                   1

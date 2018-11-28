@@ -280,18 +280,18 @@ int main(void)
 	  //timers_init();
 
 		// ble
-    ble_stack_init();
-    gap_params_init();
-    gatt_init();
-    services_init();
-		advertising_init();
-    conn_params_init();
-	  peer_manager_init();
+//    ble_stack_init();
+//    gap_params_init();
+//    gatt_init();
+//    services_init();
+//		advertising_init();
+//    conn_params_init();
+//	  peer_manager_init();
 
 		// dfu
-    dfu_settings_init();
-		nrf_crypto_init();
-		nrf_crypto_ecc_public_key_from_raw(&g_nrf_crypto_ecc_secp256r1_curve_info, &m_public_key,pk, sizeof(pk));
+    //dfu_settings_init();
+		//nrf_crypto_init();
+		//nrf_crypto_ecc_public_key_from_raw(&g_nrf_crypto_ecc_secp256r1_curve_info, &m_public_key,pk, sizeof(pk));
 
 		// sensors
 	  //sensors_init();
@@ -302,7 +302,7 @@ int main(void)
 	  Gsm_PowerUp();
 
     // Create a FreeRTOS task for the BLE stack. The task will run advertising_start() before entering its loop.
-    nrf_sdh_freertos_init(advertising_start, NULL);
+    //nrf_sdh_freertos_init(advertising_start, NULL);
 		
 		// dfu task init
 		//BaseType_t xReturned = xTaskCreate(dfu_task, "dfu", 512, NULL, 1, NULL);

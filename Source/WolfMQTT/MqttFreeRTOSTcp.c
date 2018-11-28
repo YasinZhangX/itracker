@@ -360,7 +360,7 @@ exit:
 	} /* for loop */
 }
 
-#define MQTT_TASK_STACK_SIZE 1024*3
+#define MQTT_TASK_STACK_SIZE 1024
 
 void MQTT_init(void)
 {

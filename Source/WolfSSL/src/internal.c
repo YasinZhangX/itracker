@@ -6682,7 +6682,7 @@ int GrowInputBuffer(WOLFSSL* ssl, int size, int usedLength)
     tmp = (byte*)XMALLOC(size + usedLength + align,
                              ssl->heap, DYNAMIC_TYPE_IN_BUFFER);
     WOLFSSL_MSG("growing input buffer\n");
-
+		
     if (tmp == NULL)
         return MEMORY_E;
 

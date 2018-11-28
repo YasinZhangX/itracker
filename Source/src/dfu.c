@@ -168,7 +168,7 @@ nrf_crypto_ecdsa_secp256r1_signature_t       m_signature;
  */
 nrf_crypto_hash_sha256_digest_t              m_init_packet_hash;
 
-extern uint16_t eraser_flag;
+uint16_t eraser_flag = 0;
 
 uint32_t firmware_copy(uint32_t dst_addr,
                            uint8_t *src_addr,

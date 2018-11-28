@@ -625,7 +625,7 @@ int Gsm_SendDataCmd(void *context, const void *data, uint16_t len, uint32_t time
 	int retval = -1;
 	char *cmd;
 	uint8_t connectID;
-	uint8_t send_retry = 2;
+	uint8_t send_retry = 1;
 	uint8_t retry_count;
 	int pos, times;
 

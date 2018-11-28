@@ -18,7 +18,7 @@
 
 extern GSM_RECIEVE_TYPE g_type;
 extern TimerHandle_t m_demo_timer;  
-extern char GSM_RSP[1600];
+extern char GSM_RSP[1024];
 extern unsigned char dfu_cc_packet[136];
 //dfu task
 nrf_dfu_settings_t s_dfu_settings;
@@ -35,7 +35,7 @@ extern nrf_crypto_ecc_public_key_t              m_public_key;
 extern void generate_pb(void);
 extern nrf_dfu_result_t signature_check(void);
 extern uint32_t firmware_copy(uint32_t dst_addr,uint8_t *src_addr,uint32_t size);
-uint16_t eraser_flag = 0;
+extern uint16_t eraser_flag;
 
 void check_answer()
 {
