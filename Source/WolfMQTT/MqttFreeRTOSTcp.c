@@ -25,15 +25,15 @@
 
 /* Configuration */
 #define MQTT_BUF_SIZE   1024
-#define DEFAULT_MQTT_HOST       "mqtt-dev-esp8266-v1.baiyatech.com" /* mqtt broker server */
+#define DEFAULT_MQTT_HOST       "www.yasinzhang.top" //"mqtt-dev-esp8266-v1.baiyatech.com" /* mqtt broker server */
 #define DEFAULT_CMD_TIMEOUT_MS  30000
 #define DEFAULT_CON_TIMEOUT_MS  30000
 #define DEFAULT_MQTT_QOS        MQTT_QOS_0
 #define DEFAULT_KEEP_ALIVE_SEC  60
 #define DEFAULT_CLIENT_ID       "WolfMQTTClient"
-#define DEFAULT_USERNAME        "baiya"
-#define DEFAULT_USERPW					"baiyatech"
-#define WOLFMQTT_TOPIC_NAME     "BY2/"
+#define DEFAULT_USERNAME        "yasin"
+#define DEFAULT_USERPW					"testserver"
+#define WOLFMQTT_TOPIC_NAME     "Test/"
 #define DEFAULT_TOPIC_NAME      WOLFMQTT_TOPIC_NAME "U/wolfmqtt"
 #define TLS_CA_CERT             "DSTRootCAX3.pem"
 
@@ -238,7 +238,7 @@ void vSecureMQTTClientTask(void *pvParameters)
 			case 0:
 			{
 				rc = MqttClient_NetConnect(&gMQTTC, DEFAULT_MQTT_HOST, 0,
-							   DEFAULT_CON_TIMEOUT_MS, 0, mqtt_tls_cb);
+							   DEFAULT_CON_TIMEOUT_MS, 1, mqtt_tls_cb);
 
 				if (rc != MQTT_CODE_SUCCESS) {
 					vTaskDelay(250);
@@ -336,7 +336,6 @@ void vSecureMQTTClientTask(void *pvParameters)
 					       publish.topic_name,
 					       MqttClient_ReturnCodeToString(rc), rc);
 				}
-				vTaskDelay(5000);
 				break;
 			}
 			default:
@@ -361,7 +360,7 @@ exit:
 	} /* for loop */
 }
 
-#define MQTT_TASK_STACK_SIZE 1024
+#define MQTT_TASK_STACK_SIZE 1024*3
 
 void MQTT_init(void)
 {

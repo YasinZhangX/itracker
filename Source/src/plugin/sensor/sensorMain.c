@@ -16,7 +16,7 @@
 				"}\r\n"
 
 tracker_data_t tracker_data;
-char post_data[1024]={0};
+char post_data[512]={0};
 
 void sensors_init()
 {

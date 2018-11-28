@@ -59,9 +59,6 @@ static ble_uuid_t m_adv_uuids[]          =                                      
     {BLE_UUID_NUS_SERVICE, NUS_SERVICE_UUID_TYPE}
 };
 
-char CMD[128] = {0};
-char RSP[128] = {0};
-extern char GSM_RSP[1600];
 #define SEC_PARAM_BOND                      1                                       /**< Perform bonding. */
 #define SEC_PARAM_MITM                      0                                       /**< Man In The Middle protection not required. */
 #define SEC_PARAM_LESC                      0                                       /**< LE Secure Connections not enabled. */

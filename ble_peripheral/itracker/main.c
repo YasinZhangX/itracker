@@ -119,6 +119,14 @@ extern void delay_ms(uint32_t ms);
 
 
 /*************************** Log ********************************/
+#ifdef DEBUG_WOLFSSL
+#include "logging.h"
+
+void log_print(const int logLevel, const char *const logMessage)
+{
+		DPRINTF(LOG_DEBUG, "%s\r\n", logMessage);
+}
+#endif
 
 /**@brief Function for initializing the nrf log module.
  */
@@ -128,6 +136,10 @@ static void log_init(void)
     APP_ERROR_CHECK(err_code);
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
+	
+	#ifdef DEBUG_WOLFSSL
+		wolfSSL_SetLoggingCb(log_print);
+	#endif
 }
 
 /*************************** Timer ********************************/

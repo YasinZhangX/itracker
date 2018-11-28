@@ -5,7 +5,7 @@
 #define _USER_SETTING_H_
 
 /* optional debugging */
-#if 0
+#if 1
 #define DEBUG_WOLFSSL
 #endif
 
@@ -16,6 +16,7 @@
 #define SIZEOF_LONG_LONG 8
 #define WOLFSSL_HAVE_MIN
 #define WOLFSSL_HAVE_MAX
+#define WOLFSSL_SMALL_STACK 
 
 /* side-channel resistance */
 #define TFM_TIMING_RESISTANT

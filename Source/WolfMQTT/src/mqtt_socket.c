@@ -36,7 +36,7 @@
 #ifdef WOLFMQTT_NO_STDIO
     #undef WOLFMQTT_DEBUG_SOCKET
 #endif
-
+#define WOLFMQTT_DEBUG_SOCKET
 
 /* Private Functions */
 #ifdef ENABLE_MQTT_TLS
