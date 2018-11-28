@@ -12,7 +12,8 @@
 #include "gps.h"
 #include "mqttnet.h"
 
-#define  GSM_RXBUF_MAXSIZE           1024
+#define GSM_RXBUF_MAXSIZE           1024
+#define GSM_MAX_RX_DATA             512
 
 static uint16_t rxReadIndex = 0;
 static uint16_t rxWriteIndex = 0;
@@ -201,6 +202,15 @@ int Gsm_RxByte(void)
 	return c;
 }
 
+void Gsm_print(char *at_cmd)
+{
+	uint8_t cmd_len;
+
+	memset(GSM_CMD, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(GSM_CMD, "%s\r\n", at_cmd);
+	GSM_UART_TxBuf((uint8_t *)GSM_CMD, cmd_len);
+	DPRINTF(LOG_DEBUG, "send: %s\r\n", at_cmd);
+}
 
 int Gsm_WaitRspOK(char *rsp_value, uint32_t timeout_ms, uint8_t is_rf)
 {
@@ -309,7 +319,7 @@ int Gsm_WaitNewLine(char *rsp_value, uint32_t timeout_ms)
 			continue;
 		}
 		//R485_UART_TxBuf((uint8_t *)&c,1);
-		//SEGGER_RTT_printf(0, "%c", c);
+		SEGGER_RTT_printf(0, "%c", c);
 		str_tmp[i++] = c;
 		if (i > strlen("\r\n")) {
 			if ((cmp_p = strstr(str_tmp, "\r\n")) != NULL) {
@@ -344,7 +354,7 @@ int Gsm_WaitRecvPrompt(uint32_t timeout_ms)
 			continue;
 		}
 		//R485_UART_TxBuf((uint8_t *)&c,1);
-		//SEGGER_RTT_printf(0, "%c", c);
+		SEGGER_RTT_printf(0, "%c", c);
 		resp[i++] = (char)c;
 		if (i >= wait_len) {
 			cmp_p = strstr(resp, GSM_RECVDATA_RSP_STR);
@@ -352,21 +362,17 @@ int Gsm_WaitRecvPrompt(uint32_t timeout_ms)
 				retval = 0;
 				break;
 			}
+			cmp_p = strstr(resp, "ERROR");
+			if (cmp_p) {
+				Gsm_print("AT+QIGETERROR");
+				memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+				Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 5, true);
+				break;
+			}
 		}
 	} while (time_count > 0);
 
 	return retval;
-}
-
-
-void Gsm_print(char *at_cmd)
-{
-	uint8_t cmd_len;
-
-	memset(GSM_CMD, 0, GSM_GENER_CMD_LEN);
-	cmd_len = sprintf(GSM_CMD, "%s\r\n", at_cmd);
-	GSM_UART_TxBuf((uint8_t *)GSM_CMD, cmd_len);
-	DPRINTF(LOG_DEBUG, "send: %s\r\n", at_cmd);
 }
 
 void gsm_send_test(void)
@@ -407,7 +413,7 @@ int Gsm_nb_iot_config(void)
 	// delay_ms(1000);
 
 	//Gsm_print("AT+COPS=1,0,\"CHN-UNICOM\",0");
-  Gsm_print("AT+COPS=1,0,\"CHINA MOBILE\",0");
+	Gsm_print("AT+COPS=1,0,\"CHINA MOBILE\",0");
 	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
 	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 100, true);
 	if (retval == -1)
@@ -685,13 +691,15 @@ int Gsm_ReadRecvBufferCmd(void *context, uint16_t len, uint32_t timeout)
 	SocketContext *sock = (SocketContext *)context;
 
 	connectID = sock->connectID;
+	if (len >= GSM_MAX_RX_DATA)
+		len = GSM_MAX_RX_DATA;
 
 	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
 	if (cmd) {
 		uint8_t cmd_len;
 		memset(cmd, 0, GSM_GENER_CMD_LEN);
 		cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_READDATA_CMD_STR, connectID, len);
-		//DPRINTF(LOG_DEBUG, "recvSendCmd: %s\r\n", cmd);
+		DPRINTF(LOG_DEBUG, "recvSendCmd: %s\r\n", cmd);
 		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
 		retval = Gsm_WaitRecvPrompt(timeout);
@@ -700,8 +708,8 @@ int Gsm_ReadRecvBufferCmd(void *context, uint16_t len, uint32_t timeout)
 			memset(resp, 0, GSM_GENER_CMD_LEN);
 			retval = Gsm_WaitNewLine(resp, timeout);
 			if (retval >= 0)
-				//DPRINTF(LOG_DEBUG, "recvlen:%s\r\n", resp);
-				sscanf(resp, " %d", &retval);
+				DPRINTF(LOG_DEBUG, "recvlen:%s\r\n", resp);
+			sscanf(resp, " %d", &retval);
 		}
 
 		free(cmd);
@@ -717,7 +725,7 @@ uint16_t Gsm_RecvRawData(byte *recv_buf, uint16_t len, uint32_t timeout)
 	uint16_t i = 0;
 	uint32_t time_left = timeout;
 
-	//DPRINTF(LOG_INFO, "Rx:");
+	//DPRINTF(LOG_DEBUG, "Rx:");
 	do {
 		c = Gsm_RxByte();
 		if (c < 0) {

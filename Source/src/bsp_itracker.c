@@ -6,7 +6,7 @@
 #include "bsp_itracker.h"
 
 #define UART_TX_BUF_SIZE 1024                         /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE 1024                           /**< UART RX buffer size. */
+#define UART_RX_BUF_SIZE 1024                         /**< UART RX buffer size. */
 
 typedef enum {
 		UART_IDLE=0,

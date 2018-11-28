@@ -16,7 +16,9 @@
 #define SIZEOF_LONG_LONG 8
 #define WOLFSSL_HAVE_MIN
 #define WOLFSSL_HAVE_MAX
-#define WOLFSSL_SMALL_STACK 
+//#define WOLFSSL_SMALL_STACK
+#define RSA_LOW_MEM
+#define WOLFSSL_STATIC_MEMORY 
 
 /* side-channel resistance */
 #define TFM_TIMING_RESISTANT

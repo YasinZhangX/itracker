@@ -299,8 +299,8 @@
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x20002600</StartAddress>
-                <Size>0xda00</Size>
+                <StartAddress>0x20001600</StartAddress>
+                <Size>0xea00</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -421,26 +421,6 @@
               <FileName>gps.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\src\gps.c</FilePath>
-            </File>
-            <File>
-              <FileName>public_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\src\public_key.c</FilePath>
-            </File>
-            <File>
-              <FileName>dfu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\src\dfu.c</FilePath>
-            </File>
-            <File>
-              <FileName>dfuTask.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\src\plugin\dfu\dfuTask.c</FilePath>
-            </File>
-            <File>
-              <FileName>dfuTask.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\Source\inc\plugin\dfu\dfuTask.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4279,26 +4259,6 @@
               <FileName>gps.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\src\gps.c</FilePath>
-            </File>
-            <File>
-              <FileName>public_key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\src\public_key.c</FilePath>
-            </File>
-            <File>
-              <FileName>dfu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\src\dfu.c</FilePath>
-            </File>
-            <File>
-              <FileName>dfuTask.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\src\plugin\dfu\dfuTask.c</FilePath>
-            </File>
-            <File>
-              <FileName>dfuTask.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\..\..\..\Source\inc\plugin\dfu\dfuTask.h</FilePath>
             </File>
           </Files>
         </Group>
