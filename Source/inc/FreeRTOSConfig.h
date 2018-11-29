@@ -63,7 +63,7 @@
 #define configTICK_RATE_HZ                                                        (portTickType)1000
 #define configMAX_PRIORITIES                                                      ( 3 )
 #define configMINIMAL_STACK_SIZE                                                  ( 60 )
-#define configTOTAL_HEAP_SIZE                                                     ( 1024*31 )
+#define configTOTAL_HEAP_SIZE                                                     ( 1024*27 )
 #define configMAX_TASK_NAME_LEN                                                   ( 20 )
 #define configUSE_16_BIT_TICKS                                                    0
 #define configIDLE_SHOULD_YIELD                                                   1
@@ -81,7 +81,7 @@
 #define configUSE_IDLE_HOOK                                                       1
 #define configUSE_TICK_HOOK                                                       0
 #define configCHECK_FOR_STACK_OVERFLOW                                            0
-#define configUSE_MALLOC_FAILED_HOOK                                              1
+#define configUSE_MALLOC_FAILED_HOOK                                              0
 
 /* Run time and task stats gathering related definitions. */
 #define configGENERATE_RUN_TIME_STATS                                             0

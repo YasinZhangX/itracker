@@ -24,7 +24,8 @@
 
 
 /* Configuration */
-#define MQTT_BUF_SIZE   1024
+#define MQTT_TX_BUF_SIZE   1024
+#define MQTT_RX_BUF_SIZE   1024
 #define DEFAULT_MQTT_HOST       "www.yasinzhang.top" //"mqtt-dev-esp8266-v1.baiyatech.com" /* mqtt broker server */
 #define DEFAULT_CMD_TIMEOUT_MS  30000
 #define DEFAULT_CON_TIMEOUT_MS  30000
@@ -41,8 +42,8 @@ char gps_data[512] = { 0 };
 
 static MqttClient gMQTTC;
 static MqttNet gMQTTN;
-static byte gMqttTxBuf[MQTT_BUF_SIZE] = {0};
-static byte gMqttRxBuf[MQTT_BUF_SIZE] = {0};
+static byte gMqttTxBuf[MQTT_TX_BUF_SIZE] = {0};
+static byte gMqttRxBuf[MQTT_RX_BUF_SIZE] = {0};
 static int mPacketIdLast;
 static const char *mTlsCaFile = TLS_CA_CERT;
 
@@ -220,8 +221,8 @@ void vSecureMQTTClientTask(void *pvParameters)
 
 		rc = MqttClient_Init(&gMQTTC, &gMQTTN,
 				     mqtt_message_cb,
-				     gMqttTxBuf, MQTT_BUF_SIZE,
-				     gMqttRxBuf, MQTT_BUF_SIZE,
+				     gMqttTxBuf, MQTT_TX_BUF_SIZE,
+				     gMqttRxBuf, MQTT_RX_BUF_SIZE,
 				     DEFAULT_CMD_TIMEOUT_MS);
 		PRINTF("MQTT Init: %s (%d)",
 		       MqttClient_ReturnCodeToString(rc), rc);

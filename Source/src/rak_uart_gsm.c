@@ -11,8 +11,9 @@
 #include "rak_uart_gsm.h"
 #include "gps.h"
 #include "mqttnet.h"
+#include "bsp_itracker.h"
 
-#define GSM_RXBUF_MAXSIZE           1024
+#define GSM_RXBUF_MAXSIZE           2048
 #define GSM_MAX_RX_DATA             512
 
 static uint16_t rxReadIndex = 0;
@@ -553,47 +554,45 @@ int Gsm_OpenSocketCmd(void *context, uint8_t ServiceType, uint8_t accessMode)
 
 	SocketContext *sock = (SocketContext *)context;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s%d,%d,\"%s\",\"%s\",%d,%d,%d\r\n", GSM_OPENSOCKET_CMD_STR, sock->contextID, sock->connectID,
-				  (ServiceType == GSM_TCP_TYPE) ? GSM_TCP_STR : GSM_UDP_STR,
-				  sock->addr.hostname, sock->addr.remote_port, sock->addr.local_port, accessMode);
-		DPRINTF(LOG_DEBUG, "socket cmd=%s\r\n", cmd);
+	cmd = (char *)GSM_CMD;
 
-		retry_count = 3;
-		do {
-			retry_count--;
-			GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
-			memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-			retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
-		} while (retry_count && retval < 0);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s%d,%d,\"%s\",\"%s\",%d,%d,%d\r\n", GSM_OPENSOCKET_CMD_STR, sock->contextID, sock->connectID,
+			  (ServiceType == GSM_TCP_TYPE) ? GSM_TCP_STR : GSM_UDP_STR,
+			  sock->addr.hostname, sock->addr.remote_port, sock->addr.local_port, accessMode);
+	DPRINTF(LOG_DEBUG, "socket cmd=%s\r\n", cmd);
 
-		free(cmd);
+	retry_count = 3;
+	do {
+		retry_count--;
+		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+		memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+		retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40, true);
+	} while (retry_count && retval < 0);
 
-		if (strstr((char *)GSM_RSP, "QIURC")) {
-			retval = MQTT_CODE_ERROR_NETWORK;
-			return retval;
-		}
+	if (strstr((char *)GSM_RSP, "QIURC")) {
+		retval = MQTT_CODE_ERROR_NETWORK;
+		return retval;
+	}
 
+	if (retval >= 0) {
+		memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+		retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 100);
 		if (retval >= 0) {
-			memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-			retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 100);
+			retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40);
+			DPRINTF(LOG_DEBUG, "open socket rsp=%s\r\n", GSM_RSP);
 			if (retval >= 0) {
-				retval = Gsm_WaitNewLine((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT * 40);
-				DPRINTF(LOG_DEBUG, "open socket rsp=%s\r\n", GSM_RSP);
-				if (retval >= 0) {
-					if (strstr((char *)GSM_RSP, "QIOPEN: 0,0"))
-						retval = 0;
-					else
-						retval = MQTT_CODE_CONTINUE;
-				}
+				if (strstr((char *)GSM_RSP, "QIOPEN: 0,0"))
+					retval = 0;
+				else
+					retval = MQTT_CODE_CONTINUE;
 			}
 		}
-
-		Gsm_GetSocketStateCmd();
 	}
+
+	Gsm_GetSocketStateCmd();
+
 	return retval;
 }
 
@@ -609,18 +608,15 @@ int Gsm_CloseSocketCmd(void *context)
 
 	connectID = sock->connectID;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s=%d\r\n", GSM_CLOSESOCKET_CMD_STR, connectID);
-		DPRINTF(LOG_DEBUG, "close socket cmd=%s", cmd);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = (char *)GSM_CMD;
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s=%d\r\n", GSM_CLOSESOCKET_CMD_STR, connectID);
+	DPRINTF(LOG_DEBUG, "close socket cmd=%s", cmd);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT * 40, true);
+	retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT * 40, true);
 
-		free(cmd);
-	}
 	return retval;
 }
 
@@ -639,42 +635,41 @@ int Gsm_SendDataCmd(void *context, const void *data, uint16_t len, uint32_t time
 
 	connectID = sock->connectID;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_SENDDATA_CMD_STR, connectID, len);
-		do {
-			send_retry--;
-			times = len / 100 + 1;
-			retry_count = 2 * times;
-			pos = 0;
-			GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
-			DPRINTF(LOG_DEBUG, "cmd=%s\r\n", cmd);
-			DPRINTF(LOG_DEBUG, "data=%s\n", (char *)data);
-			delay_ms(10);
+	cmd = GSM_CMD;
 
-			DPRINTF(LOG_DEBUG, "GSM_SEND_DATA\n");
-			GSM_UART_TxBuf((uint8_t *)data, len);
-			memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-			do {
-				retry_count--;
-				retval = Gsm_WaitRspOK((char *)&GSM_RSP[pos], GSM_GENER_CMD_TIMEOUT * 10, true);  //500*10=5000ms
-				DPRINTF(LOG_DEBUG, "GSM_RSP=%s\r\n pos=%d\r\n rsp_len=%d retval=%d\r\n", GSM_RSP, pos, strlen((char *)GSM_RSP), retval);
-				if (retval >= 0)
-					pos = pos + retval;
-				if (strstr((char *)GSM_RSP, "SEND"))
-					retval = len;
-				else if (strstr((char *)GSM_RSP, "+QIURC: \"recv\""))
-					retval = 0;
-				else
-					retval = -1;
-			} while (retval < 0 && retry_count > 0);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_SENDDATA_CMD_STR, connectID, len);
+	do {
+		send_retry--;
+		times = len / 100 + 1;
+		retry_count = 2 * times;
+		pos = 0;
+		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+		DPRINTF(LOG_DEBUG, "cmd=%s\r\n", cmd);
+		DPRINTF(LOG_DEBUG, "data=%s\n", (char *)data);
+		delay_ms(10);
+
+		DPRINTF(LOG_DEBUG, "GSM_SEND_DATA\n");
+		GSM_UART_TxBuf((uint8_t *)data, len);
+		memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+		do {
+			retry_count--;
+			retval = Gsm_WaitRspOK((char *)&GSM_RSP[pos], GSM_GENER_CMD_TIMEOUT * 10, true);          //500*10=5000ms
+			DPRINTF(LOG_DEBUG, "GSM_RSP=%s\r\n pos=%d\r\n rsp_len=%d retval=%d\r\n", GSM_RSP, pos, strlen((char *)GSM_RSP), retval);
 			if (retval >= 0)
-				break;
-		} while (send_retry > 0);
-	}
-	free(cmd);
+				pos = pos + retval;
+			if (strstr((char *)GSM_RSP, "SEND"))
+				retval = len;
+			else if (strstr((char *)GSM_RSP, "+QIURC: \"recv\""))
+				retval = 0;
+			else
+				retval = -1;
+		} while (retval < 0 && retry_count > 0);
+		if (retval >= 0)
+			break;
+	} while (send_retry > 0);
+
 	if (retval < 0)
 		retval = 0;
 
@@ -687,6 +682,7 @@ int Gsm_ReadRecvBufferCmd(void *context, uint16_t len, uint32_t timeout)
 	int retval = -1;
 	char *cmd;
 	uint8_t connectID;
+	static uint8_t enterFlag = FALSE;
 
 	SocketContext *sock = (SocketContext *)context;
 
@@ -694,25 +690,31 @@ int Gsm_ReadRecvBufferCmd(void *context, uint16_t len, uint32_t timeout)
 	if (len >= GSM_MAX_RX_DATA)
 		len = GSM_MAX_RX_DATA;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_READDATA_CMD_STR, connectID, len);
-		DPRINTF(LOG_DEBUG, "recvSendCmd: %s\r\n", cmd);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
 
-		retval = Gsm_WaitRecvPrompt(timeout);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s%d,%d\r\n", GSM_READDATA_CMD_STR, connectID, len);
+	DPRINTF(LOG_DEBUG, "recvSendCmd: %s\r\n", cmd);
+//	if (enterFlag) {
+//		Gsm_print("AT");
+//		Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT * 2, TRUE);
+//		enterFlag = FALSE;
+//	}
+	if (len == 228 || len == 512)
+		enterFlag = TRUE;
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	DPRINTF(LOG_DEBUG, "send: %s\r\n", cmd);
+	
 
-		if (retval >= 0) {
-			memset(resp, 0, GSM_GENER_CMD_LEN);
-			retval = Gsm_WaitNewLine(resp, timeout);
-			if (retval >= 0)
-				DPRINTF(LOG_DEBUG, "recvlen:%s\r\n", resp);
-			sscanf(resp, " %d", &retval);
-		}
+	retval = Gsm_WaitRecvPrompt(timeout);
 
-		free(cmd);
+	if (retval >= 0) {
+		memset(resp, 0, GSM_GENER_CMD_LEN);
+		retval = Gsm_WaitNewLine(resp, timeout);
+		if (retval >= 0)
+			DPRINTF(LOG_DEBUG, "recvlen:%s\r\n", resp);
+		sscanf(resp, " %d", &retval);
 	}
 
 	return retval;
@@ -747,22 +749,20 @@ int Gsm_AutoBaud(void)
 	//
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s\r\n", GSM_AUTO_CMD_STR);
-		do {
-			DPRINTF(LOG_DEBUG, "\r\n auto baud rety\r\n");
-			GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
 
-			retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, NULL);
-			delay_ms(500);
-			rety_cunt--;
-		} while (retval < 0 && rety_cunt > 0);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s\r\n", GSM_AUTO_CMD_STR);
+	do {
+		DPRINTF(LOG_DEBUG, "\r\n auto baud rety\r\n");
+		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		free(cmd);
-	}
+		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, NULL);
+		delay_ms(500);
+		rety_cunt--;
+	} while (retval < 0 && rety_cunt > 0);
+
 	DPRINTF(LOG_DEBUG, "Gsm_AutoBaud retval= %d\r\n", retval);
 	return retval;
 }
@@ -772,17 +772,15 @@ int Gsm_FixBaudCmd(int baud)
 	int retval = -1;
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s%d%s\r\n", GSM_FIXBAUD_CMD_STR, baud, ";&W");
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
 
-		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s%d%s\r\n", GSM_FIXBAUD_CMD_STR, baud, ";&W");
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		free(cmd);
-	}
+	retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
+
 	DPRINTF(LOG_DEBUG, "Gsm_FixBaudCmd retval= %d\r\n", retval);
 	return retval;
 }
@@ -793,17 +791,15 @@ int Gsm_SetEchoCmd(int flag)
 	int retval = -1;
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s%d\r\n", GSM_SETECHO_CMD_STR, flag);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
 
-		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s%d\r\n", GSM_SETECHO_CMD_STR, flag);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		free(cmd);
-	}
+	retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
+
 	DPRINTF(LOG_DEBUG, "Gsm_SetEchoCmd retval= %d\r\n", retval);
 	return retval;
 }
@@ -812,29 +808,25 @@ int Gsm_SetEchoCmd(int flag)
 int Gsm_CheckSimCmd(void)
 {
 	int retval = -1;
-	//
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s\r\n", GSM_CHECKSIM_CMD_STR);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
 
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT * 5, true);
-		DPRINTF(LOG_DEBUG, "Gsm_CheckSimCmd cmd= %s\r\n", cmd);
-		if (retval >= 0) {
-			if (NULL != strstr(cmd, GSM_CHECKSIM_RSP_OK))
-				retval = 0;
-			else
-				retval = -1;
-		}
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s\r\n", GSM_CHECKSIM_CMD_STR);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-
-		free(cmd);
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT * 5, true);
+	DPRINTF(LOG_DEBUG, "Gsm_CheckSimCmd cmd= %s\r\n", cmd);
+	if (retval >= 0) {
+		if (NULL != strstr(cmd, GSM_CHECKSIM_RSP_OK))
+			retval = 0;
+		else
+			retval = -1;
 	}
+
 	DPRINTF(LOG_DEBUG, "Gsm_CheckSimCmd retval= %d\r\n", retval);
 	return retval;
 }
@@ -843,31 +835,27 @@ int Gsm_CheckSimCmd(void)
 int Gsm_CheckNetworkCmd(void)
 {
 	int retval = -1;
-	//
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s\r\n", GSM_CHECKNETWORK_CMD_STR);
-		//DPRINTF(LOG_INFO, "%s", cmd);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT, true);
+	cmd = GSM_CMD;
 
-		if (retval >= 0) {
-			if (strstr(cmd, GSM_CHECKNETWORK_RSP_OK))
-				retval = 0;
-			else if (strstr(cmd, GSM_CHECKNETWORK_RSP_OK_5))
-				retval = 0;
-			else
-				retval = -1;
-		}
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s\r\n", GSM_CHECKNETWORK_CMD_STR);
+	//DPRINTF(LOG_INFO, "%s", cmd);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT, true);
 
-
-		free(cmd);
+	if (retval >= 0) {
+		if (strstr(cmd, GSM_CHECKNETWORK_RSP_OK))
+			retval = 0;
+		else if (strstr(cmd, GSM_CHECKNETWORK_RSP_OK_5))
+			retval = 0;
+		else
+			retval = -1;
 	}
+
 	return retval;
 }
 
@@ -875,25 +863,22 @@ int Gsm_CheckNetworkCmd(void)
 int Gsm_CheckGPRSCmd(void)
 {
 	int retval = -1;
-	//
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s\r\n", GSM_CHECKGPRS_CMD_STR);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
 
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT, true);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s\r\n", GSM_CHECKGPRS_CMD_STR);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		if (retval >= 0)
-			if (!strstr(cmd, GSM_CHECKGPRS_RSP_OK))
-				retval = -1;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT, true);
 
-		free(cmd);
-	}
+	if (retval >= 0)
+		if (!strstr(cmd, GSM_CHECKGPRS_RSP_OK))
+			retval = -1;
+
 	return retval;
 }
 
@@ -901,21 +886,17 @@ int Gsm_CheckGPRSCmd(void)
 int Gsm_SetContextCmd(void)
 {
 	int retval = -1;
-	//
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s\r\n", GSM_SETCONTEXT_CMD_STR);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s\r\n", GSM_SETCONTEXT_CMD_STR);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
 
-		free(cmd);
-	}
 	return retval;
 }
 
@@ -923,21 +904,17 @@ int Gsm_SetContextCmd(void)
 int Gsm_SetAtsEnCmd(void)
 {
 	int retval = -1;
-	//
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s\r\n", GSM_ATS_ENABLE_CMD_STR);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s\r\n", GSM_ATS_ENABLE_CMD_STR);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
 
-		free(cmd);
-	}
 	return retval;
 }
 
@@ -945,39 +922,36 @@ int Gsm_SetAtsEnCmd(void)
 int Gsm_GetRssiCmd()
 {
 	int retval = -1;
-	//
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s\r\n", GSM_RSSI_CMD_STR);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
 
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT, true);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s\r\n", GSM_RSSI_CMD_STR);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		if (retval >= 0) {
-			if (!strstr(cmd, GSM_GETRSSI_RSP_OK)) {
-				retval = -1;
-			} else {
-				retval = atoi(cmd + 2 + strlen(GSM_GETRSSI_RSP_OK));
-				if (retval == 0) {
-					retval = 53; //113
-				} else if (retval == 1) {
-					retval = 111;
-				} else if (retval >= 2 && retval <= 30) {
-					retval -= 2;
-					retval = 109 - retval * 2;
-				} else if (retval >= 31) {
-					retval = 51;
-				}
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	retval = Gsm_WaitRspOK(cmd, GSM_GENER_CMD_TIMEOUT, true);
+
+	if (retval >= 0) {
+		if (!strstr(cmd, GSM_GETRSSI_RSP_OK)) {
+			retval = -1;
+		} else {
+			retval = atoi(cmd + 2 + strlen(GSM_GETRSSI_RSP_OK));
+			if (retval == 0) {
+				retval = 53; //113
+			} else if (retval == 1) {
+				retval = 111;
+			} else if (retval >= 2 && retval <= 30) {
+				retval -= 2;
+				retval = 109 - retval * 2;
+			} else if (retval >= 31) {
+				retval = 51;
 			}
 		}
-
-		free(cmd);
 	}
+
 	return retval;
 }
 
@@ -1068,19 +1042,17 @@ int Gsm_QueryDnsServer(uint8_t contextID)
 	//
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s%d\r\n", GSM_QUERY_DNSSERVER_CMD_STR, contextID);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
 
-		memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT, true);
-		DPRINTF(LOG_INFO, "DNSQuery: %s\n", GSM_RSP);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s%d\r\n", GSM_QUERY_DNSSERVER_CMD_STR, contextID);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		free(cmd);
-	}
+	memset(GSM_RSP, 0, GSM_GENER_CMD_LEN);
+	retval = Gsm_WaitRspOK((char *)GSM_RSP, GSM_GENER_CMD_TIMEOUT, true);
+	DPRINTF(LOG_INFO, "DNSQuery: %s\n", GSM_RSP);
+
 	return retval;
 }
 
@@ -1089,18 +1061,16 @@ uint32_t Gsm_gethostbyname_a(uint8_t contextID, const char *pcHostName, uint16_t
 	int retval = -1;
 	char *cmd;
 
-	cmd = (char *)malloc(GSM_GENER_CMD_LEN);
-	if (cmd) {
-		uint8_t cmd_len;
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		cmd_len = sprintf(cmd, "%s\r\n", GSM_DNS_GETIP_CMD_STR);
-		GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
+	cmd = GSM_CMD;
 
-		memset(cmd, 0, GSM_GENER_CMD_LEN);
-		retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
+	uint8_t cmd_len;
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	cmd_len = sprintf(cmd, "%s\r\n", GSM_DNS_GETIP_CMD_STR);
+	GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
 
-		free(cmd);
-	}
+	memset(cmd, 0, GSM_GENER_CMD_LEN);
+	retval = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, true);
+
 	return retval;
 }
 /**
