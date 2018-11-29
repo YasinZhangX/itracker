@@ -7,6 +7,7 @@
 /* optional debugging */
 #if 1
 #define DEBUG_WOLFSSL
+#define WOLFMQTT_DEBUG_SOCKET
 #endif
 
 /* Use the FreeRTOS TCP API's */
@@ -17,8 +18,8 @@
 #define WOLFSSL_HAVE_MIN
 #define WOLFSSL_HAVE_MAX
 //#define WOLFSSL_SMALL_STACK
-#define RSA_LOW_MEM
-#define WOLFSSL_STATIC_MEMORY 
+//#define RSA_LOW_MEM
+//#define WOLFSSL_STATIC_MEMORY 
 
 /* side-channel resistance */
 #define TFM_TIMING_RESISTANT

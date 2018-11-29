@@ -120,7 +120,6 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGUARM</Key>
-          <Name>p7??纖p7??纖p7?</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -152,18 +151,66 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>5212</LineNumber>
+          <LineNumber>203</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>167780</Address>
+          <Address>296268</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\asn.c</Filename>
+          <Filename>..\..\..\..\..\..\external\freertos\source\portable\MemMang\heap_2.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\iTracker\../../../../../Source/WolfSSL/wolfcrypt/src/asn.c\5212</Expression>
+          <Expression>\\iTracker\../../../../../../external/freertos/source/portable/MemMang/heap_2.c\203</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>12713</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>212580</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\..\..\..\..\Source\WolfSSL\src\internal.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\iTracker\../../../../../Source/WolfSSL/src/internal.c\12713</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>518</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>300838</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\iTracker\../../../../../../modules/nrfx/drivers/src/nrfx_uart.c\518</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>562</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>301688</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\iTracker\../../../../../../modules/nrfx/drivers/src/nrfx_uarte.c\562</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -439,7 +486,7 @@
         <Mm>
           <WinNumber>1</WinNumber>
           <SubType>0</SubType>
-          <ItemText>0x0004B8</ItemText>
+          <ItemText>0x0024356</ItemText>
           <AccSizeX>0</AccSizeX>
         </Mm>
       </MemoryWindow1>
@@ -954,7 +1001,7 @@
         <Bp>
           <Number>22</Number>
           <Type>0</Type>
-          <LineNumber>5212</LineNumber>
+          <LineNumber>12713</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -963,7 +1010,39 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\..\..\..\Source\WolfSSL\wolfcrypt\src\asn.c</Filename>
+          <Filename>..\..\..\..\..\Source\WolfSSL\src\internal.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>23</Number>
+          <Type>0</Type>
+          <LineNumber>518</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>24</Number>
+          <Type>0</Type>
+          <LineNumber>562</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uarte.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
