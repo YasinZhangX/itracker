@@ -16,7 +16,7 @@
 				"}\r\n"
 
 tracker_data_t tracker_data;
-char post_data[512]={0};
+//char post_data[512]={0};
 
 void sensors_init()
 {
@@ -106,19 +106,19 @@ void sensor_collect_timer_handle()
 	
 		start_collect_data();	
 
-		sprintf(post_data, POST_FORMAT, tracker_data.temp_value,
-																		tracker_data.humidity_value,
-																		tracker_data.gas_value,
-																		/*tracker_data.barometer_value,*/
-																		tracker_data.light_value,
-																		//tracker_data.latitude,
-																		//tracker_data.longitude,
-																		tracker_data.x,
-																		tracker_data.y,
-																		tracker_data.z,
-																		tracker_data.magnetic_x,
-																		tracker_data.magnetic_y,
-																		tracker_data.magnetic_z
-																		);
-		DPRINTF(LOG_INFO, "%s", post_data);
+//		sprintf(post_data, POST_FORMAT, tracker_data.temp_value,
+//																		tracker_data.humidity_value,
+//																		tracker_data.gas_value,
+//																		/*tracker_data.barometer_value,*/
+//																		tracker_data.light_value,
+//																		//tracker_data.latitude,
+//																		//tracker_data.longitude,
+//																		tracker_data.x,
+//																		tracker_data.y,
+//																		tracker_data.z,
+//																		tracker_data.magnetic_x,
+//																		tracker_data.magnetic_y,
+//																		tracker_data.magnetic_z
+//																		);
+//		DPRINTF(LOG_INFO, "%s", post_data);
 }

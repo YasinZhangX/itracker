@@ -302,7 +302,7 @@ int main(void)
 	  Gsm_PowerUp();
 
     // Create a FreeRTOS task for the BLE stack. The task will run advertising_start() before entering its loop.
-    //nrf_sdh_freertos_init(advertising_start, NULL);
+//    nrf_sdh_freertos_init(advertising_start, NULL);
 		
 		// dfu task init
 		//BaseType_t xReturned = xTaskCreate(dfu_task, "dfu", 512, NULL, 1, NULL);

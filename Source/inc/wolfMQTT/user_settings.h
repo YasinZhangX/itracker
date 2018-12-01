@@ -22,7 +22,6 @@
 //#define WOLFSSL_STATIC_MEMORY 
 
 /* side-channel resistance */
-#define TFM_TIMING_RESISTANT
 #define ECC_TIMING_RESISTANT
 #define WC_RSA_BLINDING
 
@@ -40,8 +39,8 @@
 #define HAVE_AESGCM
 #define HAVE_CHACHA
 #define HAVE_POLY1305
-#define WOLFSSL_SHA384
-#define WOLFSSL_SHA512
+//#define WOLFSSL_SHA384
+//#define WOLFSSL_SHA512
 #define BUILD_TLS_RSA_WITH_AES_128_GCM_SHA256
 
 #define WOLFSSL_BASE64_ENCODE
@@ -53,6 +52,7 @@
 
 
 /* disable algorithms off by default */
+#define NO_WOLFSSL_SERVER
 #define NO_DSA
 #define NO_RC4
 #define NO_HC128
@@ -60,6 +60,5 @@
 #define NO_PSK
 #define NO_MD4
 #define NO_DES3
-#define NO_FILESYSTEM
 
 #endif /* _USER_SETTING_H_ */

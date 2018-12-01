@@ -25,7 +25,8 @@
 
 /* Configuration */
 #define MQTT_TX_BUF_SIZE   1024
-#define MQTT_RX_BUF_SIZE   1024
+#define MQTT_RX_BUF_SIZE   512
+#define MAX_CONNECT_RETRY  500
 #define DEFAULT_MQTT_HOST       "www.yasinzhang.top" //"mqtt-dev-esp8266-v1.baiyatech.com" /* mqtt broker server */
 #define DEFAULT_CMD_TIMEOUT_MS  30000
 #define DEFAULT_CON_TIMEOUT_MS  30000
@@ -186,6 +187,8 @@ int mqtt_tls_cb(MqttClient *client)
 
 void vSecureMQTTClientTask(void *pvParameters)
 {
+	static int netConnectTimes = 0;
+	
 	int rc;
 	int state = -1;
 	word32 cntr = 0;
@@ -243,7 +246,14 @@ void vSecureMQTTClientTask(void *pvParameters)
 
 				if (rc != MQTT_CODE_SUCCESS) {
 					vTaskDelay(250);
-					PRINTF("NetConnect continue(%d)...", rc);
+					netConnectTimes++;
+					if (netConnectTimes > MAX_CONNECT_RETRY) {
+						PRINTF("Reach Net Connect Retry Times(%d), break", netConnectTimes);
+						netConnectTimes = 0;
+						rc = MQTT_CODE_ERROR_NETWORK;
+					}
+					else		
+						PRINTF("NetConnect continue(%d)...", rc);
 					break;
 				}
 				XMEMSET(&connect, 0, sizeof(connect));
@@ -344,6 +354,7 @@ void vSecureMQTTClientTask(void *pvParameters)
 			} /* switch */
 
 			if ((rc != MQTT_CODE_SUCCESS) && (rc != MQTT_CODE_CONTINUE)) {
+				netConnectTimes = 0;
 				PRINTF("Disconnect: State %d, %s (%d)",
 				       state, MqttClient_ReturnCodeToString(rc), rc);
 

@@ -119,10 +119,6 @@
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>DLGUARM</Key>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>ARMRTXEVENTFLAGS</Key>
           <Name>-L70 -Z18 -C0 -M0 -T1</Name>
         </SetRegEntry>
@@ -151,57 +147,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>705</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>191632</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\..\..\Source\src\rak_uart_gsm.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\iTracker\../../../../../Source/src/rak_uart_gsm.c\705</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>12713</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>212580</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\..\..\Source\WolfSSL\src\internal.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\iTracker\../../../../../Source/WolfSSL/src/internal.c\12713</Expression>
-        </Bp>
-        <Bp>
-          <Number>2</Number>
-          <Type>0</Type>
-          <LineNumber>518</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
-          <Address>300674</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\..\..\..\..\..\modules\nrfx\drivers\src\nrfx_uart.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\iTracker\../../../../../../modules/nrfx/drivers/src/nrfx_uart.c\518</Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
           <LineNumber>12347</LineNumber>
           <EnabledFlag>0</EnabledFlag>
-          <Address>212220</Address>
+          <Address>211940</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -213,11 +161,11 @@
           <Expression>\\iTracker\../../../../../Source/WolfSSL/src/internal.c\12347</Expression>
         </Bp>
         <Bp>
-          <Number>4</Number>
+          <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>6408</LineNumber>
+          <LineNumber>12684</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>327358</Address>
+          <Address>212292</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -226,7 +174,39 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\..\..\..\..\Source\WolfSSL\src\internal.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\iTracker\../../../../../Source/WolfSSL/src/internal.c\6408</Expression>
+          <Expression>\\iTracker\../../../../../Source/WolfSSL/src/internal.c\12684</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>10317</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>178710</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\..\..\..\..\Source\WolfSSL\src\internal.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\iTracker\../../../../../Source/WolfSSL/src/internal.c\10317</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>10301</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>178648</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>..\..\..\..\..\Source\WolfSSL\src\internal.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\iTracker\../../../../../Source/WolfSSL/src/internal.c\10301</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -1101,8 +1081,8 @@
         <Bp>
           <Number>26</Number>
           <Type>0</Type>
-          <LineNumber>12347</LineNumber>
-          <EnabledFlag>0</EnabledFlag>
+          <LineNumber>12684</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
@@ -1117,7 +1097,23 @@
         <Bp>
           <Number>27</Number>
           <Type>0</Type>
-          <LineNumber>705</LineNumber>
+          <LineNumber>12347</LineNumber>
+          <EnabledFlag>0</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\..\..\..\..\Source\WolfSSL\src\internal.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>28</Number>
+          <Type>0</Type>
+          <LineNumber>10301</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -1126,7 +1122,23 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>..\..\..\..\..\Source\src\rak_uart_gsm.c</Filename>
+          <Filename>..\..\..\..\..\Source\WolfSSL\src\internal.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+        <Bp>
+          <Number>29</Number>
+          <Type>0</Type>
+          <LineNumber>10317</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>0</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\..\..\..\..\Source\WolfSSL\src\internal.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
@@ -2198,7 +2210,7 @@
       <GroupNumber>9</GroupNumber>
       <FileNumber>80</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT_Syscalls_KEIL.c</PathWithFileName>
@@ -2210,7 +2222,7 @@
       <GroupNumber>9</GroupNumber>
       <FileNumber>81</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\..\..\..\external\segger_rtt\SEGGER_RTT.c</PathWithFileName>
@@ -2426,7 +2438,7 @@
       <GroupNumber>12</GroupNumber>
       <FileNumber>97</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\..\..\..\..\components\libraries\bootloader\dfu\dfu-cc.pb.c</PathWithFileName>
@@ -3038,7 +3050,7 @@
 
   <Group>
     <GroupName>wolfSSL</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
