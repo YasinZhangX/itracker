@@ -8,6 +8,7 @@
 #if 1
 #define DEBUG_WOLFSSL
 #define WOLFMQTT_DEBUG_SOCKET
+#define WOLFSSL_DEBUG_MEMORY
 #endif
 
 /* Use the FreeRTOS TCP API's */
@@ -18,8 +19,8 @@
 #define WOLFSSL_HAVE_MIN
 #define WOLFSSL_HAVE_MAX
 //#define WOLFSSL_SMALL_STACK
-//#define RSA_LOW_MEM
-//#define WOLFSSL_STATIC_MEMORY 
+#define RSA_LOW_MEM
+#define WOLFSSL_STATIC_MEMORY 
 
 /* side-channel resistance */
 #define ECC_TIMING_RESISTANT
@@ -39,8 +40,8 @@
 #define HAVE_AESGCM
 #define HAVE_CHACHA
 #define HAVE_POLY1305
-//#define WOLFSSL_SHA384
-//#define WOLFSSL_SHA512
+#define WOLFSSL_SHA384
+#define WOLFSSL_SHA512
 #define BUILD_TLS_RSA_WITH_AES_128_GCM_SHA256
 
 #define WOLFSSL_BASE64_ENCODE
@@ -52,7 +53,6 @@
 
 
 /* disable algorithms off by default */
-#define NO_WOLFSSL_SERVER
 #define NO_DSA
 #define NO_RC4
 #define NO_HC128
@@ -60,5 +60,6 @@
 #define NO_PSK
 #define NO_MD4
 #define NO_DES3
+//#define NO_WOLFSSL_MEMORY
 
 #endif /* _USER_SETTING_H_ */

@@ -10,7 +10,7 @@
 #include "bsp_itracker.h"
 #include "mqttnet.h"
 
-#define  GSM_GENER_CMD_LEN                    (128)
+#define  GSM_GENER_CMD_LEN                    (64)
 #define  GSM_GENER_CMD_TIMEOUT                (500)             //ms
 #define  GSM_OPENSOCKET_CMD_TIMEOUT           (15000)           //ms
 #define  GSM_GETDNSIP_CMD_TIMEOUT             (30 * 1000)       //ms

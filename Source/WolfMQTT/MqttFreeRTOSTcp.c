@@ -25,7 +25,7 @@
 
 /* Configuration */
 #define MQTT_TX_BUF_SIZE   1024
-#define MQTT_RX_BUF_SIZE   512
+#define MQTT_RX_BUF_SIZE   256
 #define MAX_CONNECT_RETRY  500
 #define DEFAULT_MQTT_HOST       "www.yasinzhang.top" //"mqtt-dev-esp8266-v1.baiyatech.com" /* mqtt broker server */
 #define DEFAULT_CMD_TIMEOUT_MS  30000
@@ -39,7 +39,7 @@
 #define DEFAULT_TOPIC_NAME      WOLFMQTT_TOPIC_NAME "U/wolfmqtt"
 #define TLS_CA_CERT             "DSTRootCAX3.pem"
 
-char gps_data[512] = { 0 };
+char gps_data[300] = { 0 };
 
 static MqttClient gMQTTC;
 static MqttNet gMQTTN;

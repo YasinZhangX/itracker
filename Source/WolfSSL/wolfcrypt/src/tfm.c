@@ -519,7 +519,8 @@ void fp_mul_comba(fp_int *A, fp_int *B, fp_int *C)
 /* a/b => cb + d == a */
 int fp_div(fp_int *a, fp_int *b, fp_int *c, fp_int *d)
 {
-  fp_int  q, x, y, t1, t2;
+  static  fp_int  q, x, y;
+	fp_int  t1, t2;
   int     n, t, i, norm, neg;
 
   /* is divisor zero ? */

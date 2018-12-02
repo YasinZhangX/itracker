@@ -13,8 +13,8 @@
 #include "mqttnet.h"
 #include "bsp_itracker.h"
 
-#define GSM_RXBUF_MAXSIZE           1024
-#define GSM_MAX_RX_DATA             512
+#define GSM_RXBUF_MAXSIZE           512
+#define GSM_MAX_RX_DATA             500
 
 static uint16_t rxReadIndex = 0;
 static uint16_t rxWriteIndex = 0;
@@ -28,7 +28,7 @@ extern GSM_RECIEVE_TYPE g_type;
 char GSM_CMD[GSM_GENER_CMD_LEN] = { 0 };
 uint8_t GSM_RSP[GSM_GENER_CMD_LEN] = { 0 };
 char resp[GSM_GENER_CMD_LEN] = { 0 };
-extern char gps_data[512];
+extern char gps_data[300];
 //extern char post_data[512];
 extern tNmeaGpsData NmeaGpsData;
 #define  GPS_FORMAT                             \

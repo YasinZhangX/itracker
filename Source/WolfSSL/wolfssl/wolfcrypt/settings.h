@@ -549,8 +549,8 @@ extern void uITRON4_free(void *p) ;
     /* FreeRTOS pvPortRealloc() only in AVR32_UC3 port */
     #if !defined(XMALLOC_USER) && !defined(NO_WOLFSSL_MEMORY) && \
         !defined(WOLFSSL_STATIC_MEMORY)
-        #define XMALLOC(s, h, type)  pvPortMalloc((s))
-        #define XFREE(p, h, type)    vPortFree((p))
+        #define XMALLOC(s, h, type)  malloc((s))  //pvPortMalloc((s))
+        #define XFREE(p, h, type)    {void* xp = (p); if ((xp)) free((xp));}  //vPortFree((p))
     #endif
 
     #ifndef NO_WRITEV

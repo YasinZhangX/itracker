@@ -44,6 +44,7 @@
     #include <stdio.h>
 #endif
 
+#include "bsp_itracker.h"
 
 /* Set these to default values initially. */
 static wolfSSL_Malloc_cb  malloc_function = 0;
@@ -546,7 +547,17 @@ void* wolfSSL_Malloc(size_t size, void* heap, int type)
         #else
         #ifndef WOLFSSL_NO_MALLOC
             #ifdef FREERTOS
-                res = pvPortMalloc(size);
+                //res = malloc(size);
+								res = pvPortMalloc(size);
+								#ifdef WOLFSSL_DEBUG_MEMORY
+								if ( res != NULL ) {
+									DPRINTF(LOG_DEBUG, "Alloc: %p -> %u at %s:%d\n", res, size, func, line);
+								} else {
+									WOLFSSL_MSG("ERROR ran out of memory");
+									DPRINTF(LOG_DEBUG, "Remain space is %u", xPortGetFreeHeapSize());
+									DPRINTF(LOG_DEBUG, "Looking for %u bytes at %s:%d\n", size, func, line);
+								}
+								#endif
             #else
                 res = malloc(size);
             #endif
@@ -684,7 +695,11 @@ void wolfSSL_Free(void *ptr, void* heap, int type)
         #endif
         #ifndef WOLFSSL_NO_MALLOC
             #ifdef FREERTOS
+					      //free(ptr);
                 vPortFree(ptr);
+								#ifdef WOLFSSL_DEBUG_MEMORY
+								DPRINTF(LOG_DEBUG, "Free: %p at %s:%d\n", ptr, func, line);
+								#endif
             #else
                 free(ptr);
             #endif
